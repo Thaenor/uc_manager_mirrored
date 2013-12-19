@@ -6,10 +6,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <map>
-using namespace std;
-
+#include "Bdados.h"
+#include "Aluno.h"
 #include "Pessoa.h"
 #include "Utilizador.h"
+using namespace std;
+
+
 
 /*******************************************************************************************/
 /*******************************************************************************************/
@@ -49,34 +52,26 @@ void pause()
 /*******************************************************************************************/
 
 
-int main(int argc, const char * argv[])
+int main(void)
 {
 
     // insert code here...
     //menuprincipal();
 
     cout << "Development test area!" << endl;
-    
-    Uc obj (1,"amata");
-    Uc obj2 (2,"Aprog");
-    Uc obj3 (3,"LAPR");
-    Uc* apt_uc = new Uc();
-    apt_uc = &obj3;
-    
-    obj.write();
-    
+ 
     
     cout << endl;
     /////////////////////////BDADODS
 
-	 string utilizador = "nfm";  
-	 string palavra = "lapr3_nfm"; 
+	 string utilizador = "B6_5";  
+	 string palavra = "B6_5"; 
 	 string bd = "193.136.62.27:1521/isepdb"; //ou em vez de ip, gandalf   
 	 try {     cout << "Exemplo de ligacao: a ligar ..."        << endl;    
 	 BDados *exemplo = new BDados (utilizador, palavra, bd);  
-	 list <Cliente> l = exemplo->lerClientes(); 
-	 cout << setw(5) << "COD." << " | "      << setw(12) << "Nome" << "         | "     << setw(6) << "NIF" << "    | "     << setw(14) << "Morada" << "       | " << endl; 
-	 for (list<Cliente>::iterator it = l.begin(); it != l.end(); it++)   cout << *it;  cout << endl;     delete (exemplo);     cout << "Exemplo de ligacao: terminado" << endl;   
+	 list <Aluno> l = exemplo->lerAlunos(); 
+	 //cout << setw(5) << "COD." << " | "      << setw(12) << "Nome" << "         | "     << setw(6) << "NIF" << "    | "     << setw(14) << "Morada" << "       | " << endl; 
+	 for (list<Aluno>::iterator it = l.begin(); it != l.end(); it++)   cout << *it;  cout << endl;     delete (exemplo);     cout << "Exemplo de ligacao: terminado" << endl;   
 	 }   catch (SQLException erro) {    
 		 cerr << "Erro: " << erro.getMessage () << endl; 
 	 }   cin.get();  
