@@ -2,10 +2,11 @@
 #define BDados_  
 #include <iostream> 
 #include <iomanip> 
-#include <occi.h> 
+#include <occi.h>
+#include "Aluno.h"
 #include <list>  
 using namespace oracle::occi;
-#include "Aluno.h"
+
 
 class BDados {  
 private:   Environment *env;  
@@ -14,20 +15,29 @@ private:   Environment *env;
 public:    
 	BDados(string user, string passwd, string db);  
 	~ BDados();   
-	list <Aluno> lerClientes(); // Método para ler uma lista de clientes };  
+	list <Aluno> lerAlunos(); // Método para ler uma lista de clientes };  
+};
 	BDados::BDados(string user, string passwd, string db) 
-	{     env = Environment::createEnvironment (Environment::DEFAULT);     
-	ligacao = env->createConnection (user, passwd, db); }  
+	{     
+		env = Environment::createEnvironment (Environment::DEFAULT);     
+		ligacao = env->createConnection (user, passwd, db);  
+	}
 	BDados::~BDados() 
-	{     env->terminateConnection (ligacao);  
-	Environment::terminateEnvironment (env); 
+	{    
+		env->terminateConnection (ligacao);  
+		Environment::terminateEnvironment (env); 
 	} 
-	list <Aluno> BDados::lerAlunos() { 
-		list <Aluno> ret;     
+	list <Aluno> BDados::lerAlunos() 
+	{ 
+		list <Aluno> ret; 
+
 		instrucao = ligacao->createStatement("SELECT * FROM Aluno"); 
 		ResultSet *rset = instrucao->executeQuery ();    
 		while (rset->next ())    
-		{   Aluno a(rset->getInt(1), rset->getString(2));
-		ret.push_back(a);     }   
-		instrucao->closeResultSet (rset);  return ret; } 
+		{   
+			Aluno a(rset->getInt(1), rset->getString(2));
+		ret.push_back(a);     
+		}   
+		instrucao->closeResultSet (rset);  
+		return ret; } 
 #endif 

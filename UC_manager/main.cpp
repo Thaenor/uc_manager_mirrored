@@ -2,16 +2,12 @@
 #include <string>
 #include <vector>
 #include <list>
-#include <fstream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <map>
-#include "Bdados.h"
-#include "Aluno.h"
-#include "Pessoa.h"
-#include "Utilizador.h"
-using namespace std;
+#include<iostream>
+#include<string>
 
+using namespace std;
+#include"Bdados.h"
+#include"Aluno.h"
 
 
 /*******************************************************************************************/
@@ -76,65 +72,4 @@ int main(void)
 		 cerr << "Erro: " << erro.getMessage () << endl; 
 	 }   cin.get();  
 	 return 0; 
-}
-
-
-
-
-
-
-void menuprincipal(){
-    
-    cout << "=========================" << endl << "| Welcome to UC Manager! |"  << endl << "=========================" << endl << endl;
-    
-	bool flag=false;
-	
-	int op;
-	do{
-		clear();
-		cout << " Trabalho Pratico - ESINF 2013 \n" << endl<<endl;
-		cout << " |_______________ MENU______________"<<endl;
-		cout << " 1: In development " <<endl;
-		cout << " 2: In development "<<endl;
-		cout << " 3: In development     "<<endl;
-		cout << " 0: Sair " <<endl;
-		cout << " |__________________________________|"<<endl;
-		cin>>op;
-		switch (op)
-		{
-			case 0:
-				exit(1);
-			case 1:
-				flag=true;
-				clear();
-            {
-                // INSERT FUNCTION HERE
-                cout <<endl;
-            }
-				pause();
-				clear();
-				break;
-                
-			case 2:
-				clear();
-				// INSERT FUNCTION HERE
-				pause();
-				break;
-			case 3:
-            {
-                // INSERT FUNCTION HERE
-				break;
-            }
-			default:
-            {
-				cout << "Opcao invalida!" << endl << endl;
-				
-				pause();
-				
-            }
-        }
-		
-	}while(op!=0);
-    
-	pause();
 }
