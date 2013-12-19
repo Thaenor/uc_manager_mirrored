@@ -38,6 +38,7 @@ public:
 			Aluno a(rset->getInt(1), rset->getString(2));
 		ret.push_back(a);     
 		}   
+		
 		instrucao->closeResultSet (rset);  
 		return ret; } 
 #endif 
