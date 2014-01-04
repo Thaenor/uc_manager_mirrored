@@ -26,7 +26,7 @@ Aluno :: Aluno()
 	nome = " ";
 }
 
-Aluno :: Aluno(int num,string name) 
+Aluno :: Aluno(int num,string name)
 {
 	numero = num;
 	nome = name;
