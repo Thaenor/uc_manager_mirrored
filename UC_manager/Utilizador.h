@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-//using namespace std;
+using namespace std;
 
 #include "Pessoa.h"
 #include "UC.h"

@@ -4,6 +4,7 @@
 #include"Eventos.h"
 #include <string>
 #include<list>
+#include<vector>
 
 class Conferencia : public Eventos{
 
@@ -21,17 +22,17 @@ public:
 	Conferencia(const Conferencia &c);
 	~Conferencia();
 
-	virtual Eventos* clone()const;
+	virtual Conferencia* clone()const;
 	int getCodigo()const;
 	string getSala()const;
 	string getCod_utilizador()const;
-	list<string>getCod_utilizadoreres()const{ return cod_utilizadores };
+	list<string>getCod_utilizadoreres()const;
 
 
 	void setCodigo(int codigo);
-	void setSala(int sala);
+	void setSala(string sala);
 	void setCod_utilizador(string cod_utilizador);
-	void setCod_utilizadores(list<string> val){ cod_utilizadores = val; }
+	void setCod_utilizadores(list<string> val);
 
 	Conferencia& operator=(const Conferencia &c);
 	bool operator==(const Conferencia &c)const;
@@ -71,7 +72,7 @@ Conferencia::Conferencia(const Conferencia & c){
 		codigo = cod;
 	}
 
-	void Conferencia::setSala(int s){
+	void Conferencia::setSala(string s){
 		sala = s;
 	}
 
@@ -81,13 +82,13 @@ Conferencia::Conferencia(const Conferencia & c){
 	int Conferencia::getCodigo()const{
 		return codigo;
 	}
-	int Conferencia::getSala()const{
+	string Conferencia::getSala()const{
 		return codigo;
 	}
-	int Conferencia::getCod_utilizador()const{
+	string Conferencia::getCod_utilizador()const{
 		return cod_utilizador;
 	}
-	int Conferencia::getCod_utilizadores()const{
+	list<string> Conferencia::getCod_utilizadores()const{
 		return cod_utilizadores;
 	}
 

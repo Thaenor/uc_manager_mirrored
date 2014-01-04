@@ -1,4 +1,4 @@
-#ifdef UC_Sala_H
+#ifndef UC_Sala_H
 #define UC_Sala_H
 
 #include <string>
@@ -23,11 +23,11 @@ public:
 	~Sala();
 	Sala(const Sala &other);
 	Sala* clone() const;
-
-	int getCod_sala();
-	int getCod_evento();
-	vector<Pessoa> getPresentes();
-	int getCapacidade();
+	
+	int getCod_sala()const;
+	int getCod_evento()const;
+	vector<Pessoa> getPresentes()const;
+	int getCapacidade()const;
 
 	void setCod_sala(int cod_sala);
 	void setCod_evento(int cod_evento);
@@ -68,15 +68,15 @@ Sala* Sala::clone() const
 	return new Sala(*this);
 }
 
-int Sala::getCod_sala()					{ return cod_sala; }
-int Sala::getCod_evento()				{ return cod_evento; }
-vector<Pessoa> Sala::getPresentes()		{ return presentes; }
-int Sala::getCapacidade()				{ return capacidade; }
+int Sala::getCod_sala()			const		{ return cod_sala; }
+int Sala::getCod_evento()	const			{ return cod_evento; }
+vector<Pessoa> Sala::getPresentes()	const	{ return presentes; }
+int Sala::getCapacidade()		const		{ return capacidade; }
 
-void Sala::setCod_sala(int cod_sala)				{ this->cod_sala = other.cod_sala; }
-void Sala::setCod_evento(int cod_evento)			{ this->cod_evento = other.cod_evento; }
-void Sala::setPresentes(vector<Pessoa> presentes)	{ this->presentes = other.presentes; }
-void Sala::setCapacidade(int capacidade)			{ this->capacidade = other.capacidade; }
+void Sala::setCod_sala(int cod_sala)				{ this->cod_sala = cod_sala; }
+void Sala::setCod_evento(int cod_evento)			{ this->cod_evento = cod_evento; }
+void Sala::setPresentes(vector<Pessoa> presentes)	{ this->presentes = presentes; }
+void Sala::setCapacidade(int capacidade)			{ this->capacidade = capacidade; }
 
 void Sala::escreve(ostream out) const
 {
