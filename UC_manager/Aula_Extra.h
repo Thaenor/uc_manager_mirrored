@@ -21,7 +21,7 @@ public:
 	void escreve(ostream &out) const;
 	virtual Aula_Extra* clone()const;
 	Sala getSala()const;
-	Pessoa getProfessor()const;
+	Pessoa* getProfessor()const;
 
 	void setSala(Sala sala);
 	void setProfessor(Pessoa prefessor);
@@ -63,7 +63,7 @@ void Aula_Extra::setProfessor(Pessoa professor){
 Sala Aula_Extra::getSala()const{
 	return sala;
 }
-Pessoa Aula_Extra ::getProfessor()const{
+Pessoa* Aula_Extra ::getProfessor()const{
 	return this->professor;
 }
 
