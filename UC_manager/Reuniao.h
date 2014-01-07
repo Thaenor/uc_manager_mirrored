@@ -1,37 +1,34 @@
 #ifndef Reuniao_
 #define Reuniao_
 
-#include"Eventos.h"
 #include <string>
 #include<list>
+#include<vector>
+
+#include"Sala.h"
+#include"Pessoa.h"
+#include"Eventos.h"
+using namespace std;
 
 class Reuniao : public Eventos{
 
 private:
-	int codigo;
-	string sala;
-	string cod_utilizador;
-	list<string>cod_utilizadores;
-
-
+	Sala sala;
+	vector<Pessoa*>docente;
 
 public:
 	Reuniao();
-	Reuniao(int codigo, string s, string c, list<string>cod_utili);
+	Reuniao(int cod, string data_inicio, string data_fim, string des, int pri,Sala sala, vector<Pessoa>docente);
 	Reuniao(const Reuniao &r);
 	~Reuniao();
 
 	virtual Eventos* clone()const;
-	int getCodigo()const;
-	string getSala()const;
-	string getCod_utilizador()const;
-	list<string>getCod_utilizadoreres()const{ return cod_utilizadores };
+	Sala getSala()const;
+	vector<Pessoa>getDocente()const;
 
 
-	void setCodigo(int codigo);
-	void setSala(int sala);
-	void setCod_utilizador(string cod_utilizador);
-	void setCod_utilizadores(list<string> val){ cod_utilizadores = val; }
+	void setSala(Sala sala);
+	void setDocente(vector<Pessoa> docente);
 
 	Reuniao& operator=(const Reuniao &r);
 	bool operator==(const Reuniao &r)const;
@@ -41,23 +38,16 @@ public:
 
 };
 Reuniao::Reuniao() {
-	this->codigo = 0;
-	this->sala = "";
-	this->cod_utilizador = "";
 }
 
-Reuniao::Reuniao(int cod, string s, string c, list<string>cod_utili){
-	codigo = cod;
-	sala = s;
-	cod_utilizador = c;
-	cod_utilizadores = cod_utili;
+Reuniao::Reuniao((int cod, string data_inicio, string data_fim, string des, int pri, Sala sala, vector<Pessoa>docente) : Eventos(cod, data_inicio, data_fim, des, pri){
+	sala = sala;
+	docente = decente;
 }
 
 Reuniao::Reuniao(const Reuniao & r){
-	codigo = r.getCodigo();
 	sala = r.getSala();
-	cod_utilizador = r.getCod_utilizador();
-	cod_utilizadores = r.getCod_utilizadores();
+	docente = r.getDocente();
 
 
 	Reuniao:: ~Reuniao(){
@@ -66,44 +56,35 @@ Reuniao::Reuniao(const Reuniao & r){
 	Reuniao* Reuniao::clone()const{
 		return new Reuniao(*this);
 	}
-	void Reuniao::setCodigo(int cod){
-		codigo = cod;
-	}
 
-	void Reuniao::setSala(int s){
+	void Reuniao::setSala(Sala s){
 		sala = s;
 	}
 
-	void Reuniao::setCod_utilizador(int cod_utili){
-		cod_utilizador = cod_utili;
+	void Reuniao::setDocente(vector<Pessoa> docente){
+		docente = docente;
 	}
-	int Reuniao::getCodigo()const{
-		return codigo;
+
+	Sala Reuniao::getSala()const{
+		return sala;
 	}
-	int Reuniao::getSala()const{
-		return codigo;
-	}
-	int Reuniao::getCod_utilizador()const{
-		return cod_utilizador;
-	}
-	int Reuniao::getCod_utilizadores()const{
-		return cod_utilizadores;
+
+	vector<Pessoa> Reuniao::getDocente()const{
+		return docente;
 	}
 
 	Reuniao& Reuniao:: operator=(const Reuniao &r){
 
 		if (this != &r){
-			codigo = r.codigo;
 			sala = r.sala;
-			cod_utilizador = r.cod_utilizador;
-			cod_utilizadores = r.cod_utilizadores;
+			docente = r.docente;
 		}
 		return *this;
 	}
 
 	bool Reuniao:: operator==(const Reuniao &r)const{
 
-		if (codigo == r.codigo && sala == r.sala  && cod_utilizador == r.cod_utilizador && cod_utilizadores == r.cod_utilizadores)
+		if (sala == r.sala  && docente == r.docente)
 			return true;
 		return false;
 	}
@@ -116,6 +97,6 @@ Reuniao::Reuniao(const Reuniao & r){
 	void Reuniao::escrever(ostream &o)const{
 
 		o << "Sala: " << getSala() << endl;
-		o << "Docentes: " << getCod_utilizadores() << endl;
+		o << "Docentes: " << getDocente() << endl;
 	}
 #endif

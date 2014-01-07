@@ -59,7 +59,7 @@ string Pessoa::getNome()const{
 Pessoa& Pessoa:: operator=(const Pessoa &p){
 
 	if (this != &p){
-		nome = p.nome;
+		nome = p.getNome();
 	}
 	return *this;
 }
@@ -87,6 +87,14 @@ ostream &operator<<(ostream & out, const Pessoa &p){
 
 void Pessoa::escrever(ostream &o)const{
 	o << "Nome: " << getNome() << endl;
+}
+
+Pessoa& Pessoa:: operator=(const Pessoa&c){
+
+	if (this != &c){
+		nome = c.getNome();
+	}
+	return *this;
 }
 
 #endif

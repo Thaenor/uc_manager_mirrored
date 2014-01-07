@@ -7,14 +7,13 @@ using namespace std;
 class Mensagem
 {
 private:
-	int cod_mensagem;
+	string emissor;
 	string texto;
 	string assunto;
 	string anexo; //URL do anexo
 	string cod_destino;
-	string cod_origem;
-	string data_ini;
-	string data_limite;
+	string data_envio;
+	string data_leitura;
 
 
 public:
@@ -25,8 +24,8 @@ public:
 	void escreve(ostream &out) const;
 	//  void escreve(); 
 
-	int getCod_mensagem() const { return cod_mensagem; }
-	void setCod_mensagem(int val) { cod_mensagem = val; }
+	string getEmissor() const { return emissor; }
+	void setEmissor(int val) { emissor = val; }
 	string getTexto() const { return texto; }
 	void setTexto(string val) { texto = val; }
 	string getAssunto() const { return assunto; }
@@ -35,12 +34,10 @@ public:
 	void setAnexo(string val) { anexo = val; }
 	string getCod_destino() const { return cod_destino; }
 	void setCod_destino(string val) { cod_destino = val; }
-	string getCod_origem() const { return cod_origem; }
-	void setCod_origem(string val) { cod_origem = val; }
-	string getData_ini() const { return data_ini; }
-	void setData_ini(string val) { data_ini = val; }
-	string getData_limite() const { return data_limite; }
-	void setData_limite(string val) { data_limite = val; }
+	string getData_ini() const { return data_envio; }
+	void setData_ini(string val) { data_envio = val; }
+	string getData_limite() const { return data_leitura; }
+	void setData_limite(string val) { data_leitura = val; }
 	void listar();
 };
 
@@ -52,40 +49,40 @@ Mensagem :: Mensagem()
 
 Mensagem :: Mensagem(int cod_mensagem, string texto,string assunto,string anexo,string cod_destino,string cod_origem, string data_ini, string data_limite) 
 {
-	this->cod_mensagem = cod_mensagem;
+	this->emissor = cod_mensagem;
 	this->texto = texto;
 	this->assunto = assunto;
 	this->anexo = anexo;
 	this->cod_destino= cod_destino;
-	this->cod_origem = cod_origem;
-	this->data_ini=data_ini;
-	this->data_limite= data_limite;
+
+	this->data_envio=data_ini;
+	this->data_leitura= data_limite;
 }
 
 Mensagem:: ~Mensagem(){}
 
 Mensagem:: Mensagem(const Mensagem& other)
 {
-	this->cod_mensagem = other.cod_mensagem;
+	this->emissor = other.emissor;
 	this->texto = other.texto;
 	this->assunto = other.assunto;
 	this->anexo = other.anexo;
 	this->cod_destino= other.cod_destino;
-	this->cod_origem = other.cod_origem;
-	this->data_ini=other.data_ini;
-	this->data_limite= other.data_limite;
+
+	this->data_envio=other.data_envio;
+	this->data_leitura= other.data_leitura;
 	
 }
 void Mensagem::listar(){
-	cout<<"Remetente: "<<this->getCod_origem();
-	cout<<"Assunto: "<<this->getAssunto()<<endl;
+	cout << "Remetente: " << emissor;
+	cout<<"Assunto: "<<assunto<<endl;
 }
 
 
 void Mensagem :: escreve(ostream &out) const
 {
 	out << "MENSAGEM" << endl
-		<< "De: " << cod_origem << endl
+		<< "De: " << emissor<< endl
 		<< "Assunto: " << anexo << endl
 		<< "Mensagem " << texto << endl;
 }

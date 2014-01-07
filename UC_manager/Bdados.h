@@ -37,22 +37,22 @@ public:
 		env->terminateConnection (ligacao);  
 		Environment::terminateEnvironment (env); 
 	} 
-	list <Aluno> BDados::lerAlunos() 
-	{ 
-		list <Aluno> ret; 
-		
-		instrucao = ligacao->createStatement("SELECT * FROM ALUNO"); 
-		ResultSet *rset = instrucao->executeQuery ();
-		while (rset->next ())    
-		{   
-			int i=rset->getInt(1);
-			string s=rset->getString(2);
-			Aluno a(i,s);
-		ret.push_back(a);     
-		}
-		
-		instrucao->closeResultSet (rset);  
-		return ret; } 
+	//list <Aluno> BDados::lerAlunos() 
+	//{ 
+	//	list <Aluno> ret; 
+	//	
+	//	instrucao = ligacao->createStatement("SELECT * FROM ALUNO"); 
+	//	ResultSet *rset = instrucao->executeQuery ();
+	//	while (rset->next ())    
+	//	{   
+	//		int i=rset->getInt(1);
+	//		string s=rset->getString(2);
+	//		//Aluno a(i,s);
+	//	ret.push_back(a);     
+	//	}
+	//	
+	//	instrucao->closeResultSet (rset);  
+	//	return ret; } 
 	//Utilizador BDados::getDocente(string sigla) 
 	//{ 
 	//	Utilizador ret; 

@@ -7,17 +7,18 @@
 using namespace std;
 
 #include "Pessoa.h"
+#include"Mensagem.h"
 
 class Utilizador : public Pessoa
 {
 	private:
 	string  cod_utilizador;
 	char tipo; //1-docente, 2-regente
-	vector<string> msg;
+	vector<Mensagem> msg;
 
 	public:
 	Utilizador();
-	Utilizador(string nome,string cod_utilizador, char tipo, vector<string>msg);
+	Utilizador(string nome,string cod_utilizador, char tipo, vector<Mensagem>msg);
 	~ Utilizador();
 	Utilizador(const Utilizador &other);            /* Construtor Copia */
 	Utilizador* clone() const;						/* construtor Clone */
@@ -30,8 +31,8 @@ class Utilizador : public Pessoa
 	char  getTipo()const;
 	void setTipo(char tipo);
 
-	vector<string> getMsg()const;
-	void setMsg(vector<string> msg);
+	vector<Mensagem> getMsg()const;
+	void setMsg(vector<Mensagem> msg);
 };
 
 Utilizador::Utilizador()
@@ -40,7 +41,7 @@ Utilizador::Utilizador()
 	tipo = 1;
 }
 
-Utilizador::Utilizador(string nome, string cod_utilizador, char tipo, vector<string>msg) : Pessoa( nome)
+Utilizador::Utilizador(string nome, string cod_utilizador, char tipo, vector<Mensagem>msg) : Pessoa( nome)
 {
 	cod_utilizador = cod_utilizador;
 	tipo = tipo; 
@@ -66,11 +67,11 @@ Utilizador::Utilizador(const Utilizador &other){    /* Construtor Copia */
 
 	string Utilizador::getCod_utilizador()	const			{return this->cod_utilizador;}
 	char Utilizador::getTipo()const							{return this->tipo;}
-	vector<string> Utilizador::getMsg()const				{return this->msg;}	
+	vector<Mensagem> Utilizador::getMsg()const				{return this->msg;}	
 
 	void Utilizador::setCod_utilizador(string cod)			{cod_utilizador = cod_utilizador;}
 	void Utilizador::setTipo(char type)						{tipo = type;}
-	void Utilizador::setMsg(vector<string> msg)				{msg = msg;}
+	void Utilizador::setMsg(vector<Mensagem> msg)				{msg = msg;}
 
 	void Utilizador::escreve(ostream out) const
 	{

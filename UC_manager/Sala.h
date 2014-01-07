@@ -12,27 +12,29 @@ using namespace std;
 class Sala
 {
 private:
-	int cod_sala;
-	int cod_evento;
-	vector<Pessoa> presentes;
+	string cod_sala;
+	std::string getCod_sala() const { return cod_sala; }
+	void setCod_sala(std::string val) { cod_sala = val; }
 	int capacidade;
+	int getCapacidade() const { return capacidade; }
+	void setCapacidade(int val) { capacidade = val; }
+
 
 public:
 	Sala();
-	Sala(int cod_sala, int cod_evento, vector<Pessoa> presentes, int capacidade);
+	Sala(int c, int cap);
 	~Sala();
 	Sala(const Sala &other);
 	Sala* clone() const;
 	
-	int getCod_sala()const;
-	int getCod_evento()const;
-	vector<Pessoa> getPresentes()const;
+	string getCod_sala()const;
 	int getCapacidade()const;
 
-	void setCod_sala(int cod_sala);
-	void setCod_evento(int cod_evento);
-	void setPresentes(vector<Pessoa> presentes);
+	void setCod_sala(string cod_sala);
 	void setCapacidade(int capacidade);
+
+	Sala& operator=(const Sala &c);
+	bool operator==(const Sala &c)const;
 
 	void escreve(ostream out) const;
 	void listar();
@@ -40,17 +42,12 @@ public:
 
 Sala::Sala()
 {
-	cod_sala = 0;
-	cod_evento = 0;
-	capacidade = 0;
 }
 
-Sala::Sala(int cod_sala, int cod_evento, vector<Pessoa> presentes, int capacidade)
+Sala::Sala(int c, int cap)
 {
-	this->cod_sala = cod_sala;
-	this->cod_evento = cod_evento;
-	this->presentes = presentes;
-	this->capacidade = capacidade;
+	this->cod_sala = c;
+	this->capacidade = cap;
 }
 
 Sala::~Sala(){}
@@ -58,8 +55,6 @@ Sala::~Sala(){}
 Sala::Sala(const Sala &other)
 {
 	this->cod_sala = other.cod_sala;
-	this->cod_evento = other.cod_evento;
-	this->presentes = other.presentes;
 	this->capacidade = other.capacidade;
 }
 
@@ -68,15 +63,6 @@ Sala* Sala::clone() const
 	return new Sala(*this);
 }
 
-int Sala::getCod_sala()			const		{ return cod_sala; }
-int Sala::getCod_evento()	const			{ return cod_evento; }
-vector<Pessoa> Sala::getPresentes()	const	{ return presentes; }
-int Sala::getCapacidade()		const		{ return capacidade; }
-
-void Sala::setCod_sala(int cod_sala)				{ this->cod_sala = cod_sala; }
-void Sala::setCod_evento(int cod_evento)			{ this->cod_evento = cod_evento; }
-void Sala::setPresentes(vector<Pessoa> presentes)	{ this->presentes = presentes; }
-void Sala::setCapacidade(int capacidade)			{ this->capacidade = capacidade; }
 
 void Sala::escreve(ostream out) const
 {
@@ -88,4 +74,20 @@ void Sala::listar()
 	cout << "Sala codigo: " << getCod_sala() << " com capacidade: " << getCapacidade() << endl;
 }
 
+
+Sala& Sala:: operator=(const Sala&c){
+
+	if (this != &c){
+		cod_sala= c.getCod_sala();
+		capacidade = c.getCapacidade();
+	}
+	return *this;
+}
+
+bool Sala:: operator==(const Sala &c)const{
+
+	if (cod_sala == c.getCod_sala())
+		return true;
+	return false;
+}
 #endif

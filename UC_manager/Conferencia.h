@@ -2,37 +2,35 @@
 #define Conferencia_
 
 #include"Eventos.h"
+#include"Pessoa.h"
+#include"Sala.h"
+
 #include <string>
 #include<list>
 #include<vector>
+using namespace std;
 
 class Conferencia : public Eventos{
 
 private:
-	int codigo;
-	string sala;
-	string cod_utilizador;
-	list<string>cod_utilizadores;
+	Sala sala;
+	vector<Pessoa*> oradores;
 
 
 
 public:
 	Conferencia();
-	Conferencia(int codigo, string s, string c, list<string>cod_utili);
+	Conferencia(int cod, string data_inicio, string data_fim, string des, int pri,Sala s, vector<Pessoa>orad);
 	Conferencia(const Conferencia &c);
 	~Conferencia();
 
 	virtual Conferencia* clone()const;
-	int getCodigo()const;
-	string getSala()const;
-	string getCod_utilizador()const;
-	list<string>getCod_utilizadoreres()const;
 
+	Sala getSala()const;
+	vector<Pessoa>getOradores()const;
 
-	void setCodigo(int codigo);
-	void setSala(string sala);
-	void setCod_utilizador(string cod_utilizador);
-	void setCod_utilizadores(list<string> val);
+	void setSala(Sala sala);
+	void setOradores(vector<Pessoa> oradores);
 
 	Conferencia& operator=(const Conferencia &c);
 	bool operator==(const Conferencia &c)const;
@@ -42,23 +40,16 @@ public:
 
 };
 Conferencia::Conferencia() {
-	this->codigo = 0;
-	this->sala = "";
-	this->cod_utilizador = "";
 }
 
-Conferencia::Conferencia(int cod, string s, string c, list<string>cod_utili){
-	codigo = cod;
+Conferencia::Conferencia(int cod, string data_inicio, string data_fim, string des, int pri, Sala s, vector<Pessoa>orad) :Eventos(cod,data_inicio,data_fim,des,pri){
 	sala = s;
-	cod_utilizador = c;
-	cod_utilizadores = cod_utili;
+	oradores = orad;
 }
 
 Conferencia::Conferencia(const Conferencia & c){
-	codigo = c.getCodigo();
 	sala = c.getSala();
-	cod_utilizador = c.getCod_utilizador();
-	cod_utilizadores = c.getCod_utilizadores();
+	oradores = c.getOradores();
 }
 
 
@@ -68,56 +59,45 @@ Conferencia::Conferencia(const Conferencia & c){
 	Conferencia* Conferencia::clone()const{
 		return new Conferencia(*this);
 	}
-	void Conferencia::setCodigo(int cod){
-		codigo = cod;
-	}
 
-	void Conferencia::setSala(string s){
+	void Conferencia::setSala(Sala s){
 		sala = s;
 	}
-
-	void Conferencia::setCod_utilizador(int cod_utili){
-		cod_utilizador = cod_utili;
+	void Conferencia::setOradores(vector<Pessoa> orad){
+		oradores = orad; 
 	}
-	int Conferencia::getCodigo()const{
-		return codigo;
+	
+	Sala Conferencia::getSala()const{
+		return sala;
 	}
-	string Conferencia::getSala()const{
-		return codigo;
-	}
-	string Conferencia::getCod_utilizador()const{
-		return cod_utilizador;
-	}
-	list<string> Conferencia::getCod_utilizadores()const{
-		return cod_utilizadores;
+	vector<Pessoa> Conferencia::getOradores()const{
+		return this->oradores; 
 	}
 
-	Conferencia& Conferencia:: operator=(const Reuniao &c){
+	Conferencia& Conferencia:: operator=(const Conferencia &c){
 
 		if (this != &c){
-			codigo = c.codigo;
 			sala = c.sala;
-			cod_utilizador = c.cod_utilizador;
-			cod_utilizadores = c.cod_utilizadores;
+			oradores = c.oradores;
 		}
 		return *this;
 	}
 
-	bool Conferencia:: operator==(const Reuniao &c)const{
+	bool Conferencia:: operator==(const Conferencia &c)const{
 
-		if (codigo == c.codigo && sala == c.sala  && cod_utilizador == c.cod_utilizador && cod_utilizadores == c.cod_utilizadores)
+		if (sala == c.sala && oradores == c.oradores)
 			return true;
 		return false;
 	}
 
-	ostream &operator<<(ostream & out, const Reuniao &c){
+	ostream &operator<<(ostream & out, const Conferencia &c){
 		c.escrever(out);
 		return out;
 	}
 
 	void Conferencia::escrever(ostream &o)const{
 
-		o << "Sala: " << getSala() << endl;
-		o << "Docentes: " << getCod_utilizadores() << endl;
+		//o << "Sala: " << getSala() << endl;
+		//o << "Oradores: " << getOradores () << endl;
 	}
 #endif

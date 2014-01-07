@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-
+#include"Pessoa.h"
 #include"Bdados.h"
 #include"Aluno.h"
 using namespace std;    
