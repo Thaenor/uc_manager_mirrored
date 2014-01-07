@@ -18,7 +18,7 @@ private:
 
 public:
 	Reuniao();
-	Reuniao(int cod, string data_inicio, string data_fim, string des, int pri,Sala sala, vector<Pessoa>docente);
+	Reuniao(int cod, string data_inicio, string data_fim, string des, int pri,Sala sala, vector<Pessoa*>docente);
 	Reuniao(const Reuniao &r);
 	~Reuniao();
 
@@ -28,7 +28,7 @@ public:
 
 
 	void setSala(Sala sala);
-	void setDocente(vector<Pessoa> docente);
+	void setDocente(vector<Pessoa*> docente);
 
 	Reuniao& operator=(const Reuniao &r);
 	bool operator==(const Reuniao &r)const;
@@ -40,7 +40,7 @@ public:
 Reuniao::Reuniao() {
 }
 
-Reuniao::Reuniao((int cod, string data_inicio, string data_fim, string des, int pri, Sala sala, vector<Pessoa>docente) : Eventos(cod, data_inicio, data_fim, des, pri){
+Reuniao::Reuniao((int cod, string data_inicio, string data_fim, string des, int pri, Sala sala, vector<Pessoa*>docente) : Eventos(cod, data_inicio, data_fim, des, pri){
 	sala = sala;
 	docente = decente;
 }
@@ -61,7 +61,7 @@ Reuniao::Reuniao(const Reuniao & r){
 		sala = s;
 	}
 
-	void Reuniao::setDocente(vector<Pessoa> docente){
+	void Reuniao::setDocente(vector<Pessoa*> docente){
 		docente = docente;
 	}
 

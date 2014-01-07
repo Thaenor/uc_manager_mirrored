@@ -24,22 +24,22 @@ private:
 	int estado;
 	int Estado() const { return estado; }
 	void Estado(int val) { estado = val; }
-	vector<Sala> salas;
-	vector<Pessoa> monitores;
+	vector<Sala*> salas;
+	vector<Pessoa*> monitores;
 	int docentes_sala;
 	
 public:
 
 	Avaliacao();
 	~Avaliacao();
-	Avaliacao(int c, string t, string di, string df, int es,vector<Sala> sa, vector<Pessoa> moni, int doc);
+	Avaliacao(int c, string t, string di, string df, int es,vector<Sala*> sa, vector<Pessoa*> moni, int doc);
 
 	int Docentes_sala() const { return docentes_sala; }
 	void Docentes_sala(int val) { docentes_sala = val; }
-	vector<Pessoa> Monitores() const { return monitores; }
-	void Monitores(vector<Pessoa> val) { monitores = val; }
-	vector<Sala> Salas() const { return salas; }
-	void Salas(vector<Sala> val) { salas = val; }
+	vector<Pessoa*> Monitores() const { return monitores; }
+	void Monitores(vector<Pessoa*> val) { monitores = val; }
+	vector<Sala*> Salas() const { return salas; }
+	void Salas(vector<Sala*> val) { salas = val; }
 	std::string Data_fim() const { return data_fim; }
 	void Data_fim(std::string val) { data_fim = val; }
 	std::string Data_inicio() const { return data_inicio; }
@@ -62,7 +62,7 @@ Avaliacao::Avaliacao()
 
 Avaliacao::~Avaliacao(){}
 
-Avaliacao::Avaliacao(int c, string t, string di, string df, int es, vector<Sala> sa, vector<Pessoa> moni, int doc)
+Avaliacao::Avaliacao(int c, string t, string di, string df, int es, vector<Sala*> sa, vector<Pessoa*> moni, int doc)
 {
 	cod_avaliacao = c;
 	tipo = t;

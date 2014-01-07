@@ -19,20 +19,20 @@ private:
 
 public:
 	Workshops();
-	Workshops(int cod, string data_inicio, string data_fim, string des, int pri,Sala sala,vector<Pessoa>formador);
+	Workshops(int cod, string data_inicio, string data_fim, string des, int pri,Sala sala,vector<Pessoa*>formador);
 	Workshops(const Workshops &w);
 	~Workshops();
 
 	virtual Eventos* clone()const;
 	
 	Sala getSala()const;
-	vector<Pessoa>getFormador()const;
+	vector<Pessoa*>getFormador()const;
 
 
 	
 	void setSala(Sala sala);
 	
-	void setFormaodres(vector<Pessoa> formador){ formador = formador; }
+	void setFormaodres(vector<Pessoa*> formador){ formador = formador; }
 
 	Workshops& operator=(const Workshops &w);
 	bool operator==(const Workshops &w)const;
@@ -44,8 +44,8 @@ public:
 Workshops::Workshops() {
 }
 
-Workshops::Workshops(int cod, string data_inicio, string data_fim, string des, int pri, Sala sala, vector<Pessoa>formador) :Eventos(cod, data_inicio, data_fim, des, pri){
-	sala = s;
+Workshops::Workshops(int cod, string data_inicio, string data_fim, string des, int pri, Sala sala, vector<Pessoa*>formador) :Eventos(cod, data_inicio, data_fim, des, pri){
+	this->sala = sala;
 	formador = formador;
 }
 

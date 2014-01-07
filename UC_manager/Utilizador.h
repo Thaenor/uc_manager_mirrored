@@ -15,7 +15,6 @@ class Utilizador : public Pessoa
 	string  cod_utilizador;
 	char tipo; //1-docente, 2-regente,,
 	vector<Mensagem> msg;
-
 	public:
 	Utilizador();
 	Utilizador(string nome,string cod_utilizador, char tipo, vector<Mensagem>msg);
@@ -33,8 +32,16 @@ class Utilizador : public Pessoa
 
 	vector<Mensagem> getMsg()const;
 	void setMsg(vector<Mensagem> msg);
+
+	virtual Utilizador& operator=(const Utilizador &u);
 };
 
+Utilizador& Utilizador::operator=(const Utilizador &u)
+{
+	cod_utilizador = u.getCod_utilizador();
+	tipo = u.getTipo();
+	msg = u.getMsg();
+}
 Utilizador::Utilizador()
 {
 	cod_utilizador = "";

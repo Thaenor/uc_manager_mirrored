@@ -13,20 +13,20 @@ class Cursos :Eventos{
 
 private:
 	Sala sala;
-	vector<Pessoa> formadores;
+	vector<Pessoa*> formadores;
 
 public:
 	Cursos();
-	Cursos(int cod, string data_inicio, string data_fim, string des, int pri,Sala sala, vector<Pessoa>formad);
+	Cursos(int cod, string data_inicio, string data_fim, string des, int pri,Sala sala, vector<Pessoa*>formad);
 	Cursos(const Cursos &c);
 	~Cursos();
 
 	virtual Cursos* clone()const;
 	Sala getSala()const;
-	vector<Pessoa>getFormadores()const;
+	vector<Pessoa*>getFormadores()const;
 
 	void setSala(Sala sala);
-	void setFormadores(vector<Pessoa>formadores);
+	void setFormadores(vector<Pessoa*>formadores);
 
 	Cursos& operator=(const Cursos &c);
 	bool operator==(const Cursos &c)const;
@@ -37,7 +37,7 @@ public:
 };
 Cursos::Cursos() {
 }
-Cursos::Cursos(int cod, string data_inicio, string data_fim, string des, int pri, Sala sala, vector<Pessoa>formad) :Eventos(cod, data_inicio, data_fim, des, pri){
+Cursos::Cursos(int cod, string data_inicio, string data_fim, string des, int pri, Sala sala, vector<Pessoa*>formad) :Eventos(cod, data_inicio, data_fim, des, pri){
 	sala = sala;
 	formadores = formad;
 }
@@ -58,14 +58,14 @@ Cursos* Cursos::clone()const{
 void Cursos::setSala(Sala s){
 	sala = s;
 }
-void Cursos::setFormadores(vector<Pessoa> formd){
+void Cursos::setFormadores(vector<Pessoa*> formd){
 	formadores = formd;
 }
 
 Sala Cursos::getSala()const{
 	return sala;
 }
-vector<Pessoa> Cursos::getFormadores()const{
+vector<Pessoa*> Cursos::getFormadores()const{
 	return this->formadores;
 }
 

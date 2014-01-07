@@ -20,17 +20,17 @@ private:
 
 public:
 	Conferencia();
-	Conferencia(int cod, string data_inicio, string data_fim, string des, int pri,Sala s, vector<Pessoa>orad);
+	Conferencia(int cod, string data_inicio, string data_fim, string des, int pri,Sala s, vector<Pessoa*>orad);
 	Conferencia(const Conferencia &c);
 	~Conferencia();
 
 	virtual Conferencia* clone()const;
 
 	Sala getSala()const;
-	vector<Pessoa>getOradores()const;
+	vector<Pessoa*>getOradores()const;
 
 	void setSala(Sala sala);
-	void setOradores(vector<Pessoa> oradores);
+	void setOradores(vector<Pessoa*> oradores);
 
 	Conferencia& operator=(const Conferencia &c);
 	bool operator==(const Conferencia &c)const;
@@ -42,7 +42,7 @@ public:
 Conferencia::Conferencia() {
 }
 
-Conferencia::Conferencia(int cod, string data_inicio, string data_fim, string des, int pri, Sala s, vector<Pessoa>orad) :Eventos(cod,data_inicio,data_fim,des,pri){
+Conferencia::Conferencia(int cod, string data_inicio, string data_fim, string des, int pri, Sala s, vector<Pessoa*>orad) :Eventos(cod,data_inicio,data_fim,des,pri){
 	sala = s;
 	oradores = orad;
 }
@@ -63,14 +63,14 @@ Conferencia::Conferencia(const Conferencia & c){
 	void Conferencia::setSala(Sala s){
 		sala = s;
 	}
-	void Conferencia::setOradores(vector<Pessoa> orad){
+	void Conferencia::setOradores(vector<Pessoa*> orad){
 		oradores = orad; 
 	}
 	
 	Sala Conferencia::getSala()const{
 		return sala;
 	}
-	vector<Pessoa> Conferencia::getOradores()const{
+	vector<Pessoa*> Conferencia::getOradores()const{
 		return this->oradores; 
 	}
 

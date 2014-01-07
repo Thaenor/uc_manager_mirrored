@@ -12,22 +12,22 @@ class Visita_de_estudo : public Eventos{
 
 private:
 	string local;
-	vector<Pessoa>monitores;
+	vector<Pessoa*>monitores;
 
 
 
 public:
 	Visita_de_estudo();
-	Visita_de_estudo(int cod, string data_inicio, string data_fim, string des, int pri,string local, vector<Pessoa>monitores);
+	Visita_de_estudo(int cod, string data_inicio, string data_fim, string des, int pri,string local, vector<Pessoa*>monitores);
 	Visita_de_estudo(const Visita_de_estudo &v);
 	~Visita_de_estudo();
 
 	virtual Visita_de_estudo* clone()const;
 	string getLocal()const;
-	vector<Pessoa>getMonitores()const;
+	vector<Pessoa*>getMonitores()const;
 
 	void setLocal(string local);
-	void setMonitores(vector<Pessoa> monitores);
+	void setMonitores(vector<Pessoa*> monitores);
 
 	Visita_de_estudo& operator=(const Visita_de_estudo &v);
 	bool operator==(const Visita_de_estudo &v)const;
@@ -40,7 +40,7 @@ Visita_de_estudo::Visita_de_estudo() {
 	this->local = "";
 }
 
-Visita_de_estudo::Visita_de_estudo(int cod, string data_inicio, string data_fim, string des, int pri, string local, vector<Pessoa>monitores) :Eventos(cod, data_inicio, data_fim, des, pri){
+Visita_de_estudo::Visita_de_estudo(int cod, string data_inicio, string data_fim, string des, int pri, string local, vector<Pessoa*>monitores) :Eventos(cod, data_inicio, data_fim, des, pri){
 	local = local;
 	monitores = monitores;
 
@@ -62,7 +62,7 @@ Visita_de_estudo::Visita_de_estudo(const Visita_de_estudo & v){
 	void Visita_de_estudo::setLocal(string l){
 		local = l;
 	}
-	void Visita_de_estudo::setMonitores(vector<Pessoa>  monit){
+	void Visita_de_estudo::setMonitores(vector<Pessoa*>  monit){
 		monitores = monit;
 	}
 	
@@ -70,7 +70,7 @@ Visita_de_estudo::Visita_de_estudo(const Visita_de_estudo & v){
 	string Visita_de_estudo::getLocal()const{
 		return local;
 	}
-	vector<Pessoa> Visita_de_estudo::getMonitores()const{
+	vector<Pessoa*> Visita_de_estudo::getMonitores()const{
 		return monitores;
 
 	}
