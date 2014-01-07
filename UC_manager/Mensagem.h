@@ -82,9 +82,9 @@ void Mensagem::listar(){
 void Mensagem :: escreve(ostream &out) const
 {
 	out << "MENSAGEM" << endl
-		<< "De: " << emissor<< endl
-		<< "Assunto: " << anexo << endl
-		<< "Mensagem " << texto << endl;
+		<< "De: " << getEmissor<< endl
+		<< "Assunto: " << getAnexo << endl
+		<< "Mensagem " << getTexto() << endl;
 }
 
 ostream &operator << (ostream &out, const Mensagem &a)

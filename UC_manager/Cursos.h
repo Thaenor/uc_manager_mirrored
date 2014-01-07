@@ -7,6 +7,7 @@
 #include"Eventos.h"
 #include"Sala.h"
 #include"Pessoa.h"
+#include "Gestao.h"
 using namespace std;
 
 class Cursos :Eventos{
@@ -14,6 +15,7 @@ class Cursos :Eventos{
 private:
 	Sala sala;
 	vector<Pessoa*> formadores;
+	
 
 public:
 	Cursos();
@@ -31,7 +33,7 @@ public:
 	Cursos& operator=(const Cursos &c);
 	bool operator==(const Cursos &c)const;
 	bool operator>(const Cursos &c)const;
-	void escrever(ostream &o)const;
+	void escrever(ostream &o) const;
 
 
 };
@@ -91,8 +93,8 @@ ostream &operator<<(ostream & out, const Cursos &c){
 }
 
 void Cursos::escrever(ostream &o)const{
-
-	//o << "Sala: " << getSala() << endl;
-	//o << "Formadores: " << getFormadores () << endl;
+	Gestao<Pessoa> g;
+	o << "Sala: " << sala.getCod_sala() << endl;
+	o << "Formadores: " <<  g.ListarVectores(formadores) << endl;
 }
 #endif

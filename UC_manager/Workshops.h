@@ -98,8 +98,8 @@ Workshops::Workshops(const workshops & w){
 	}
 
 	void Workshops::escrever(ostream &o)const{
-
+		Gestao<Pessoa> g;
 		o << "Sala: " << getSala() << endl;
-		o << "Formador: " << getFormador() << endl;
+		o << "Formadores: " << g.ListarVectores(formadores) << endl;
 	}
 #endif

@@ -6,6 +6,7 @@ using namespace std;
 #include <iostream>
 #include <vector>
 #include "Pessoa.h"
+#include"Gestao.h"
 
 
 class Aluno : public Pessoa
@@ -101,7 +102,8 @@ ostream &operator<<(ostream & out, const Aluno &a){
 }
 
 void Aluno::escrever(ostream &o)const{
-	o << "Numero: " << getNome() << endl;
-	//o << "Notas: " << getNotas() << endl;
+	Gestao <Pessoa> g;
+	o << "Numero: " << getNumero() << endl;
+	//o << "Notas: " << vector(notas) << endl;
 }
 #endif

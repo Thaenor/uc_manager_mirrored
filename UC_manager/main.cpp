@@ -118,6 +118,10 @@ int main(void)
 		 cerr << "Erro: " << erro.getMessage () << endl; 
 	 } 
 	 
+	 void menu()
+	 {
+
+	 }
 	return 0; 
 	}
 

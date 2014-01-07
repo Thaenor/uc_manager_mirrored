@@ -13,17 +13,10 @@ class Avaliacao{
 
 private:
 	int cod_avaliacao;
-	
 	string tipo;
-	
-	string data_inicio
-		;
-	
+	string data_inicio;
 	string data_fim;
-
 	int estado;
-	int Estado() const { return estado; }
-	void Estado(int val) { estado = val; }
 	vector<Sala*> salas;
 	vector<Pessoa*> monitores;
 	int docentes_sala;
@@ -34,20 +27,22 @@ public:
 	~Avaliacao();
 	Avaliacao(int c, string t, string di, string df, int es,vector<Sala*> sa, vector<Pessoa*> moni, int doc);
 
-	int Docentes_sala() const { return docentes_sala; }
-	void Docentes_sala(int val) { docentes_sala = val; }
-	vector<Pessoa*> Monitores() const { return monitores; }
-	void Monitores(vector<Pessoa*> val) { monitores = val; }
-	vector<Sala*> Salas() const { return salas; }
-	void Salas(vector<Sala*> val) { salas = val; }
-	std::string Data_fim() const { return data_fim; }
-	void Data_fim(std::string val) { data_fim = val; }
-	std::string Data_inicio() const { return data_inicio; }
-	void Data_inicio(std::string val) { data_inicio = val; }
-	std::string Tipo() const { return tipo; }
-	void Tipo(std::string val) { tipo = val; }
-	int Cod_avaliacao() const { return cod_avaliacao; }
-	void Cod_avaliacao(int val) { cod_avaliacao = val; }
+	int getDocentes_sala() const { return docentes_sala; }
+	void setDocentes_sala(int val) { docentes_sala = val; }
+	vector<Pessoa*> getMonitores() const { return monitores; }
+	void setMonitores(vector<Pessoa*> val) { monitores = val; }
+	vector<Sala*> getSalas() const { return salas; }
+	void setSalas(vector<Sala*> val) { salas = val; }
+	std::string getData_fim() const { return data_fim; }
+	void setData_fim(std::string val) { data_fim = val; }
+	std::string getData_inicio() const { return data_inicio; }
+	void setData_inicio(std::string val) { data_inicio = val; }
+	std::string getTipo() const { return tipo; }
+	void setTipo(std::string val) { tipo = val; }
+	int getCod_avaliacao() const { return cod_avaliacao; }
+	void setCod_avaliacao(int val) { cod_avaliacao = val; }
+	int getEstado() const { return estado; }
+	void setEstado(int val) { estado = val; }
 
 	Avaliacao& operator=(const Avaliacao &c);
 	bool operator==(const Avaliacao &c)const;
@@ -113,7 +108,7 @@ ostream &operator<<(ostream & out, const Avaliacao &c){
 }
 void Avaliacao::escrever(ostream &o)const
 {
-	o << "Codigo de avaliacao:" << cod_avaliacao<<endl;
+	//o << "Codigo de avaliacao:" << cod_avaliacao<<endl;
 }
 
 #endif

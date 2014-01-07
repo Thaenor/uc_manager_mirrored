@@ -4,6 +4,7 @@
 #include"Eventos.h"
 #include"Pessoa.h"
 #include"Sala.h"
+#include"Gestao.h"
 
 #include <string>
 #include<list>
@@ -96,8 +97,8 @@ Conferencia::Conferencia(const Conferencia & c){
 	}
 
 	void Conferencia::escrever(ostream &o)const{
-
-		//o << "Sala: " << getSala() << endl;
-		//o << "Oradores: " << getOradores () << endl;
+		Gestao <Pessoa> g;
+		o << "Sala: " << sala.getCod_sala() << endl;
+		o << "Oradores: " << g.ListarVectores(oradores) << endl;
 	}
 #endif

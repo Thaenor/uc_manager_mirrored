@@ -8,6 +8,7 @@
 #include"Sala.h"
 #include"Pessoa.h"
 #include"Eventos.h"
+#include"Gestao.h"
 using namespace std;
 
 class Reuniao : public Eventos{
@@ -95,8 +96,7 @@ Reuniao::Reuniao(const Reuniao & r){
 	}
 
 	void Reuniao::escrever(ostream &o)const{
-
+		Gestao<Pessoa>g;
 		o << "Sala: " << getSala() << endl;
-		o << "Docentes: " << getDocente() << endl;
-	}
+		o << "Docentes: " << g.ListarVectores(docentes) << endl;
 #endif

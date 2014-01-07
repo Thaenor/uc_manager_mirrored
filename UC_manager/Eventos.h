@@ -151,9 +151,9 @@ ostream &operator<<(ostream & out, const Eventos &e){
 void Eventos::escrever(ostream &o)const{
 
 	o << "Evento: " << getDescricao() << endl;
-	o << "Data: " << getData() << endl;
-	o << "Unidade curricular: " << getCod_uc() << endl;
-	o << "Edição: " << getEdicao() << endl;
+	o << "Data Inicio: " << getDataInicio() << endl;
+	o << "Data Fim: " << getDataFim() << endl;
+	o << "Prioridade: " << getPrioridades() << endl;
 
 }
 
