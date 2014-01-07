@@ -5,26 +5,88 @@ using namespace std;
 class Pessoa
 {
 private:
-	string cod_utilizador;
     string nome;
-	string email;
-  //  Date data_de_nascimento;
 
 public:
 	Pessoa();
-    Pessoa(string _cod, string _nome, string _email);
+    Pessoa(string _nome);
     ~Pessoa();
     Pessoa(const Pessoa& other);
-    void escreve(ostream out) const;
-  //  void escreve(); 
 
+	virtual Pessoa* clone()const;
 
+	void setNome(string nome);
 
+	string getNome()const;
+
+	virtual void listar()const;
+	virtual Pessoa& operator=(const Pessoa &p);
+	virtual bool operator==(const Pessoa &p)const;
+	virtual bool operator>(const Pessoa &p)const;
+	const Pessoa& operator+=(const Pessoa &p);
+	void escrever(ostream &p)const;
 };
 
-Pessoa::Pessoa(string _cod, string _nome, string _email){
-	cod_utilizador = _cod;
-	nome = _nome;
-	email = _email;
+Pessoa::Pessoa(){
+	this->nome = "";
 }
+
+Pessoa::Pessoa(string n){
+	nome = n;
+
+}
+
+Pessoa::Pessoa(const Pessoa &p){
+	nome = p.getNome();
+}
+
+Pessoa:: ~Pessoa(){
+}
+
+Pessoa* Pessoa::clone()const{
+	return new Pessoa(*this);
+}
+
+void Pessoa::setNome(string n){
+	nome = n;
+}
+
+string Pessoa::getNome()const{
+	return nome;
+}
+
+
+Pessoa& Pessoa:: operator=(const Pessoa &p){
+
+	if (this != &p){
+		nome = p.nome;
+	}
+	return *this;
+}
+
+bool Pessoa:: operator==(const Pessoa &p)const{
+
+	if (nome == p.nome)
+		return true;
+	return false;
+}
+bool Pessoa:: operator>(const Pessoa &p)const{
+
+	if (nome > p.nome)
+		return true;
+	return false;
+}
+
+
+ostream &operator<<(ostream & out, const Pessoa &p){
+	p.escrever(out);
+	return out;
+}
+
+
+
+void Pessoa::escrever(ostream &o)const{
+	o << "Nome: " << getNome() << endl;
+}
+
 #endif

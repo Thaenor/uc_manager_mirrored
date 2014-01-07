@@ -2,53 +2,103 @@
 #define UC_Manager_Aluno_h
 
 using namespace std;
+#include <string>
+#include <iostream>
+#include <vector>
+#include "Pessoa.h"
 
-class Aluno
+
+class Aluno : public Pessoa
 {
-	private:
+private:
 	int numero;
-    string nome;
-	//string email;
-	//  Date data_de_nascimento;
+	vector<float> notas;
 
 public:
 	Aluno();
-	Aluno(int numero, string nome);
+	Aluno(string nome, int numero,vector <float> notas);
 	~Aluno();
     Aluno(const Aluno& other);
     void escreve(ostream &out) const;
-  //  void escreve(); 
+
+	virtual Aluno* clone()const;
+
+	void setNumero(int numero);
+	void setNotas(vector<float> notas);
+
+	int getNumero()const;
+	vector<float> getNotas()const;
+
+	virtual void listar()const;
+	virtual Aluno& operator=(const Aluno &a);
+	virtual bool operator==(const Aluno &a)const;
+	virtual bool operator>(const Aluno &a)const;
+	void escrever(ostream &a)const;
+	const Aluno& operator+=(const Aluno &a);
 };
+
 
 Aluno :: Aluno() 
 {
 	numero =0;
-	nome = " ";
 }
 
-Aluno :: Aluno(int num,string name)
+Aluno::Aluno(string nome, int num,vector <float>notas) :Pessoa(nome)
 {
 	numero = num;
-	nome = name;
 }
 
 Aluno:: ~Aluno(){}
 
-Aluno:: Aluno(const Aluno& other)
+Aluno:: Aluno(const Aluno& a)
 {
-	this->nome = other.nome;
-	this->numero = other.numero;
-	
+	this->numero = a.numero;
+	this->notas = a.notas;
 }
 
-void Aluno :: escreve(ostream &out) const
-{
-	out << nome  << "\n" << numero << endl;
+void Aluno::setNumero(int num){
+	numero = num;
+}
+void Aluno::setNotas(vector <float>not){
+	notas = not;
 }
 
-ostream &operator << (ostream &out, const Aluno &a)
-{
-	a.escreve(out);
+int Aluno::getNumero()const{
+	return numero;
+}
+vector<float> Aluno::getNotas()const{
+	return notas;
+}
+Aluno& Aluno:: operator=(const Aluno &a){
+
+	if (this != &a){
+		numero = a.numero;
+		notas = a.notas;
+	}
+	return *this;
+}
+
+bool Aluno:: operator==(const Aluno &a)const{
+
+	if (numero == a.numero && notas == a.notas)
+		return true;
+	return false;
+}
+bool Aluno:: operator>(const Aluno &a)const{
+
+	if (numero> a.numero && notas > a.notas)
+		return true;
+	return false;
+}
+
+
+ostream &operator<<(ostream & out, const Aluno &a){
+	a.escrever(out);
 	return out;
+}
+
+void Aluno::escrever(ostream &o)const{
+	o << "Numero: " << getNome() << endl;
+	//o << "Notas: " << getNotas() << endl;
 }
 #endif
