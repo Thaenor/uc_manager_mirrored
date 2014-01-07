@@ -8,38 +8,33 @@ class Eventos{
 
 private:
 	int codigo;
-	string data;
-	string hora;
+	string data_inicio;
+	string data_fim;
 	string descricao;
-	int cod_uc;
 	int prioridades;
-	int edicao;
 
 
 public:
 
 	Eventos();
-	Eventos(int cod, string d, string h, string des, int c, int pri, int ed);
+	Eventos(int cod, string data_inicio, string data_fim, string des, int pri);
 	Eventos(const Eventos &e);
 	~Eventos();
 	virtual Eventos* clone()const;
 
 	void setCodigo(int cod);
-	void setData(string d);
-	void setHora(string h);
+	void setDataFim(string data_fim);
+	void setDataInicio(string data_inicio);
 	void setDescricao(string des);
-	void setCod_uc(int c);
 	void setPrioridades(int pri);
-	void setEdicao(int ed);
 
 
 	int getCodigo()const;
-	string getData()const;
-	string getHora()const;
+	string getDataFim()const;
+	string getDataInicio()const;
 	string getDescricao()const;
-	int getCod_uc()const;
 	int getPrioridades()const;
-	int getEdicao()const;
+
 
 	virtual void listar()const;
 	virtual Eventos& operator=(const Eventos &e);
@@ -53,35 +48,26 @@ public:
 
 Eventos::Eventos(){
 	this->codigo = 0;
-	this->data = "";
-	this->hora = "";
+	this->data_inicio = "";
+	this->data_fim = "";
 	this->descricao = "";
-	this->cod_uc = 0;
 	this->prioridades = 0;
-	this->edicao = 0;
 }
 
-Eventos::Eventos(int cod, string d, string h, string des, int c, int pri, int ed){
+Eventos::Eventos(int cod, string data_inicio, string data_fim, string des, int pri){
 	codigo = cod;
-	data = d;
-	hora = h;
+	data_inicio = data_inicio;
+	data_fim = data_fim;
 	descricao = des;
-	cod_uc = c;
 	prioridades = pri;
-	edicao = ed;
-
 }
 
 Eventos::Eventos(const Eventos &e){
 	codigo = e.getCodigo();
-	data = e.getData();
-	hora = e.getHora();
+	data_inicio = e.getDataInicio();
+	data_fim = e.getDataFim();
 	descricao = e.getDescricao();
-	cod_uc = e.getCod_uc();
 	prioridades = e.getPrioridades();
-	edicao = e.getEdicao();
-
-
 }
 
 Eventos:: ~Eventos(){
@@ -95,68 +81,55 @@ void Eventos::setCodigo(int cod){
 	codigo = cod;
 }
 
-void Eventos::setData(string d){
-	data = d;
+void Eventos::setDataInicio(string data_inicio){
+	data_inicio = data_inicio;
 }
 
-void Eventos::setHora(string h){
-	hora = h;
+void Eventos::setDataFim(string data_fim){
+	data_fim = data_fim;
 }
 
 void Eventos::setDescricao(string des){
 	descricao = des;
 }
-void Eventos::setCod_uc(int c){
-	cod_uc = c;
-}
 void Eventos::setPrioridades(int pri){
 	prioridades = pri;
-}
-void Eventos::setEdicao(int ed){
-	edicao = ed;
 }
 
 int Eventos::getCodigo()const{
 	return codigo;
 }
 
-string Eventos::getData()const{
-	return data;
+string Eventos::getDataInicio()const{
+	return data_inicio;
 }
-string Eventos::getHora()const{
-	return hora;
+string Eventos::getDataFim()const{
+	return data_fim;
 }
 
 string Eventos::getDescricao()const{
 	return descricao;
 }
-int Eventos::getCod_uc()const{
-	return cod_uc;
-}
 int Eventos::getPrioridades()const{
 	return prioridades;
-}
-int Eventos::getEdicao()const{
-	return edicao;
 }
 
 Eventos& Eventos:: operator=(const Eventos &e){
 
 	if (this != &e){
 		codigo = e.codigo;
-		data = e.data;
-		hora = e.hora;
+		data_inicio = e.data_inicio;
+		data_fim = e.data_fim;
 		descricao = e.descricao;
-		cod_uc = e.cod_uc;
 		prioridades = e.prioridades;
-		edicao = e.edicao;
+		
 	}
 	return *this;
 }
 
 bool Eventos:: operator==(const Eventos &e)const{
 
-	if (codigo == e.codigo && data == e.data  && hora == e.hora && descricao == e.descricao && cod_uc == e.cod_uc && prioridades == e.prioridades && edicao == e.edicao)
+	if (codigo == e.codigo && data_inicio == e.data_inicio  && data_fim == e.data_fim && descricao == e.descricao && prioridades == e.prioridades)
 		return true;
 	return false;
 }
