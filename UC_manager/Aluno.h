@@ -29,7 +29,6 @@ public:
 	int getNumero()const;
 	vector<float> getNotas()const;
 
-	virtual void listar()const;
 	virtual Aluno& operator=(const Aluno &a);
 	virtual bool operator==(const Aluno &a)const;
 	virtual bool operator>(const Aluno &a)const;
@@ -46,6 +45,10 @@ Aluno :: Aluno()
 Aluno::Aluno(string nome, int num,vector <float>notas) :Pessoa(nome)
 {
 	numero = num;
+}
+
+Aluno* Aluno::clone()const{
+	return new Aluno(*this);
 }
 
 Aluno:: ~Aluno(){}

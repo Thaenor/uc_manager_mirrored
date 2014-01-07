@@ -19,7 +19,6 @@ public:
 
 	string getNome()const;
 
-	virtual void listar()const;
 	virtual Pessoa& operator=(const Pessoa &p);
 	virtual bool operator==(const Pessoa &p)const;
 	virtual bool operator>(const Pessoa &p)const;
@@ -56,13 +55,6 @@ string Pessoa::getNome()const{
 }
 
 
-Pessoa& Pessoa:: operator=(const Pessoa &p){
-
-	if (this != &p){
-		nome = p.getNome();
-	}
-	return *this;
-}
 
 bool Pessoa:: operator==(const Pessoa &p)const{
 
@@ -89,7 +81,7 @@ void Pessoa::escrever(ostream &o)const{
 	o << "Nome: " << getNome() << endl;
 }
 
-Pessoa& Pessoa:: operator=(const Pessoa&c){
+Pessoa& Pessoa:: operator=(const Pessoa &c){
 
 	if (this != &c){
 		nome = c.getNome();
