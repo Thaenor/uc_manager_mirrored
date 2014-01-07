@@ -26,7 +26,7 @@ private:
 	int ano,semestre;
 	string regente;
 	vector<Pessoa*> alunos;
-	vector<Pessoa*> docentes;
+	vector<Pessoa*> utilizador;
 	vector<Eventos*> eventos;
 	
     
@@ -36,7 +36,7 @@ public:
     ~UC();                          /* Destrutor */
     UC(const UC &other);            /* Construtor Copia */
     UC* clone() const;              /* construtor Clone */
-    void print(ostream out) const;
+    void print(ostream &out) const;
     void write();                   /*write UC name*/
     
     string getCod()const;            /*Gets & set*/
@@ -53,12 +53,12 @@ public:
 	void setSemestre(int val);
 	int getAno() const;
 	void setAno(int val);
-	vector<Pessoa> getDocentes() const;
-	void setDocentes(vector<Pessoa> docentes);
-	vector<Pessoa> getAlunos() const;
-	void setAlunos(vector<Pessoa> alunos);
-	vector<Eventos> geteventos() const;
-	void setEventos(vector<Eventos> eventos);
+	vector<Pessoa*> getUtilizador() const;
+	void setUtilizador(vector<Pessoa*> Utilizador);
+	vector<Pessoa*> getAlunos() const;
+	void setAlunos(vector<Pessoa*> alunos);
+	vector<Eventos*> geteventos() const;
+	void setEventos(vector<Eventos*> eventos);
 	string getRegente() const;
 	void setRegente(string regente);
 };
@@ -94,7 +94,7 @@ UC::UC(const UC &other){    /* Construtor Copia */
 	ano= other.getAno();
 	semestre= other.getSemestre();
 
-	docentes = other.getDocentes();
+	utilizador = other.getUtilizador();
 	alunos = other.getAlunos();
 	/// vector avaliação a implementar
 	regente = other.getRegente();
@@ -103,22 +103,22 @@ UC::UC(const UC &other){    /* Construtor Copia */
 
 	int UC::getSemestre() const { return semestre; }
 	int UC::getAno() const { return ano; }
-	vector<Pessoa> UC::getDocentes() const { return docentes; }
-	vector<Pessoa> UC::getAlunos() const { return alunos; }
-	vector<Eventos> UC::geteventos() const { return eventos; }
+	vector<Pessoa*> UC::getUtilizador() const { return utilizador; }
+	vector<Pessoa*> UC::getAlunos() const { return alunos; }
+	vector<Eventos*> UC::geteventos() const { return eventos; }
 	string UC::getRegente() const { return regente; }
 
-	void UC::setSemestre(int val) { semestre = val; }
-	void UC::setAno(int val) { ano = val; }
-	void UC::setDocentes(vector<Pessoa> docentes) { this->docentes = docentes; }
-	void UC::setAlunos(vector<Pessoa> alunos) { this->alunos = alunos; }
-	void UC::setEventos(vector<Eventos> eventos) { this->eventos = eventos; }
+	void UC::setSemestre(int semestre) { this->semestre = semestre; }
+	void UC::setAno(int ano) { this->ano = ano; }
+	void UC::setUtilizador(vector<Pessoa*> utilizador) { this->utilizador = utilizador; }
+	void UC::setAlunos(vector<Pessoa*> alunos) { this->alunos = alunos; }
+	void UC::setEventos(vector<Eventos*> eventos) { this->eventos = eventos; }
 	void UC::setRegente(string regente) { this->regente = regente; }
 
 
-void UC::print(ostream out) const
+void UC::print(ostream &out) const
 {
-    out << "UC ID = " << cod_uc << " name: " << regente << ". ";
+    out << "Codigo UC = " << cod_uc << " regente: " << regente << ". ";
 }
 
 void UC::write()
@@ -154,8 +154,8 @@ bool UC::operator > ( const UC &other) const{
 /****************************************...************************************************/
 
 /*  Overl0ad print operator - NORMAL  */
-ostream& operator<<(ostream& out, const UC* UC){
-    UC->print(out);
+ostream& operator<<(ostream& out, const UC& UC){
+    UC.print(out);
     return out;
 }
 
