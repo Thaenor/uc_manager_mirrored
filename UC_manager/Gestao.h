@@ -13,21 +13,25 @@ public:
 	Gestao(const Gestao &g);
 	~Gestao();
 	//metodo ordenar
-	ListarVectores(vector<T*> t);
+	void ListarVectores(vector<T*> t);
 };
 
 //construtor e destrutor
-Gestao::Gestao()
+template <class T>
+Gestao<T>::Gestao()
 {
 }
-Gestao::Gestao(const Gestao &g){
-
-}
-
-Gestao::~Gestao(){}
 
 template <class T>
-void ListarVectores(vector<T*> t){
+Gestao<T>::Gestao(const Gestao &g){
+
+}
+template <class T>
+Gestao<T>::~Gestao(){}
+
+template <class T>
+void Gestao<T> ::ListarVectores(vector<T*> t)
+{
 	vector<Pessoa*>::const_iterator it;
 
 	for (it = t.begin(); it != t.end(); it++) {
@@ -35,4 +39,5 @@ void ListarVectores(vector<T*> t){
 		cout << "Nome: " << **it << "\n";
 
 	}
+}
 #endif
