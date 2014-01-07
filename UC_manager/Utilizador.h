@@ -13,7 +13,7 @@ class Utilizador : public Pessoa
 {
 	private:
 	string  cod_utilizador;
-	char tipo; //1-docente, 2-regente
+	char tipo; //1-docente, 2-regente,,
 	vector<Mensagem> msg;
 
 	public:
