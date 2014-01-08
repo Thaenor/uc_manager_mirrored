@@ -10,9 +10,19 @@ using namespace std;
 /*******************************************************************************************/
 /*******************************************************************************************/
 
+void janelaLogin();
+void janelaBV_Regente();
+void janelaMensagens();
+void janelaGerirConteudo();
+void janelaDisciplina();
+void janelaCaixaEntrada();
+void janelaEnviarMensagem();
+void janelaVisualizacao();
+void janelaGerirEventos();
+
 int main(void)
 {
-
+	system( "color 79" );
 	cout << "Development test area!" << endl;
 
 
@@ -26,13 +36,17 @@ int main(void)
 		cout << "Exemplo de ligacao: a ligar ..." << endl;
 		BDados *ligacao = new BDados(utilizador, palavra, bd);
 		cout << "ligaçao estabelecida" << endl;
+		cout << endl << endl << "Prima enter para continuar" << endl;
+		char cont;
+		cin >> cont;
 		delete ligacao;
 
 	}
 	catch (SQLException erro) {
 		cerr << "Erro: " << erro.getMessage() << endl;
 	}
-
+	system("cls");
+	janelaLogin();
 	return 0;
 }
 	 
@@ -45,19 +59,28 @@ int main(void)
 		 cin  >> _user;
 		 cout << endl << "Password: ";
 		 cin >> _pw;
+
+		janelaBV_Regente();
 	 }
 
 	 void janelaBV_Regente() //janela boas vindas
 	 {
 		 system("cls");
-		 cout << "---Bem-vindo--" << endl << endl <<
-			 "1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Remover UC" << endl << "A sua opcao:" << endl;
+		 cout << "-----Bem-vindo-----" << endl << endl <<
+			 "1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Remover UC"<<endl <<"----------" 
+			 <<endl <<"m-Mensagens"<< endl << endl << "A sua opcao:" << endl;
 		 char opc;
 		 cin >> opc;
-		 if (opc > '3' || opc < '0')
-		 {
-			 janelaBV_Regente();
+		 switch (opc)
+		 {			 
+			 case '1':janelaGerirConteudo();
+			 case '2':
+			 case '3':
+			 case 'm':janelaMensagens();
+			default: janelaGerirConteudo();	 
+
 		 }
+
 	 }
 
 	 void janelaGerirConteudo()
@@ -65,18 +88,18 @@ int main(void)
 		 char opc;
 		 system("cls");
 		 cout << "-----Gerir Conteudos-----" << endl << endl << "0-Voltar" << endl <<
-			 "1-Gerir Eventos" << endl << "2-Gerir Docentes" << endl << "3-Gerir UC" << endl << "4-Gerir Alunos" << endl << "A susa opcao: " << endl;
-		 if (opc == '0')
-		 {
-			 janelaBV();
-		 }
-		 if (opc == '4' || opc == '2' || opc == '3')
-		 {
-			 // abre janela
-		 }
-		 if (opc == '1')
-		 {
-
+			 "1-Gerir Eventos" << endl << "2-Gerir Docentes" << endl << "3-Gerir UC" << endl << "4-Gerir Alunos" << endl << "A sua opcao: " << endl;
+		 cin >> opc;
+		 switch (opc)
+		 {	
+			 case '0':janelaBV_Regente();
+			 case '1':janelaGerirEventos();
+			 case '2'://janelaGerirDocentes()/ 
+				 ;
+			 case '3':
+			 case '4':
+			 case 'm':janelaMensagens();
+			 default: janelaGerirConteudo();
 		 }
 	 }
 
@@ -86,10 +109,19 @@ int main(void)
 			 system("cls");
 			 cout << "-----Gerir Eventos-----" << endl << endl << "0-Voltar" << endl <<
 				 "1-Alterar" << endl << "2-Remover" << endl << "3-Adicionar" << endl << "A sua opcao: " << endl;
-			 if (opc == '0')
-			 {
-				 janelaGerirConteudo();
-			 }
+			 
+			cin >> opc;
+		 switch (opc)
+		 {	
+			case '0':janelaGerirConteudo();
+			 case '1':janelaGerirEventos();
+			 case '2'://janelaGerirDocentes()/ 
+				 ;
+			 case '3':
+			 case '4':
+			 case 'm':janelaMensagens();
+			 default: janelaGerirEventos();
+		 }
 		}
 
 		 void janelaUC()
@@ -97,11 +129,18 @@ int main(void)
 			 char opc;
 			 system("cls");
 			 cout << "-----Janela UC-----" << endl << endl << "0-Voltar" << endl <<
-				 "Leccionadas" << endl << "Permissões/Histórico" << endl;
-			 if (opc == '0')
-			 {
-				 // volta atras
-			 }
+				 "1-Leccionadas" << endl << "2-Permissoes/Historico" << endl;
+			 cin >> opc;
+		 switch (opc)
+		 {	
+			case '0':janelaUC();
+			case '1':janelaDisciplina();
+			case '2':janelaVisualizacao();
+			case '3':;
+			case '4':;
+			case 'm':janelaMensagens();
+			 default: janelaUC();
+		 }
 		 }
 		 void janelaMensagens()
 		 {
@@ -109,10 +148,17 @@ int main(void)
 			 system("cls");
 			 cout << "-----Mensagens-----" << endl << endl << "0-Voltar" << endl <<
 				 "1-Caixa de entrada" << endl << "2-Escrever mensagem" << endl << "A sua opcao: " << endl;
-			 if (opc == '0')
-			 {
-				 janelaUC();
-			 }
+			 cin >> opc;
+			 switch (opc)
+			 {	
+				case '0':janelaUC();
+				case '1':janelaCaixaEntrada();
+				case '2':janelaEnviarMensagem();
+			 case '3':;
+			 case '4':;
+			 case 'm':janelaMensagens();
+			 default: janelaMensagens();
+		 }
 		 }
 		 
 		 void janelaDisciplina()
@@ -122,10 +168,17 @@ int main(void)
 			 cout << "-----Gestão Disciplina-----" << endl << endl << "0-Voltar" << endl <<
 				 "1-Marcar Avaliacao" << endl << "2-Publicar notas" << endl << "3-Visualizar notas" << endl << "4-Escrever sumarios" << endl  << "5-Visualizar Sumarios" 
 				 << endl << "6-Marcar aula extra" <<endl<< "7-Histórico"<<endl<< "A sua opcao: " << endl;
-			 if (opc == '0')
-			 {
-				 janelaUC();
-			 }
+			 cin >> opc;
+		 switch (opc)
+		 {	
+			case '0':;
+			 case '1':;
+			 case '2':;
+			 case '3':;
+			 case '4':;
+			 case 'm':;
+			 default: janelaUC();
+		 }
 		 }
 
 		 void janelaVisualizacao()
@@ -135,10 +188,17 @@ int main(void)
 			 system("cls");
 			 cout << "-----Visualizacao-----" << endl << endl << "0-Voltar" << endl <<
 				 "1-Visualizar notas" << endl << "2-Visualizar sumarios" << endl << "A sua opcao: " << endl;
-			 if (opc == '0')
-			 {
-				 janelaUC();
-			 }
+			 cin >> opc;
+		 switch (opc)
+		 {	
+			 case '0':janelaUC();
+			 case '1':;
+			 case '2':;
+			 case '3':;
+			 case '4':;
+			 case 'm':janelaMensagens();
+			 default: janelaVisualizacao();
+		 }
 		 }
 
 		 void janelaCaixaEntrada() // caixa de entrada de mensagens
