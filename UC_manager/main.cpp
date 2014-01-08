@@ -35,10 +35,10 @@ int main(void)
 	try {
 		cout << "Exemplo de ligacao: a ligar ..." << endl;
 		BDados *ligacao = new BDados(utilizador, palavra, bd);
-		cout << "ligaçao estabelecida" << endl;
-		cout << endl << endl << "Prima enter para continuar" << endl;
-		char cont;
-		cin >> cont;
+		cout << "ligacao estabelecida" << endl;
+		cout << endl << endl << "Prima enter para continuar" ;
+		system("PAUSE");
+		//cin >> cont;
 		delete ligacao;
 
 	}
@@ -153,7 +153,7 @@ int main(void)
 			 {	
 				case '0':janelaUC();
 				case '1':janelaCaixaEntrada();
-				case '2':janelaEnviarMensagem();
+				case '2':cout << "entrou"; janelaEnviarMensagem();
 			 case '3':;
 			 case '4':;
 			 case 'm':janelaMensagens();
@@ -171,7 +171,7 @@ int main(void)
 			 cin >> opc;
 		 switch (opc)
 		 {	
-			case '0':;
+			 case '0':;
 			 case '1':;
 			 case '2':;
 			 case '3':;
