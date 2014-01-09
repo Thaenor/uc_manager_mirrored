@@ -2,7 +2,7 @@
 #define Gestao_
 
 #include <fstream>
-#include "Aluno.h"
+#include "Utilizador.h"
 //#include <list>
 using namespace std;
 
@@ -18,10 +18,17 @@ public:
 	Gestao(const Gestao &g);
 	~Gestao();
 	//metodo ordenar
-	void ListarVectores(vector<Aluno> al);
+	static void ListarTeste(vector<Aluno> al);
 
 	//leitura Teste
-	vector<Aluno> LerTeste(string fich);
+	static vector<Aluno> LerTeste(string fich);
+	static double calcAlineas(vector<double> notas, vector<double> cota);
+
+	//leitra de docentes
+	static vector<Pessoa*> lerDocentes(string fich);
+	static void printDoc(vector<Pessoa*> vec);
+
+
 };
 
 //construtor e destrutor
@@ -34,13 +41,13 @@ Gestao::Gestao(const Gestao &g){
 }
 Gestao::~Gestao(){}
 
-void Gestao::ListarVectores(vector<Aluno> t)
+void Gestao::ListarTeste(vector<Aluno> t)
 {
-	vector<Aluno>::const_iterator it;
+	vector<Aluno>::iterator it;
 
 	for (it = t.begin(); it != t.end(); it++) {
 
-		cout << "Nome: " << *it << "\n";
+		cout << "Numero: " << it->getNumero() <<" Nota: " << (it->getNotas())[0] << "\n";
 
 	}
 }
@@ -50,11 +57,11 @@ vector<Aluno> Gestao::LerTeste(string fich)
 {
 	int inic = 0;
 	string linha;
-	fstream fx;
+	ifstream fx;
 
 	//dados importados
-	vector<float> cotacoes;
-	list<float> notas;
+	vector<double> cotacoes;
+	list<double> notas;
 	vector<int> numeros;
 	vector<Aluno> alunos;
 	int n_al;
@@ -92,7 +99,7 @@ vector<Aluno> Gestao::LerTeste(string fich)
 	while (!fx.eof())
 	{
 		getline(fx, linha, '\n');
-
+		inic = 0;
 		if (linha.size() > 0)
 		{
 			int	pos = linha.find(';', inic);
@@ -105,7 +112,7 @@ vector<Aluno> Gestao::LerTeste(string fich)
 				inic = pos;
 				pos = linha.find(';', inic);
 				string nota(linha.substr(inic, pos - inic));
-				float n = stof(nota);
+				double n = std::stod(nota);
 				notas.push_back(n);
 			}
 
@@ -114,31 +121,80 @@ vector<Aluno> Gestao::LerTeste(string fich)
 
 	for (vector<int> ::iterator it = numeros.begin(); it != numeros.end(); it++)
 	{
-		vector<float> n;
+		vector<double> n;
 
 		for (int i = 0; i < n_al; i++)
 		{
 			n.push_back(notas.front());
 			notas.pop_front();
 		}
-		vector<float> nota;
+		vector<double> nota;
 		nota.push_back(calcAlineas(n, cotacoes));
 
 		alunos.push_back(Aluno(*it, nota));
 	}
-	ListarVectores(alunos);
+	ListarTeste(alunos);
 	return alunos;
 }
 
-float calcAlineas(vector<float> notas, vector<float> cota)
+double Gestao::calcAlineas(vector<double> notas, vector<double> cota)
 {
-	float nota;
-	vector<float> ::iterator itn = notas.begin();
-	vector<float> ::iterator itc = cota.begin();
+	double nota=0; double a, b; double aux;
+	vector<double> ::iterator itn = notas.begin();
+	vector<double> ::iterator itc = cota.begin();
 	for (int i = 0; i < notas.size(); i++)
 	{
-		nota += (*(itn + i)) * (*(itc + i));
+		a = *(itn + i);
+		b = *(itc + i);
+		aux = a*b;
+		nota += aux;
 	}
 	return nota;
+}
+
+vector<Pessoa*> Gestao::lerDocentes(string fich)
+{
+	int inic = 0;
+	string linha;
+	ifstream fx;
+
+	fx.open(fich);
+	if (!fx)
+	{
+		cout << "Ficheiro de Alunos nao existe !" << endl;
+
+	}
+	
+	vector <Pessoa*> users;
+	while (!fx.eof())
+	{
+		inic = 0;
+		getline(fx, linha, '\n');
+		if (linha.size() > 0)
+		{
+			int	pos = linha.find(';', inic);
+			string sigla(linha.substr(inic, pos - inic));
+			pos++;
+			inic = pos;
+			string nome(linha.substr(inic, linha.size()));
+			Utilizador * p = new Utilizador(nome, sigla);
+			users.push_back(p);
+			
+
+		}
+	}
+	printDoc(users);
+	return users;
+}
+
+void Gestao::printDoc(vector<Pessoa*> t)
+{
+	vector<Pessoa*>::iterator it;
+
+	for (it = t.begin(); it != t.end(); it++) {
+
+		cout << "Sigla: " << (**it).getCod_utilizador() << " Nome: " << (**it).getNome()<< "\n";
+
+	}
 }
 #endif

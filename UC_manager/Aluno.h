@@ -13,12 +13,12 @@ class Aluno : public Pessoa
 {
 private:
 	int numero;
-	vector<float> notas;
+	vector<double> notas;
 
 public:
 	Aluno();
-	Aluno(string nome, int numero,vector <float> notas);
-	Aluno(int numero, vector <float> notas);
+	Aluno(string nome, int numero,vector <double> notas);
+	Aluno(int numero, vector <double> notas);
 	~Aluno();
     Aluno(const Aluno& other);
     void escreve(ostream &out) const;
@@ -26,10 +26,10 @@ public:
 	virtual Aluno* clone()const;
 
 	void setNumero(int numero);
-	void setNotas(vector<float> notas);
+	void setNotas(vector<double> notas);
 
 	int getNumero()const;
-	vector<float> getNotas()const;
+	vector<double> getNotas()const;
 
 	virtual Aluno& operator=(const Aluno &a);
 	virtual bool operator==(const Aluno &a)const;
@@ -44,13 +44,13 @@ Aluno :: Aluno()
 	numero =0;
 }
 
-Aluno::Aluno(string nome, int num,vector <float>_notas) :Pessoa(nome)
+Aluno::Aluno(string nome, int num,vector <double>_notas) :Pessoa(nome)
 {
 	numero = num;
 	notas = _notas;
 }
 
-Aluno::Aluno(int _numero, vector <float> _notas)
+Aluno::Aluno(int _numero, vector <double> _notas)
 {
 	numero = _numero;
 	notas = _notas;
@@ -71,14 +71,14 @@ Aluno:: Aluno(const Aluno& a)
 void Aluno::setNumero(int num){
 	numero = num;
 }
-void Aluno::setNotas(vector <float>not){
+void Aluno::setNotas(vector <double>not){
 	notas = not;
 }
 
 int Aluno::getNumero()const{
 	return numero;
 }
-vector<float> Aluno::getNotas()const{
+vector<double> Aluno::getNotas()const{
 	return notas;
 }
 Aluno& Aluno:: operator=(const Aluno &a){

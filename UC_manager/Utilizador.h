@@ -1,13 +1,11 @@
 #ifndef Utilizador_
 #define Utilizador_
 
-#include <string>
 #include <iostream>
 #include <vector>
 using namespace std;
 
 #include "Pessoa.h"
-#include"Mensagem.h"
 
 class Utilizador : public Pessoa
 {
@@ -18,9 +16,10 @@ class Utilizador : public Pessoa
 	public:
 	Utilizador();
 	Utilizador(string nome,string cod_utilizador, char tipo, vector<Mensagem>msg);
+	Utilizador(string nome, string sigla);
 	~ Utilizador();
 	Utilizador(const Utilizador &other);            /* Construtor Copia */
-	Utilizador* clone() const;						/* construtor Clone */
+	Utilizador* clone() ;						/* construtor Clone */
 
 	void escreve(ostream out) const;
 
@@ -41,6 +40,7 @@ Utilizador& Utilizador::operator=(const Utilizador &u)
 	cod_utilizador = u.getCod_utilizador();
 	tipo = u.getTipo();
 	msg = u.getMsg();
+	return *this;
 }
 Utilizador::Utilizador()
 {
@@ -56,11 +56,16 @@ Utilizador::Utilizador(string nome, string cod_utilizador, char tipo, vector<Men
 
 }
 
+Utilizador::Utilizador(string n, string c): Pessoa(n)
+{
+	cod_utilizador = c;
+}
+
 Utilizador::~Utilizador()         /* Destrutor */
 {
 }
 
-Utilizador* Utilizador::clone()const
+Utilizador* Utilizador::clone()
 {
 	return new Utilizador(*this);
 }
