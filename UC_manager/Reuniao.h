@@ -1,14 +1,14 @@
 #ifndef Reuniao_
 #define Reuniao_
 
-#include <string>
-#include<list>
-#include<vector>
-
-#include"Sala.h"
-#include"Pessoa.h"
-#include"Eventos.h"
-#include"Gestao.h"
+//#include <string>
+//#include<list>
+//#include<vector>
+//
+//#include"Sala.h"
+//#include"Pessoa.h"
+//#include"Eventos.h"
+//#include"Gestao.h"
 using namespace std;
 
 class Reuniao : public Eventos{

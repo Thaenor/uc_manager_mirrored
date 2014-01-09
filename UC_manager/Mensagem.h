@@ -1,7 +1,6 @@
 //
 //  Mensagem.h
 //  Afonso Reis 
-#include <string>
 using namespace std;
 
 class Mensagem

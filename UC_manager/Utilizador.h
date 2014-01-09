@@ -1,11 +1,11 @@
 #ifndef Utilizador_
 #define Utilizador_
 
-#include <iostream>
+//#include <iostream>
 #include <vector>
 using namespace std;
 
-#include "Pessoa.h"
+//#include "Pessoa.h"
 
 class Utilizador : public Pessoa
 {

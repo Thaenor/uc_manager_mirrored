@@ -2,8 +2,6 @@
 #define Gestao_
 
 #include <fstream>
-#include "Utilizador.h"
-#include "Aluno.h"
 #include "UC.h"
 //#include <list>
 using namespace std;

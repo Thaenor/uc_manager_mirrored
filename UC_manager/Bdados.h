@@ -1,6 +1,6 @@
 #ifndef BDados_ 
 #define BDados_  
-#include <iostream> 
+//#include <iostream> 
 #include <iomanip> 
 #include <occi.h>
 #include "Aluno.h"
@@ -9,7 +9,7 @@
 //#include <list>
 //#include <vector>
 using namespace oracle::occi;
-
+//using namespace std;
 
 class BDados {  
 private:  
@@ -22,10 +22,9 @@ public:
 	~ BDados();   
 	list <Aluno> lerAlunos(); // Método para ler uma lista de clientes
 	vector<Mensagem> CarregaMsg();
-	Utilizador* login(string _usr, string _pw);
-
-
+	Utilizador login(string _usr, string _pw);
 };
+
 	BDados::BDados(string user, string passwd, string db) 
 	{     
 		env = Environment::createEnvironment (Environment::DEFAULT);     
@@ -39,7 +38,7 @@ public:
 	} 
 
 	///
-	 Utilizador* login(string _usr, string _pw)
+	 Utilizador BDados::login(string _usr, string _pw)
 	{
 		Connection *ligacao;
 		Statement *instrucao;
@@ -53,7 +52,7 @@ public:
 		string tipo = rset->getString(3);
 		string pass = rset->getString(4);
 		vector<Mensagem> msg;
-		Utilizador * uti = new Utilizador(nome, cod, tipo[0], msg);
+		Utilizador  uti(nome, cod, tipo[0], msg);
 		return uti;
 	}
 

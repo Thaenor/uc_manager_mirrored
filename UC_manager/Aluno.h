@@ -2,9 +2,9 @@
 #define UC_Manager_Aluno_h
 
 using namespace std;
-#include <iostream>
-#include <vector>
-//#include "Pessoa.h"
+//#include <iostream>
+//#include <vector>
+#include "Pessoa.h"
 //#include"Gestao.h"
 
 

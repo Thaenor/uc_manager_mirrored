@@ -1,11 +1,10 @@
 #include <iostream>
-#include <string>
 #include <stdlib.h>
 #include <stdio.h>
-#include"Pessoa.h"
 #include"Bdados.h"
-#include"Aluno.h"
 #include "Gestao.h"
+#include <string>
+
 using namespace std;    
 /*******************************************************************************************/
 /*******************************************************************************************/
@@ -61,10 +60,11 @@ int main(void)
 			 //cout << "ligacao estabelecida" << endl;
 			// cout << endl << endl << "Prima enter para continuar";
 			 //system("PAUSE");
-			 Utilizador* ut = ligacao->login(_user, _pw);
-			 if (ut != NULL)
+			 Utilizador ut = ligacao->login(_user, _pw);
+			 string null = "";
+			 if (strcmp(&(ut.getCod_utilizador())[0], &null[0]))
 			 {
-				 if (ut->getTipo() == 'D')
+				 if (ut.getTipo() == 'D')
 				 {
 					 janelaUC();
 				 }
