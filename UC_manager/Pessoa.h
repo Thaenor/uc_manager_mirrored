@@ -1,6 +1,7 @@
 #ifndef UC_Manager_Pessoa_h
 #define UC_Manager_Pessoa_h
 
+
 using namespace std;
 class Pessoa
 {
@@ -13,11 +14,12 @@ public:
     ~Pessoa();
     Pessoa(const Pessoa& other);
 
-	virtual Pessoa* clone()const;
+	virtual Pessoa* clone();
 
 	void setNome(string nome);
 
-	string getNome()const;
+	virtual string getNome()const;
+	virtual string getCod_utilizador()const;
 
 	virtual Pessoa& operator=(const Pessoa &p);
 	virtual bool operator==(const Pessoa &p)const;
@@ -42,7 +44,7 @@ Pessoa::Pessoa(const Pessoa &p){
 Pessoa:: ~Pessoa(){
 }
 
-Pessoa* Pessoa::clone()const{
+Pessoa* Pessoa::clone(){
 	return new Pessoa(*this);
 }
 
@@ -54,6 +56,10 @@ string Pessoa::getNome()const{
 	return nome;
 }
 
+string Pessoa::getCod_utilizador()const
+{	
+	return "";
+}
 
 
 bool Pessoa:: operator==(const Pessoa &p)const{

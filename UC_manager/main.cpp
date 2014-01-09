@@ -5,6 +5,7 @@
 #include"Pessoa.h"
 #include"Bdados.h"
 #include"Aluno.h"
+#include "Gestao.h"
 using namespace std;    
 /*******************************************************************************************/
 /*******************************************************************************************/
@@ -28,7 +29,9 @@ int main(void)
 
 	cout << endl;
 	/////////////////////////BDADODS
-
+	cout << "*****"<<endl;
+	Gestao ::lerDocentes("C:/Users/d4rk_sou1/Desktop/uc_manager/UC_manager/exemplo_Docentes.csv");
+	cin.get();
 	string utilizador = "B6_5";
 	string palavra = "xico";
 	string bd = "193.136.62.27:1521/pdborcl"; //ou em vez de ip, gandalf   
