@@ -66,7 +66,15 @@ int main(void)
 		 cin  >> _user;
 		 cout << endl << "Password: ";
 		 cin >> _pw;
-
+// 		 if (chamametodoVerificar() == true)
+// 		 {
+// 			 janelaBV_Regente();
+// 		 }
+// 		 else{
+// 			 cout << "Login incorrecto" << endl;
+// 			 system("PAUSE");
+// 			 janelaLogin();
+// 		 }
 		janelaBV_Regente();
 	 }
 
