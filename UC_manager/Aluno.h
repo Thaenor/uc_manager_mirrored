@@ -110,7 +110,6 @@ ostream &operator<<(ostream & out, const Aluno &a){
 }
 
 void Aluno::escrever(ostream &o)const{
-	Gestao <Pessoa> g;
 	o << "Numero: " << getNumero() << endl;
 	//o << "Notas: " << vector(notas) << endl;
 }
