@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include "Utilizador.h"
+#include "Aluno.h"
 #include "UC.h"
 //#include <list>
 using namespace std;
@@ -28,9 +29,13 @@ public:
 	vector<Aluno> LerTeste(string fich);
 	double calcAlineas(vector<double> notas, vector<double> cota);
 
-	//leitra de docentes
+	//leitura de docentes
 	vector<Pessoa*> lerDocentes(string fich);
 	void printDoc(vector<Pessoa*> vec);
+
+	//leitura Alunos
+	static vector<Pessoa*> Gestao::LerAlunos(string fich);
+	static void printAlu(vector<Pessoa*> p);
 
 
 
@@ -82,7 +87,7 @@ vector<Aluno> Gestao::LerTeste(string fich)
 	fx.open(fich);
 	if (!fx)
 	{
-		cout << "Ficheiro de Alunos nao existe !" << endl;
+		cout << "Ficheiro de Teste nao existe !" << endl;
 
 	}
 
@@ -172,7 +177,7 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 	fx.open(fich);
 	if (!fx)
 	{
-		cout << "Ficheiro de Alunos nao existe !" << endl;
+		cout << "Ficheiro de Docentes nao existe !" << endl;
 
 	}
 	
@@ -201,12 +206,55 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 void Gestao::printDoc(vector<Pessoa*> t)
 {
 	vector<Pessoa*>::iterator it;
+	if (strcmp(&(typeid(**it).name())[0], &("class Utilizador")[0]) == 0){
+		for (it = t.begin(); it != t.end(); it++) {
 
-	for (it = t.begin(); it != t.end(); it++) {
+			cout << "Sigla: " << (**it).getCod_utilizador() << " Nome: " << (**it).getNome() << "\n";
+		}
+	}
+	if (strcmp(&(typeid(**it).name())[0], &("class Aluno")[0]) == 0)
+	{
+		for (it = t.begin(); it != t.end(); it++) {
 
-		cout << "Sigla: " << (**it).getCod_utilizador() << " Nome: " << (**it).getNome()<< "\n";
+			cout << "Numero: " << (**it).getNumero() << " Nome: " << (**it).getNome() << "\n";
+		}
+	}
+}
+
+vector<Pessoa*> Gestao::LerAlunos(string fich)
+{
+	int inic = 0;
+	string linha;
+	ifstream fx;
+
+	fx.open(fich);
+	if (!fx)
+	{
+		cout << "Ficheiro de Alunos nao existe !" << endl;
 
 	}
+
+	vector <Pessoa*> users;
+	while (!fx.eof())
+	{
+		inic = 0;
+		getline(fx, linha, '\n');
+		if (linha.size() > 0)
+		{
+			int	pos = linha.find(';', inic);
+			string numero(linha.substr(inic, pos - inic));
+			int num = stoi(numero);
+			pos++;
+			inic = pos;
+			string nome(linha.substr(inic, linha.size()));
+			Aluno * p = new Aluno(nome, num);
+			users.push_back(p);
+
+
+		}
+	}
+	printAlu(users);
+	return users;
 }
 
 #endif

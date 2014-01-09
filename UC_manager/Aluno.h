@@ -17,6 +17,7 @@ private:
 public:
 	Aluno();
 	Aluno(string nome, int numero,vector <double> notas);
+	Aluno(string nome,int numero);
 	Aluno(int numero, vector <double> notas);
 	~Aluno();
     Aluno(const Aluno& other);
@@ -47,6 +48,11 @@ Aluno::Aluno(string nome, int num,vector <double>_notas) :Pessoa(nome)
 {
 	numero = num;
 	notas = _notas;
+}
+
+Aluno::Aluno(string nome, int num) :Pessoa(nome)
+{
+	numero = num;
 }
 
 Aluno::Aluno(int _numero, vector <double> _notas)

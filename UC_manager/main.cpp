@@ -36,6 +36,8 @@ int main(void)
 	UC uc
 	Gestao g(user,uc) ;
 	g.lerDocentes("C:/Users/d4rk_sou1/Desktop/uc_manager/UC_manager/exemplo_Docentes.csv");*/
+
+	Gestao::LerAlunos("C:/Users/d4rk_sou1/Desktop/uc_manager/UC_manager/exemplo_Alunos.csv");
 	cin.get();
 	system("cls");
 	janelaLogin();
