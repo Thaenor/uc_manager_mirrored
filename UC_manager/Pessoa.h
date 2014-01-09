@@ -20,6 +20,7 @@ public:
 
 	virtual string getNome()const;
 	virtual string getCod_utilizador()const;
+	virtual int getNumero()const;
 
 	virtual Pessoa& operator=(const Pessoa &p);
 	virtual bool operator==(const Pessoa &p)const;
@@ -60,6 +61,11 @@ string Pessoa::getCod_utilizador()const
 {	
 	return "";
 }
+int Pessoa::getNumero()const
+{
+	return 0;
+}
+
 
 
 bool Pessoa:: operator==(const Pessoa &p)const{
