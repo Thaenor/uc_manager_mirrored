@@ -6,7 +6,7 @@ using namespace std;
 #include <iostream>
 #include <vector>
 #include "Pessoa.h"
-#include"Gestao.h"
+//#include"Gestao.h"
 
 
 class Aluno : public Pessoa
@@ -18,6 +18,7 @@ private:
 public:
 	Aluno();
 	Aluno(string nome, int numero,vector <float> notas);
+	Aluno(int numero, vector <float> notas);
 	~Aluno();
     Aluno(const Aluno& other);
     void escreve(ostream &out) const;
@@ -43,9 +44,16 @@ Aluno :: Aluno()
 	numero =0;
 }
 
-Aluno::Aluno(string nome, int num,vector <float>notas) :Pessoa(nome)
+Aluno::Aluno(string nome, int num,vector <float>_notas) :Pessoa(nome)
 {
 	numero = num;
+	notas = _notas;
+}
+
+Aluno::Aluno(int _numero, vector <float> _notas)
+{
+	numero = _numero;
+	notas = _notas;
 }
 
 Aluno* Aluno::clone()const{
