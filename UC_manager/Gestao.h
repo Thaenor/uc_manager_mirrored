@@ -33,6 +33,7 @@ public:
 	void printDoc(vector<Pessoa*> vec);
 
 
+
 };
 
 //construtor e destrutor
@@ -207,4 +208,5 @@ void Gestao::printDoc(vector<Pessoa*> t)
 
 	}
 }
+
 #endif

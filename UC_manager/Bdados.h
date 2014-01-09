@@ -5,9 +5,9 @@
 #include <occi.h>
 #include "Aluno.h"
 #include "Mensagem.h"
-//#include "Utilizador.h"
-#include <list>
-#include <vector>
+#include "Utilizador.h"
+//#include <list>
+//#include <vector>
 using namespace oracle::occi;
 
 
@@ -15,14 +15,14 @@ class BDados {
 private:  
 	Environment *env;  
 	Connection *ligacao;  
-		   Statement *instrucao;   
+	Statement *instrucao;   
 public:    
 
 	BDados(string user, string passwd, string db);  
 	~ BDados();   
 	list <Aluno> lerAlunos(); // Método para ler uma lista de clientes
 	vector<Mensagem> CarregaMsg();
-	//Utilizador getDocente(string sigla);
+	static Utilizador* login(string _usr, string _pw);
 
 
 };
@@ -37,6 +37,26 @@ public:
 		env->terminateConnection (ligacao);  
 		Environment::terminateEnvironment (env); 
 	} 
+
+	///
+	static Utilizador* login(string _usr, string _pw)
+	{
+		Connection *ligacao;
+		Statement *instrucao;
+		
+		string state = "SELECT * FROM UTILIZADOR WHERE COD_UTILIZADOR=" + _usr + " AND PW=" + _pw;
+		instrucao = ligacao->createStatement(state);
+			
+		ResultSet *rset = instrucao->executeQuery ();   
+		string cod = rset->getString(1);
+		string nome = rset->getString(2);
+		string tipo = rset->getString(3);
+		string pass = rset->getString(4);
+		vector<Mensagem> msg;
+		Utilizador * uti = new Utilizador(nome, cod, tipo[0], msg);
+		return uti;
+	}
+
 	//list <Aluno> BDados::lerAlunos() 
 	//{ 
 	//	list <Aluno> ret; 

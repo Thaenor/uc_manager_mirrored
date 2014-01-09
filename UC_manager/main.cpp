@@ -21,6 +21,7 @@ void janelaEnviarMensagem();
 void janelaVisualizacao();
 void janelaGerirEventos();
 
+
 int main(void)
 {
 	system( "color 79" );
@@ -36,27 +37,11 @@ int main(void)
 	Gestao g(user,uc) ;
 	g.lerDocentes("C:/Users/d4rk_sou1/Desktop/uc_manager/UC_manager/exemplo_Docentes.csv");*/
 	cin.get();
-	string utilizador = "B6_5";
-	string palavra = "xico";
-	string bd = "193.136.62.27:1521/pdborcl"; //ou em vez de ip, gandalf   
-	try {
-		cout << "Exemplo de ligacao: a ligar ..." << endl;
-		BDados *ligacao = new BDados(utilizador, palavra, bd);
-		cout << "ligacao estabelecida" << endl;
-		cout << endl << endl << "Prima enter para continuar" ;
-		system("PAUSE");
-		//cin >> cont;
-		delete ligacao;
-
-	}
-	catch (SQLException erro) {
-		cerr << "Erro: " << erro.getMessage() << endl;
-	}
 	system("cls");
 	janelaLogin();
 	return 0;
 }
-	 
+
 	 void janelaLogin()
 	 {
 		 cout << "######## UC Manager ########" << endl << endl;
@@ -66,7 +51,17 @@ int main(void)
 		 cin  >> _user;
 		 cout << endl << "Password: ";
 		 cin >> _pw;
-// 		 if (chamametodoVerificar() == true)
+
+		 string utilizador = "B6_5";
+		 string palavra = "xico";
+		 string bd = "193.136.62.27:1521/pdborcl"; //ou em vez de ip, gandalf   
+		 try {
+			 cout << "Exemplo de ligacao: a ligar ..." << endl;
+			 BDados *ligacao = new BDados(utilizador, palavra, bd);
+			 cout << "ligacao estabelecida" << endl;
+			 cout << endl << endl << "Prima enter para continuar";
+			 system("PAUSE");
+// 			 if (bd.login(_user,_pw)==true)
 // 		 {
 // 			 janelaBV_Regente();
 // 		 }
@@ -76,6 +71,14 @@ int main(void)
 // 			 janelaLogin();
 // 		 }
 		janelaBV_Regente();
+			 delete ligacao;
+
+		 }
+		 catch (SQLException erro) {
+			 cerr << "Erro: " << erro.getMessage() << endl;
+		 }
+
+		 
 	 }
 
 	 void janelaBV_Regente() //janela boas vindas
