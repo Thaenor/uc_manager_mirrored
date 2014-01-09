@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include "Utilizador.h"
+#include "UC.h"
 //#include <list>
 using namespace std;
 
@@ -10,23 +11,26 @@ class Gestao
 {
 private:
 
+	Utilizador user;
+	UC uc;
 	void destroy();
 
 public:
 	//Construtor e destrutor
 	Gestao();
+	Gestao(Utilizador user, UC uc);
 	Gestao(const Gestao &g);
 	~Gestao();
 	//metodo ordenar
-	static void ListarTeste(vector<Aluno> al);
+	void ListarTeste(vector<Aluno> al);
 
 	//leitura Teste
-	static vector<Aluno> LerTeste(string fich);
-	static double calcAlineas(vector<double> notas, vector<double> cota);
+	vector<Aluno> LerTeste(string fich);
+	double calcAlineas(vector<double> notas, vector<double> cota);
 
 	//leitra de docentes
-	static vector<Pessoa*> lerDocentes(string fich);
-	static void printDoc(vector<Pessoa*> vec);
+	vector<Pessoa*> lerDocentes(string fich);
+	void printDoc(vector<Pessoa*> vec);
 
 
 };
@@ -34,6 +38,12 @@ public:
 //construtor e destrutor
 Gestao::Gestao()
 {
+}
+
+Gestao::Gestao(Utilizador _user, UC _uc)
+{	
+	user = _user;
+	uc = _uc;
 }
 
 Gestao::Gestao(const Gestao &g){

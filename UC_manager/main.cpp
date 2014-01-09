@@ -29,8 +29,12 @@ int main(void)
 
 	cout << endl;
 	/////////////////////////BDADODS
-	cout << "*****"<<endl;
-	Gestao ::lerDocentes("C:/Users/d4rk_sou1/Desktop/uc_manager/UC_manager/exemplo_Docentes.csv");
+	/*
+	//depois do login abrir a "ligacao" a gestao
+	Utilizador user
+	UC uc
+	Gestao g(user,uc) ;
+	g.lerDocentes("C:/Users/d4rk_sou1/Desktop/uc_manager/UC_manager/exemplo_Docentes.csv");*/
 	cin.get();
 	string utilizador = "B6_5";
 	string palavra = "xico";

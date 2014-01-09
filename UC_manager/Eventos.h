@@ -1,6 +1,5 @@
 #ifndef Eventos_
 #define Eventos_
-#include<string>
 #include<iostream>
 using namespace std;
 
@@ -36,7 +35,7 @@ public:
 	int getPrioridades()const;
 
 
-	virtual void listar()const;
+	//virtual void listar()const;
 	virtual Eventos& operator=(const Eventos &e);
 	virtual bool operator==(const Eventos &e)const;
 	virtual bool operator>(const Eventos &e)const;

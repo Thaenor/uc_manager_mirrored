@@ -8,45 +8,40 @@
 #ifndef UC_
 #define UC_
 
-#include <vector>
-#include <string>
-#include <iostream>
-
+#include "Eventos.h"
 using namespace std;
 
-#include "Pessoa.h";
-#include "Eventos.h";
 
 
 class UC
 {
 private:
-    string cod_uc;
-    int edicao;
-	int ano,semestre;
+	string cod_uc;
+	int edicao;
+	int ano, semestre;
 	string regente;
 	vector<Pessoa*> alunos;
 	vector<Pessoa*> utilizador;
 	vector<Eventos*> eventos;
-	
-    
+
+
 public:
-    UC();                           /* Construtor por Defeito */
-    UC(string ID, string name, int ano, int semestre);     /* Construtor com parametros */
-    ~UC();                          /* Destrutor */
-    UC(const UC &other);            /* Construtor Copia */
-    UC* clone() const;              /* construtor Clone */
-    void print(ostream &out) const;
-    void write();                   /*write UC name*/
-    
-    string getCod()const;            /*Gets & set*/
-    void setCod(int ID);
-    string getRegente()const;
-    void setRegente(string regente);
-    
-                                    /*      Operator Overl0ad!    */
-    //virtual UC & operator = (const UC &l);
-	bool operator > ( const UC &other) const;
+	UC();                           /* Construtor por Defeito */
+	UC(string ID, string name, int ano, int semestre);     /* Construtor com parametros */
+	~UC();                          /* Destrutor */
+	UC(const UC &other);            /* Construtor Copia */
+	UC* clone() const;              /* construtor Clone */
+	void print(ostream &out) const;
+	void write();                   /*write UC name*/
+
+	//string getCod()const;            /*Gets & set*/
+	void setCod(int ID);
+	string getRegente()const;
+	void setRegente(string regente);
+
+	/*      Operator Overl0ad!    */
+	//virtual UC & operator = (const UC &l);
+	bool operator > (const UC &other) const;
 	bool operator==(const UC& other) const;
 
 	int getSemestre() const;
@@ -59,47 +54,47 @@ public:
 	void setAlunos(vector<Pessoa*> alunos);
 	vector<Eventos*> geteventos() const;
 	void setEventos(vector<Eventos*> eventos);
-	string getRegente() const;
-	void setRegente(string regente);
-};
+	UC &operator = (const UC &other);
 
-UC::UC()                            /* Construtor por Defeito */
-{
-    cod_uc = "";
-    regente = "default";
-}
+	};
 
-UC::UC(string cod_uc, string regente, int ano, int semestre)         /* Construtor com parametros */
-{
-    this->cod_uc = cod_uc;
-    this->regente = regente;
-	this->ano = ano;
-	this->semestre = semestre;
+	UC::UC()                            /* Construtor por Defeito */
+	{
+		cod_uc = "";
+		regente = "default";
+	}
 
-}
+	UC::UC(string cod_uc, string regente, int ano, int semestre)         /* Construtor com parametros */
+	{
+		this->cod_uc = cod_uc;
+		this->regente = regente;
+		this->ano = ano;
+		this->semestre = semestre;
 
-UC::~UC()         /* Destrutor */
-{
-}
+	}
 
-UC* UC::clone()const  /* construtor Clone */
-{
-    return new UC(*this);
-}
+	UC::~UC()         /* Destrutor */
+	{
+	}
+
+	UC* UC::clone()const  /* construtor Clone */
+	{
+		return new UC(*this);
+	}
 
 
-UC::UC(const UC &other){    /* Construtor Copia */
-    cod_uc=other.getCod();
-    regente=other.getRegente();
-	ano= other.getAno();
-	semestre= other.getSemestre();
+	UC::UC(const UC &other){    /* Construtor Copia */
+		//cod_uc = other.getCod();
+		regente = other.getRegente();
+		ano = other.getAno();
+		semestre = other.getSemestre();
 
-	utilizador = other.getUtilizador();
-	alunos = other.getAlunos();
-	/// vector avaliação a implementar
-	regente = other.getRegente();
+		utilizador = other.getUtilizador();
+		alunos = other.getAlunos();
+		/// vector avaliação a implementar
+		regente = other.getRegente();
 
-}
+	}
 
 	int UC::getSemestre() const { return semestre; }
 	int UC::getAno() const { return ano; }
@@ -116,47 +111,47 @@ UC::UC(const UC &other){    /* Construtor Copia */
 	void UC::setRegente(string regente) { this->regente = regente; }
 
 
-void UC::print(ostream &out) const
-{
-    out << "Codigo UC = " << cod_uc << " regente: " << regente << ". ";
-}
-
-void UC::write()
-{
-    cout << "Unidade curricular: " << regente;
-}
-
-/*******************************************************************************************/
-/*      Operator Overl0ad!    */
-
-/* Operator == overload - Comparison */
-bool UC::operator==(const UC& other) const
-{
-	if (cod_uc == other.cod_uc)
-		return true;
-	else
-		return false;
-}
-
-UC & UC::operator = (const UC &other){
-	if(&other!=this){
-		cod_uc=other.cod_uc;
+	void UC::print(ostream &out) const
+	{
+		out << "Codigo UC = " << cod_uc << " regente: " << regente << ". ";
 	}
-	return *this;
-}
 
-/* Operator > overload - greater than */
-bool UC::operator > ( const UC &other) const{
-	return (cod_uc > other.cod_uc);
-}
+	void UC::write()
+	{
+		cout << "Unidade curricular: " << regente;
+	}
+
+	/*******************************************************************************************/
+	/*      Operator Overl0ad!    */
+
+	/* Operator == overload - Comparison */
+	bool UC::operator==(const UC& other) const
+	{
+		if (cod_uc == other.cod_uc)
+			return true;
+		else
+			return false;
+	}
+
+	UC & UC::operator = (const UC &other){
+		if (&other != this){
+			cod_uc = other.cod_uc;
+		}
+		return *this;
+	}
+
+	/* Operator > overload - greater than */
+	bool UC::operator > (const UC &other) const{
+		return (cod_uc > other.cod_uc);
+	}
 
 
-/****************************************...************************************************/
+	/****************************************...************************************************/
 
-/*  Overl0ad print operator - NORMAL  */
-ostream& operator<<(ostream& out, const UC& UC){
-    UC.print(out);
-    return out;
-}
+	/*  Overl0ad print operator - NORMAL  */
+	ostream& operator<<(ostream& out,UC uc){
+		uc.print(out);
+		return out;
+	}
 
 #endif
