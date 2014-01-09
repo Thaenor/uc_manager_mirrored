@@ -31,11 +31,10 @@ public:
 
 	//leitura de docentes
 	vector<Pessoa*> lerDocentes(string fich);
-	void printDoc(vector<Pessoa*> vec);
+	void printPessoa(vector<Pessoa*> vec);
 
 	//leitura Alunos
-	static vector<Pessoa*> Gestao::LerAlunos(string fich);
-	static void printAlu(vector<Pessoa*> p);
+	vector<Pessoa*> Gestao::LerAlunos(string fich);
 
 
 
@@ -199,11 +198,11 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 
 		}
 	}
-	printDoc(users);
+	printPessoa(users);
 	return users;
 }
 
-void Gestao::printDoc(vector<Pessoa*> t)
+void Gestao::printPessoa(vector<Pessoa*> t)
 {
 	vector<Pessoa*>::iterator it;
 	if (strcmp(&(typeid(**it).name())[0], &("class Utilizador")[0]) == 0){
@@ -253,7 +252,7 @@ vector<Pessoa*> Gestao::LerAlunos(string fich)
 
 		}
 	}
-	printAlu(users);
+	printPessoa(users);
 	return users;
 }
 

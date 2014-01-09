@@ -22,7 +22,7 @@ public:
 	~ BDados();   
 	list <Aluno> lerAlunos(); // Método para ler uma lista de clientes
 	vector<Mensagem> CarregaMsg();
-	static Utilizador* login(string _usr, string _pw);
+	Utilizador* login(string _usr, string _pw);
 
 
 };
@@ -39,7 +39,7 @@ public:
 	} 
 
 	///
-	static Utilizador* login(string _usr, string _pw)
+	 Utilizador* login(string _usr, string _pw)
 	{
 		Connection *ligacao;
 		Statement *instrucao;

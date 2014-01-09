@@ -10,7 +10,7 @@ using namespace std;
 /*******************************************************************************************/
 /*******************************************************************************************/
 /*******************************************************************************************/
-
+void janelaUC();
 void janelaLogin();
 void janelaBV_Regente();
 void janelaMensagens();
@@ -37,8 +37,6 @@ int main(void)
 	Gestao g(user,uc) ;
 	g.lerDocentes("C:/Users/d4rk_sou1/Desktop/uc_manager/UC_manager/exemplo_Docentes.csv");*/
 
-	Gestao::LerAlunos("C:/Users/d4rk_sou1/Desktop/uc_manager/UC_manager/exemplo_Alunos.csv");
-	cin.get();
 	system("cls");
 	janelaLogin();
 	return 0;
@@ -58,21 +56,30 @@ int main(void)
 		 string palavra = "xico";
 		 string bd = "193.136.62.27:1521/pdborcl"; //ou em vez de ip, gandalf   
 		 try {
-			 cout << "Exemplo de ligacao: a ligar ..." << endl;
+			// cout << "Exemplo de ligacao: a ligar ..." << endl;
 			 BDados *ligacao = new BDados(utilizador, palavra, bd);
-			 cout << "ligacao estabelecida" << endl;
-			 cout << endl << endl << "Prima enter para continuar";
-			 system("PAUSE");
-// 			 if (bd.login(_user,_pw)==true)
-// 		 {
-// 			 janelaBV_Regente();
-// 		 }
-// 		 else{
-// 			 cout << "Login incorrecto" << endl;
-// 			 system("PAUSE");
-// 			 janelaLogin();
-// 		 }
-		janelaBV_Regente();
+			 //cout << "ligacao estabelecida" << endl;
+			// cout << endl << endl << "Prima enter para continuar";
+			 //system("PAUSE");
+			 Utilizador* ut = ligacao->login(_user, _pw);
+			 if (ut != NULL)
+			 {
+				 if (ut->getTipo() == 'D')
+				 {
+					 janelaUC();
+				 }
+				 else{
+					 janelaBV_Regente();
+				 }
+			 }
+			 else{
+				 cout << "Login incorreto" << endl;
+				 system("Pause");
+				 system("cls");
+				 janelaLogin();
+			 }
+		 
+
 			 delete ligacao;
 
 		 }
