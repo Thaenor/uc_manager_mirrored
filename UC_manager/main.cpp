@@ -9,6 +9,10 @@ using namespace std;
 /*******************************************************************************************/
 /*******************************************************************************************/
 /*******************************************************************************************/
+
+Gestao _gestao;
+BDados *ligacao;
+Utilizador* ut;
 void janelaUC();
 void janelaLogin();
 void janelaBV_Regente();
@@ -51,51 +55,52 @@ int main(void)
 		 cin  >> _user;
 		 cout << endl << "Password: ";
 		 int StarNum = 0;
-		 while (c != 13)
-		 {
-			 c = (char)getch();
-			 if (c == 13) break;
-			 StarNum++;
-			 _pw += c;
-			 cout << "*";
-		 }
-
-		 getline(cin, _pw);
+/*		 while (c != 13)*/
+// 		 {
+// 			 c = (char)getch();
+// 			 if (c == 13) break;
+// 			 StarNum++;
+// 			 _pw += c;
+// 			 cout << "*";
+// 		 }
+// 		 getline(cin, _pw);
+		 cin >> _pw;
 
 		 string utilizador = "B6_5";
 		 string palavra = "xico";
 		 string bd = "193.136.62.27:1521/pdborcl"; //ou em vez de ip, gandalf   
 		 try {
+			
 			// cout << "Exemplo de ligacao: a ligar ..." << endl;
-			 BDados *ligacao = new BDados(utilizador, palavra, bd);
+			 ligacao = new BDados(utilizador, palavra, bd);
 			 //cout << "ligacao estabelecida" << endl;
 			 // cout << endl << endl << "Prima enter para continuar";
 			 //system("PAUSE");
 			 cin.get();
 			 
 
-			 Utilizador ut = ligacao->login(_user, _pw);
-			 cin.get();
+			 ut = &ligacao->login(_user, _pw);
+			 //cout << *ut;
 			 string null = "";
-			 if (strcmp(&(ut.getCod_utilizador())[0], &null[0]))
-			 {
-				 if (ut.getTipo() == 'D')
+			 
+				 if (ut->getTipo() == 'D')
 				 {
+					 cout <<endl << "Bem-vindo " << ut->getNome() << endl;
+					 cout << "Tipo de acesso: Docente"<<endl<<endl;
+					 system("Pause");
 					 janelaUC();
 				 }
-				 else{
+				 if (ut->getTipo() == 'R'){
+					 cout <<endl<< "Bem-vindo " << ut->getNome() << endl;
+					 cout << "Tipo de acesso: Regente" << endl<<endl;
+					 system("Pause");
 					 janelaBV_Regente();
 				 }
-			 }
-			 else{
+				 
 				 cout << "Login incorreto" << endl;
 				 system("Pause");
 				 system("cls");
 				 janelaLogin();
-			 }
-			 
-		 
-
 			 delete ligacao;
 
 		 }
@@ -247,19 +252,74 @@ int main(void)
 		 void janelaCaixaEntrada() // caixa de entrada de mensagens
 
 		 {
-			 char opc;
+			 int opc;
 			 system("cls");
 			 cout << "-----Caixa de entrada-----" << endl;
-			 // falta completar
+			 _gestao.ListarMensagem(ut->getMsg());
+			 cout << endl << "Qual deseja ler ? 0 para voltar: ";
+			 cin >> opc;
+			 switch (opc)
+			 {
+			 case 0:janelaUC();
+			 case 'm':janelaMensagens();
+			 default:
+				 system("cls");
+				 cout << ut->getMsg()[opc - 1] << endl;
+			 }
+			 
+			 system("PAUSE");
 		 }
 
 		 void janelaEnviarMensagem() // enviar mensagem
 
 		 {
-			 char opc;
+			 string para;
+			 string mensagem;
+			 string assunto;
+			 string anexo;
 			 system("cls");
 			 cout << "-----Enviar mensagem-----" << endl;
-			 // falta completar
+			 cout << "Para? ";
+			 cin >> para;
+			 cout << endl <<"Assunto ";
+			 cin >> assunto;
+			 cout << endl << "Deseja anexo? (s/n)";
+			 cin >> anexo;
+			 bool an = false;
+			 if (anexo.compare("s"))
+			 {
+				 an = true;
+				 cout <<endl<< "Path para anexo: ";
+				 cin >> anexo;
+			 }
+
+			 if (an) /// cria mensagem com anexo
+			 {
+				 try{
+
+				 }
+				 catch (int excp) 
+				 {
+					 
+					 cout << "Mensagem não enviada, tente de novo" << endl;
+					 system("PAUSE");
+					 janelaCaixaEntrada();
+				 }
+			 }
+			 if (an == false) /// cria mensagem sem anexo
+			 {
+				 try{
+
+				 }
+				 catch (int excp)
+				 {
+					 cout << "Mensagem não enviada, tente de novo" << endl;
+					 system("PAUSE");
+					 janelaCaixaEntrada();
+				 }
+
+			 }
+
 		 }
 		
 

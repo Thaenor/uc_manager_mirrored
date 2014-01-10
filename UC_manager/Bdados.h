@@ -15,21 +15,24 @@ class BDados {
 private:  
 	Environment *env;  
 	Connection *ligacao;  
-	Statement *instrucao;   
+	Statement *instrucao;
 public:    
 
 	BDados(string user, string passwd, string db);  
 	~ BDados();   
 	list <Aluno> lerAlunos(); // Método para ler uma lista de clientes
 	vector<Mensagem> CarregaMsg();
-	Utilizador login(string _usr, string _pw);
+	Utilizador& login(string _usr, string _pw);
+
+	Connection * Ligacao() const { return ligacao; }
+	void Ligacao(Connection * val) { ligacao = val; }
 };
 
 	BDados::BDados(string user, string passwd, string db) 
 	{     
 		env = Environment::createEnvironment (Environment::DEFAULT);     
 		ligacao = env->createConnection (user, passwd, db);  
-		cout << "*****ligacao efetuada*******" << endl;
+		//cout << "*****ligacao efetuada*******" << endl;
 	}
 	BDados::~BDados() 
 	{    
@@ -37,25 +40,57 @@ public:
 		Environment::terminateEnvironment (env); 
 	} 
 
-	///
-	 Utilizador BDados::login(string _usr, string _pw)
+	/// método login
+	Utilizador& BDados::login(string _usr, string _pw)
 	{
-		//Connection *ligacao;
-		//Statement *instrucao;
+		Statement *instruc;
+		system("cls");
+		cout << endl <<"A fazer login...." << endl;
+		instruc = ligacao->createStatement();
+		ResultSet *rset = instruc->executeQuery("SELECT * FROM UTILIZADOR");
 
-		
-		string state = "SELECT * FROM UTILIZADOR WHERE COD_UTILIZADOR=" + _usr + " AND PW=" + _pw;
-		instrucao = ligacao->createStatement(state);
-			
-		ResultSet *rset = instrucao->executeQuery ();   
-		string cod = rset->getString(1);
-		string nome = rset->getString(2);
-		string tipo = rset->getString(3);
-		string pass = rset->getString(4);
+		bool match = false;
+		Utilizador* uti;
 		vector<Mensagem> msg;
-		Utilizador  uti(nome, cod, tipo[0], msg);
-		return uti;
-		
+		while (rset->next()){
+			string cod = rset->getString(1);
+			string nome = rset->getString(2);
+			string tipo = rset->getString(3);
+			string pass = rset->getString(4);
+			if (cod.compare(_usr) ==0 && pass.compare(_pw) ==0)
+			{
+				ResultSet* rset2 = instruc->executeQuery("SELECT * FROM MENSAGEM");
+				while (rset2->next())
+				{
+					string cod_origem = rset2->getString(3);
+					string cod_uc = rset2->getString(4);
+					int cod_edicao = rset2->getInt(5);
+					string assunto = rset2->getString(6);
+					string mensagem = rset2->getString(7);
+					string data_envio = rset2->getString(8);
+					string data_leitura = rset2->getString(9);
+					string data_limite = rset2->getString(10);
+					string cod_ficheiro = rset2->getString(11);
+					if (cod_origem != _usr)
+					{
+						Mensagem ms(cod_origem, assunto, mensagem, data_envio, cod_ficheiro);
+						msg.push_back(ms);
+					}
+				}
+				char i = tipo[0];
+				uti = new Utilizador(nome, cod, i, msg);
+				match = true;
+				break;
+			}
+		}
+		if (match){
+			cout << "Sucesso";
+			return *uti;
+		}
+		else{
+			cout << "falhou login";
+			return *uti;
+		}		
 	}
 
 	//list <Aluno> BDados::lerAlunos() 

@@ -22,6 +22,7 @@ public:
 	~Gestao();
 	//metodo ordenar
 	void ListarTeste(vector<Aluno> al);
+	void ListarMensagem(vector<Mensagem> ms);
 
 	//leitura Teste
 	vector<Aluno> LerTeste(string fich);
@@ -33,6 +34,9 @@ public:
 
 	//leitura Alunos
 	vector<Pessoa*> Gestao::LerAlunos(string fich);
+
+
+	
 
 
 
@@ -64,6 +68,19 @@ void Gestao::ListarTeste(vector<Aluno> t)
 
 	}
 }
+
+void Gestao::ListarMensagem(vector<Mensagem> ms)
+{
+	vector<Mensagem>::iterator it;
+	int c = 1;
+	for (it = ms.begin(); it != ms.end(); it++) {
+		cout << "-"<<c<<"-	" ;
+		it->listar() ;
+		c++;
+
+	}
+}
+
 
 
 vector<Aluno> Gestao::LerTeste(string fich)

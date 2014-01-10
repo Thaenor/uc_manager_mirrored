@@ -48,12 +48,11 @@ Utilizador::Utilizador()
 	tipo = 1;
 }
 
-Utilizador::Utilizador(string nome, string cod_utilizador, char tipo, vector<Mensagem>msg) : Pessoa( nome)
+Utilizador::Utilizador(string nome, string _cod_utilizador, char _tipo, vector<Mensagem>_msg) : Pessoa( nome)
 {
-	cod_utilizador = cod_utilizador;
-	tipo = tipo; 
-	msg = msg;
-
+	cod_utilizador = _cod_utilizador;
+	tipo = _tipo; 
+	msg = _msg;
 }
 
 Utilizador::Utilizador(string n, string c): Pessoa(n)

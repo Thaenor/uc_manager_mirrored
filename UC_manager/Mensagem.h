@@ -7,6 +7,7 @@ class Mensagem
 {
 private:
 	string emissor;
+	string cod_origem;
 	string texto;
 	string assunto;
 	string anexo; //URL do anexo
@@ -18,6 +19,7 @@ private:
 public:
 	Mensagem();
 	Mensagem(int cod_mensagem, string texto,string assunto,string anexo,string cod_destino,string cod_origem, string data_ini, string data_limite);
+	Mensagem(string cod_origem, string assunto, string mensagem, string data_envio, string cod_ficheiro);
 	~Mensagem();
 	Mensagem(const Mensagem& other);
 	void escreve(ostream &out) const;
@@ -60,6 +62,14 @@ Mensagem :: Mensagem(int cod_mensagem, string texto,string assunto,string anexo,
 
 Mensagem:: ~Mensagem(){}
 
+Mensagem::Mensagem(string cod_origem, string assunto, string mensagem, string data_envio, string cod_ficheiro){
+	this->emissor = cod_origem;
+	this->assunto = assunto;
+	this->texto = mensagem;
+	this->data_envio = data_envio;
+	this->anexo = cod_ficheiro;
+}
+
 Mensagem:: Mensagem(const Mensagem& other)
 {
 	this->emissor = other.emissor;
@@ -73,7 +83,7 @@ Mensagem:: Mensagem(const Mensagem& other)
 	
 }
 void Mensagem::listar(){
-	cout << "Remetente: " << emissor;
+	cout << "Remetente: " << emissor << "	|	";
 	cout<<"Assunto: "<<assunto<<endl;
 }
 
@@ -82,7 +92,7 @@ void Mensagem :: escreve(ostream &out) const
 {
 	out << "MENSAGEM" << endl
 		<< "De: " << getEmissor()<< endl
-		<< "Assunto: " << getAnexo() << endl
+		<< "Assunto: " << getAssunto() << endl
 		<< "Mensagem " << getTexto() << endl;
 }
 
