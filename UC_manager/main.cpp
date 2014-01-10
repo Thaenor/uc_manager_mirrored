@@ -4,7 +4,7 @@
 #include"Bdados.h"
 #include "Gestao.h"
 #include <string>
-
+#include <conio.h>
 using namespace std;    
 /*******************************************************************************************/
 /*******************************************************************************************/
@@ -47,9 +47,20 @@ int main(void)
 		 cout << "Digite nome de utilizador: ";
 		 string _user;
 		 string _pw;
+		 char c=' ';
 		 cin  >> _user;
 		 cout << endl << "Password: ";
-		 cin >> _pw;
+		 int StarNum = 0;
+		 while (c != 13)
+		 {
+			 c = (char)getch();
+			 if (c == 13) break;
+			 StarNum++;
+			 _pw += c;
+			 cout << "*";
+		 }
+
+		 getline(cin, _pw);
 
 		 string utilizador = "B6_5";
 		 string palavra = "xico";
@@ -58,9 +69,13 @@ int main(void)
 			// cout << "Exemplo de ligacao: a ligar ..." << endl;
 			 BDados *ligacao = new BDados(utilizador, palavra, bd);
 			 //cout << "ligacao estabelecida" << endl;
-			// cout << endl << endl << "Prima enter para continuar";
+			 // cout << endl << endl << "Prima enter para continuar";
 			 //system("PAUSE");
+			 cin.get();
+			 
+
 			 Utilizador ut = ligacao->login(_user, _pw);
+			 cin.get();
 			 string null = "";
 			 if (strcmp(&(ut.getCod_utilizador())[0], &null[0]))
 			 {
@@ -78,6 +93,7 @@ int main(void)
 				 system("cls");
 				 janelaLogin();
 			 }
+			 
 		 
 
 			 delete ligacao;

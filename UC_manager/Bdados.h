@@ -40,8 +40,9 @@ public:
 	///
 	 Utilizador BDados::login(string _usr, string _pw)
 	{
-		Connection *ligacao;
-		Statement *instrucao;
+		//Connection *ligacao;
+		//Statement *instrucao;
+
 		
 		string state = "SELECT * FROM UTILIZADOR WHERE COD_UTILIZADOR=" + _usr + " AND PW=" + _pw;
 		instrucao = ligacao->createStatement(state);
@@ -54,6 +55,7 @@ public:
 		vector<Mensagem> msg;
 		Utilizador  uti(nome, cod, tipo[0], msg);
 		return uti;
+		
 	}
 
 	//list <Aluno> BDados::lerAlunos() 
