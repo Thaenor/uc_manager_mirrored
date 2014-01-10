@@ -116,7 +116,7 @@ int main(void)
 		 system("cls");
 		 cout << "-----Bem-vindo-----" << endl << endl <<
 			 "1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Remover UC"<<endl <<"----------" 
-			 <<endl <<"m-Mensagens"<< endl << endl << "A sua opcao:" << endl;
+			 <<endl <<"m-Mensagens"<< endl << endl << "A sua opcao: ";
 		 char opc;
 		 cin >> opc;
 		 switch (opc)
@@ -136,7 +136,7 @@ int main(void)
 		 char opc;
 		 system("cls");
 		 cout << "-----Gerir Conteudos-----" << endl << endl << "0-Voltar" << endl <<
-			 "1-Gerir Eventos" << endl << "2-Gerir Docentes" << endl << "3-Gerir UC" << endl << "4-Gerir Alunos" << endl << "A sua opcao: " << endl;
+			 "1-Gerir Eventos" << endl << "2-Gerir Docentes" << endl << "3-Gerir UC" << endl << "4-Gerir Alunos" << endl << "A sua opcao: ";
 		 cin >> opc;
 		 switch (opc)
 		 {	
@@ -156,7 +156,7 @@ int main(void)
 			 char opc;
 			 system("cls");
 			 cout << "-----Gerir Eventos-----" << endl << endl << "0-Voltar" << endl <<
-				 "1-Alterar" << endl << "2-Remover" << endl << "3-Adicionar" << endl << "A sua opcao: " << endl;
+				 "1-Alterar" << endl << "2-Remover" << endl << "3-Adicionar" << endl << "A sua opcao: ";
 			 
 			cin >> opc;
 		 switch (opc)
@@ -195,7 +195,7 @@ int main(void)
 			 char opc;
 			 system("cls");
 			 cout << "-----Mensagens-----" << endl << endl << "0-Voltar" << endl <<
-				 "1-Caixa de entrada" << endl << "2-Escrever mensagem" << endl << "A sua opcao: " << endl;
+				 "1-Caixa de entrada" << endl << "2-Escrever mensagem" << endl << "A sua opcao: ";
 			 cin >> opc;
 			 switch (opc)
 			 {	
@@ -215,7 +215,7 @@ int main(void)
 			 system("cls");
 			 cout << "-----Gestão Disciplina-----" << endl << endl << "0-Voltar" << endl <<
 				 "1-Marcar Avaliacao" << endl << "2-Publicar notas" << endl << "3-Visualizar notas" << endl << "4-Escrever sumarios" << endl  << "5-Visualizar Sumarios" 
-				 << endl << "6-Marcar aula extra" <<endl<< "7-Histórico"<<endl<< "A sua opcao: " << endl;
+				 << endl << "6-Marcar aula extra" <<endl<< "7-Histórico"<<endl<< "A sua opcao: ";
 			 cin >> opc;
 		 switch (opc)
 		 {	
@@ -235,7 +235,7 @@ int main(void)
 			 char opc;
 			 system("cls");
 			 cout << "-----Visualizacao-----" << endl << endl << "0-Voltar" << endl <<
-				 "1-Visualizar notas" << endl << "2-Visualizar sumarios" << endl << "A sua opcao: " << endl;
+				 "1-Visualizar notas" << endl << "2-Visualizar sumarios" << endl << "A sua opcao: " ;
 			 cin >> opc;
 		 switch (opc)
 		 {	
@@ -268,6 +268,7 @@ int main(void)
 			 }
 			 
 			 system("PAUSE");
+			 janelaMensagens();
 		 }
 
 		 void janelaEnviarMensagem() // enviar mensagem
@@ -283,20 +284,23 @@ int main(void)
 			 cin >> para;
 			 cout << endl <<"Assunto ";
 			 cin >> assunto;
+			 cout << endl << "Mensagem: ";
+			 cin >> mensagem;
 			 cout << endl << "Deseja anexo? (s/n)";
 			 cin >> anexo;
 			 bool an = false;
-			 if (anexo.compare("s"))
+			 if (anexo.compare("s")==0)
 			 {
 				 an = true;
-				 cout <<endl<< "Path para anexo: ";
+				 cout <<endl<< "Nome anexo: ";
 				 cin >> anexo;
+				  
 			 }
 
 			 if (an) /// cria mensagem com anexo
 			 {
 				 try{
-
+					 ligacao->enviaMsgBD(ut->getCod_utilizador(), para, assunto, mensagem, anexo);
 				 }
 				 catch (int excp) 
 				 {
@@ -309,7 +313,7 @@ int main(void)
 			 if (an == false) /// cria mensagem sem anexo
 			 {
 				 try{
-
+					
 				 }
 				 catch (int excp)
 				 {
@@ -322,15 +326,6 @@ int main(void)
 
 		 }
 		
-
-		 void janelaMensagemRecebida() // ler mensagem
-
-		 {
-			 char opc;
-			 system("cls");
-			 cout << "-----Mensagem-----" << endl;
-			 // falta completar
-		 }
 
 
 

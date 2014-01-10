@@ -26,6 +26,7 @@ public:
 
 	Connection * Ligacao() const { return ligacao; }
 	void Ligacao(Connection * val) { ligacao = val; }
+	void enviaMsgBD(string _usr, string cod_destino, string assunto, string msg, string anexo);
 };
 
 	BDados::BDados(string user, string passwd, string db) 
@@ -91,6 +92,26 @@ public:
 			cout << "falhou login";
 			return *uti;
 		}		
+	}
+	void BDados::enviaMsgBD(string _usr, string cod_destino, string assunto, string msg, string anexo)
+	{
+		Statement *instruc;
+		cout << "AAAAAAAAA" << endl;
+		instruc = ligacao->createStatement("INSERT INTO MENSAGEM (COD_MENSAGEM,COD_ORIGEM,COD_DESTINO,ASSUNTO,MENSAGEM,COD_FICHEIRO) VALUES (SEQ_COD_MENSAGEM.NEXTVAL,:1,:2,:3,:4,:5)");
+		/*instruc = ligacao->createStatement("INSERT INTO MENSAGEM (COD_MENSAGEM) VALUES (9); commit;");*/
+		instruc->setString(1, _usr);
+		instruc->setString(2, cod_destino);
+		instruc->setString(3, assunto);
+		instruc->setString(4, msg);
+		instruc->setString(5, anexo);
+		ResultSet* rset2 = instruc->executeQuery();
+
+
+		instruc = ligacao->createStatement("commit");
+		rset2 = instruc->executeQuery();
+
+
+		instruc->closeResultSet(rset2);
 	}
 
 	//list <Aluno> BDados::lerAlunos() 
