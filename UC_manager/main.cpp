@@ -5,14 +5,15 @@
 #include "Gestao.h"
 #include <string>
 #include <conio.h>
-using namespace std;    
-/*******************************************************************************************/
-/*******************************************************************************************/
-/*******************************************************************************************/
 
+using namespace std;    
+
+
+/*******************************************************************************************/
 Gestao _gestao;
 BDados *ligacao;
 Utilizador* ut;
+
 void janelaUC();
 void janelaLogin();
 void janelaBV_Regente();
@@ -23,23 +24,11 @@ void janelaCaixaEntrada();
 void janelaEnviarMensagem();
 void janelaVisualizacao();
 void janelaGerirEventos();
-
+/*******************************************************************************************/
 
 int main(void)
 {
 	system( "color 79" );
-	cout << "Development test area!" << endl;
-
-
-	cout << endl;
-	/////////////////////////BDADODS
-	/*
-	//depois do login abrir a "ligacao" a gestao
-	Utilizador user
-	UC uc
-	Gestao g(user,uc) ;
-	g.lerDocentes("C:/Users/d4rk_sou1/Desktop/uc_manager/UC_manager/exemplo_Docentes.csv");*/
-
 	system("cls");
 	janelaLogin();
 	return 0;
@@ -55,17 +44,7 @@ int main(void)
 		 cin  >> _user;
 		 cout << endl << "Password: ";
 		 int StarNum = 0;
-/*		 while (c != 13)*/
-// 		 {
-// 			 c = (char)getch();
-// 			 if (c == 13) break;
-// 			 StarNum++;
-// 			 _pw += c;
-// 			 cout << "*";
-// 		 }
-// 		 getline(cin, _pw);
 		 cin >> _pw;
-
 		 string utilizador = "B6_5";
 		 string palavra = "xico";
 		 string bd = "193.136.62.27:1521/pdborcl"; //ou em vez de ip, gandalf   
@@ -126,12 +105,10 @@ int main(void)
 			 case '3':
 			 case 'm':janelaMensagens();
 			default: janelaGerirConteudo();	 
-
 		 }
-
 	 }
 
-	 void janelaGerirConteudo()
+	 void janelaGerirConteudo() //só acessivel pelo regente
 	 {
 		 char opc;
 		 system("cls");
@@ -142,12 +119,12 @@ int main(void)
 		 {	
 			 case '0':janelaBV_Regente();
 			 case '1':janelaGerirEventos();
-			 case '2'://janelaGerirDocentes()/ 
+			 case '2': // falta criar janela gerir docentes
 				 ;
-			 case '3':
-			 case '4':
+			 case '3':janelaGerirConteudo(); // confirmar que é esta janela não tenho certeza
+			 case '4': // associar janela...
 			 case 'm':janelaMensagens();
-			 default: janelaGerirConteudo();
+			 default: janelaGerirConteudo(); // retorna á mesma janela.
 		 }
 	 }
 
@@ -162,8 +139,8 @@ int main(void)
 		 switch (opc)
 		 {	
 			case '0':janelaGerirConteudo();
-			 case '1':janelaGerirEventos();
-			 case '2'://janelaGerirDocentes()/ 
+			 case '1':;
+			 case '2':; 
 				 ;
 			 case '3':
 			 case '4':
@@ -201,12 +178,10 @@ int main(void)
 			 {	
 				case '0':janelaUC();
 				case '1':janelaCaixaEntrada();
-				case '2':cout << "entrou"; janelaEnviarMensagem();
-			 case '3':;
-			 case '4':;
-			 case 'm':janelaMensagens();
-			 default: janelaMensagens();
-		 }
+				case '2':janelaEnviarMensagem();
+				case 'm':janelaMensagens();
+				default: janelaMensagens();
+			 }
 		 }
 		 
 		 void janelaDisciplina()
@@ -224,6 +199,9 @@ int main(void)
 			 case '2':;
 			 case '3':;
 			 case '4':;
+			 case '5':;
+			 case '6':;
+		     case '7':;
 			 case 'm':;
 			 default: janelaUC();
 		 }
@@ -242,8 +220,6 @@ int main(void)
 			 case '0':janelaUC();
 			 case '1':;
 			 case '2':;
-			 case '3':;
-			 case '4':;
 			 case 'm':janelaMensagens();
 			 default: janelaVisualizacao();
 		 }
@@ -256,14 +232,14 @@ int main(void)
 			 system("cls");
 			 cout << "-----Caixa de entrada-----" << endl;
 			 _gestao.ListarMensagem(ut->getMsg());
-			 cout << endl << "Qual deseja ler ? 0 para voltar: ";
+			 cout << endl << "Qual deseja ler ? (0 para voltar): ";
 			 cin >> opc;
 			 switch (opc)
 			 {
 			 case 0:janelaUC();
 			 case 'm':janelaMensagens();
 			 default:
-				 system("cls");
+				 system("cls"); //metodo nao seguro, corrigir se possivel, pois caso o user utilize uma tecla que nao um numero ou "m" o programa não sabe o que fazer
 				 cout << ut->getMsg()[opc - 1] << endl;
 			 }
 			 
@@ -271,8 +247,7 @@ int main(void)
 			 janelaMensagens();
 		 }
 
-		 void janelaEnviarMensagem() // enviar mensagem
-
+		 void janelaEnviarMensagem() // enviar mensagem (completo)
 		 {
 			 string para;
 			 string mensagem;
@@ -286,25 +261,26 @@ int main(void)
 			 cin >> assunto;
 			 cout << endl << "Mensagem: ";
 			 cin >> mensagem;
-			 cout << endl << "Deseja anexo? (s/n)";
-			 cin >> anexo;
+			 anexo = "l";
+			 while(anexo.compare("n") != 0 || anexo.compare("s") !=0)
+			 {			 
+				cout << endl << "Deseja anexo? (s/n)";
+				cin >> anexo;
+			 }
 			 bool an = false;
 			 if (anexo.compare("s")==0)
 			 {
 				 an = true;
 				 cout <<endl<< "Nome anexo: ";
-				 cin >> anexo;
-				  
+				 cin >> anexo;				  
 			 }
-
 			 if (an) /// cria mensagem com anexo
 			 {
 				 try{
 					 ligacao->enviaMsgBD(ut->getCod_utilizador(), para, assunto, mensagem, anexo);
 				 }
 				 catch (int excp) 
-				 {
-					 
+				 {	 
 					 cout << "Mensagem não enviada, tente de novo" << endl;
 					 system("PAUSE");
 					 janelaCaixaEntrada();
@@ -313,7 +289,8 @@ int main(void)
 			 if (an == false) /// cria mensagem sem anexo
 			 {
 				 try{
-					
+					 anexo = "Sem anexo";
+					ligacao->enviaMsgBD(ut->getCod_utilizador(), para, assunto, mensagem, anexo);
 				 }
 				 catch (int excp)
 				 {
@@ -321,9 +298,7 @@ int main(void)
 					 system("PAUSE");
 					 janelaCaixaEntrada();
 				 }
-
 			 }
-
 		 }
 		
 
