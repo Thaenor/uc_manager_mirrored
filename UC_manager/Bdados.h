@@ -96,7 +96,6 @@ public:
 	void BDados::enviaMsgBD(string _usr, string cod_destino, string assunto, string msg, string anexo)
 	{
 		Statement *instruc;
-		cout << "AAAAAAAAA" << endl;
 		instruc = ligacao->createStatement("INSERT INTO MENSAGEM (COD_MENSAGEM,COD_ORIGEM,COD_DESTINO,ASSUNTO,MENSAGEM,COD_FICHEIRO) VALUES (SEQ_COD_MENSAGEM.NEXTVAL,:1,:2,:3,:4,:5)");
 		instruc->setString(1, _usr);
 		instruc->setString(2, cod_destino);

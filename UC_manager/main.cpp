@@ -24,6 +24,10 @@ void janelaCaixaEntrada();
 void janelaEnviarMensagem();
 void janelaVisualizacao();
 void janelaGerirEventos();
+void janelaGerirAlunos();
+void janelaAdicionarUC();
+void janelaRemoverUC();
+void janelaGerirDocente();
 /*******************************************************************************************/
 
 int main(void)
@@ -93,18 +97,54 @@ int main(void)
 	 void janelaBV_Regente() //janela boas vindas
 	 {
 		 system("cls");
-		 cout << "-----Bem-vindo-----" << endl << endl <<
+		 cout << "-----Bem-vindo-----" << endl << endl << "0-Sair" << endl <<
 			 "1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Remover UC"<<endl <<"----------" 
 			 <<endl <<"m-Mensagens"<< endl << endl << "A sua opcao: ";
 		 char opc;
 		 cin >> opc;
 		 switch (opc)
-		 {			 
+		 {		
+		     case '0':exit(0);
 			 case '1':janelaGerirConteudo();
-			 case '2':
-			 case '3':
+			 case '2':janelaAdicionarUC();
+			 case '3':janelaRemoverUC();
 			 case 'm':janelaMensagens();
 			default: janelaGerirConteudo();	 
+		 }
+	 }
+
+	 void janelaAdicionarUC() //janela adiciona UC
+	 {
+		 system("cls");
+		 cout << "-----Adicionar UC-----" << endl << endl << "0-Voltar" << endl
+			 << endl << "m-Mensagens" << endl;
+		 char opc;
+		 cin >> opc;
+		 switch (opc)
+		 {
+		 case '0':janelaBV_Regente() ;
+		 case '1':
+		 case '2':
+		 case '3':
+		 case 'm':janelaMensagens();
+		 default:;
+		 }
+	 }
+	 void janelaRemoverUC() //janela adiciona UC
+	 {
+		 system("cls");
+		 cout << "-----Remover UC-----" << endl << endl << "0-Voltar" << endl
+			 << endl << "m-Mensagens" << endl;
+		 char opc;
+		 cin >> opc;
+		 switch (opc)
+		 {
+		 case '0':janelaBV_Regente();
+		 case '1':
+		 case '2':
+		 case '3':
+		 case 'm':janelaMensagens();
+		 default:;
 		 }
 	 }
 
@@ -113,37 +153,72 @@ int main(void)
 		 char opc;
 		 system("cls");
 		 cout << "-----Gerir Conteudos-----" << endl << endl << "0-Voltar" << endl <<
-			 "1-Gerir Eventos" << endl << "2-Gerir Docentes" << endl << "3-Gerir UC" << endl << "4-Gerir Alunos" << endl << "A sua opcao: ";
+			 "1-Gerir Eventos" << endl << "2-Gerir Docentes" << endl << "3-Gerir UC" << endl 
+			 << "4-Gerir Alunos" <<endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 		 cin >> opc;
 		 switch (opc)
 		 {	
 			 case '0':janelaBV_Regente();
 			 case '1':janelaGerirEventos();
-			 case '2': // falta criar janela gerir docentes
-				 ;
+			 case '2':janelaGerirDocente();
 			 case '3':janelaGerirConteudo(); // confirmar que é esta janela não tenho certeza
-			 case '4': // associar janela...
+			 case '4':janelaGerirAlunos();
 			 case 'm':janelaMensagens();
 			 default: janelaGerirConteudo(); // retorna á mesma janela.
 		 }
 	 }
+	 void janelaGerirDocente() //só acessivel pelo regente
+	 {
+		 char opc;
+		 system("cls");
+		 cout << "-----Gerir Docente-----" << endl << endl << "0-Voltar" << endl <<
+			 "1-Adicionar Docente" << endl << "2-Remover Docente" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+		 cin >> opc;
+		 switch (opc)
+		 {
+		 case '0':janelaGerirConteudo();
+		 case '1':;
+		 case '2':;
+		 case 'm':janelaMensagens();
+		 default: janelaGerirAlunos(); // retorna á mesma janela.
+		 }
+	 }
+
+	 void janelaGerirAlunos() //só acessivel pelo regente
+	 {
+		 char opc;
+		 system("cls");
+		 cout << "-----Gerir Alunos-----" << endl << endl << "0-Voltar" << endl <<
+			 "1-Adicionar aluno" << endl << "2-Remover aluno" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+		 cin >> opc;
+		 switch (opc)
+		 {
+		 case '0':janelaBV_Regente();
+		 case '1':;
+		 case '2':;
+		 case 'm':janelaMensagens();
+		 default: janelaGerirAlunos(); // retorna á mesma janela.
+		 }
+	 }
+
+
 
 		 void janelaGerirEventos()
 		 {
 			 char opc;
 			 system("cls");
 			 cout << "-----Gerir Eventos-----" << endl << endl << "0-Voltar" << endl <<
-				 "1-Alterar" << endl << "2-Remover" << endl << "3-Adicionar" << endl << "A sua opcao: ";
+				 "1-Alterar" << endl << "2-Remover" << endl << "3-Adicionar" << endl <<
+				 "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 			 
 			cin >> opc;
 		 switch (opc)
 		 {	
 			case '0':janelaGerirConteudo();
 			 case '1':;
-			 case '2':; 
-				 ;
-			 case '3':
-			 case '4':
+			 case '2':;
+			 case '3':;
+			 case '4':;
 			 case 'm':janelaMensagens();
 			 default: janelaGerirEventos();
 		 }
@@ -154,7 +229,7 @@ int main(void)
 			 char opc;
 			 system("cls");
 			 cout << "-----Janela UC-----" << endl << endl << "0-Voltar" << endl <<
-				 "1-Leccionadas" << endl << "2-Permissoes/Historico" << endl;
+				 "1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << "----------" << endl<< "m-Mensagens" << endl << "A sua opcao: ";
 			 cin >> opc;
 		 switch (opc)
 		 {	
@@ -188,13 +263,15 @@ int main(void)
 		 {
 			 char opc;
 			 system("cls");
-			 cout << "-----Gestão Disciplina-----" << endl << endl << "0-Voltar" << endl <<
-				 "1-Marcar Avaliacao" << endl << "2-Publicar notas" << endl << "3-Visualizar notas" << endl << "4-Escrever sumarios" << endl  << "5-Visualizar Sumarios" 
-				 << endl << "6-Marcar aula extra" <<endl<< "7-Histórico"<<endl<< "A sua opcao: ";
+			 cout << "-----Gestao Disciplina-----" << endl << endl << "0-Voltar" << endl <<
+				 "1-Marcar Avaliacao" << endl << "2-Publicar notas" << endl << "3-Visualizar notas" <<
+				 endl << "4-Escrever sumarios" << endl  << "5-Visualizar Sumarios" 
+				 << endl << "6-Marcar aula extra" << endl << "7-Historico" <<endl << "----------"  <<endl<<
+				 "m-Mensagens" << endl << "A sua opcao: ";
 			 cin >> opc;
 		 switch (opc)
 		 {	
-			 case '0':;
+			 case '0':janelaUC();
 			 case '1':;
 			 case '2':;
 			 case '3':;
@@ -202,7 +279,7 @@ int main(void)
 			 case '5':;
 			 case '6':;
 		     case '7':;
-			 case 'm':;
+			 case 'm':; janelaMensagens();
 			 default: janelaUC();
 		 }
 		 }
@@ -213,7 +290,7 @@ int main(void)
 			 char opc;
 			 system("cls");
 			 cout << "-----Visualizacao-----" << endl << endl << "0-Voltar" << endl <<
-				 "1-Visualizar notas" << endl << "2-Visualizar sumarios" << endl << "A sua opcao: " ;
+				 "1-Visualizar notas" << endl << "2-Visualizar sumarios" << endl << "----------" <<endl<< "m-Mensagens" << endl << "A sua opcao: ";
 			 cin >> opc;
 		 switch (opc)
 		 {	
@@ -262,10 +339,10 @@ int main(void)
 			 cout << endl << "Mensagem: ";
 			 cin >> mensagem;
 			 anexo = "l";
-			 while(anexo.compare("n") != 0 || anexo.compare("s") !=0)
+			 while ( anexo.compare("n") != 0 && anexo.compare("s") != 0)
 			 {			 
 				cout << endl << "Deseja anexo? (s/n)";
-				cin >> anexo;
+  				cin >> anexo;
 			 }
 			 bool an = false;
 			 if (anexo.compare("s")==0)
