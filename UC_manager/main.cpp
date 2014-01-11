@@ -181,7 +181,7 @@ int main(void)
 			 cin >> opc;
 		 switch (opc)
 		 {	
-			case '0':janelaUC();
+			case '0':janelaLogin();
 			case '1':janelaDisciplina();
 			case '2':janelaVisualizacao();
 			case '3':;
