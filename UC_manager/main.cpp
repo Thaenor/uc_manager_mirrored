@@ -40,7 +40,9 @@ int main(void)
 
 	 void janelaLogin()
 	 {
-		 cout << "######## UC Manager ########" << endl << endl;
+		 cout << "############################"<<endl;
+		 cout << "######## UC Manager ########" <<endl;
+		 cout << "############################" << endl << endl;
 		 cout << "Digite nome de utilizador: ";
 		 string _user;
 		 string _pw;
@@ -109,7 +111,10 @@ int main(void)
 			 case '2':janelaAdicionarUC();
 			 case '3':janelaRemoverUC();
 			 case 'm':janelaMensagens();
-			default: janelaGerirConteudo();	 
+			 default:cout <<endl<< ("Opcao incorreta!!!   ");
+				 system("pause");
+				 system("cls");
+				 janelaBV_Regente();
 		 }
 	 }
 
@@ -127,7 +132,10 @@ int main(void)
 		 case '2':
 		 case '3':
 		 case 'm':janelaMensagens();
-		 default:;
+		 default:cout << endl << ("Opcao incorreta!!!   ");
+			 system("pause");
+			 system("cls");
+			 janelaAdicionarUC();
 		 }
 	 }
 	 void janelaRemoverUC() //janela adiciona UC
@@ -144,7 +152,10 @@ int main(void)
 		 case '2':
 		 case '3':
 		 case 'm':janelaMensagens();
-		 default:;
+		 default:cout << endl << ("Opcao incorreta!!!   ");
+			 system("pause");
+			 system("cls");
+			 janelaRemoverUC();;
 		 }
 	 }
 
@@ -164,7 +175,10 @@ int main(void)
 			 case '3':janelaGerirConteudo(); // confirmar que é esta janela não tenho certeza
 			 case '4':janelaGerirAlunos();
 			 case 'm':janelaMensagens();
-			 default: janelaGerirConteudo(); // retorna á mesma janela.
+			 default: cout << endl << ("Opcao incorreta!!!   ");
+				 system("pause");
+				 system("cls");
+				 janelaGerirConteudo();
 		 }
 	 }
 	 void janelaGerirDocente() //só acessivel pelo regente
@@ -180,7 +194,10 @@ int main(void)
 		 case '1':;
 		 case '2':;
 		 case 'm':janelaMensagens();
-		 default: janelaGerirAlunos(); // retorna á mesma janela.
+		 default: cout << endl << ("Opcao incorreta!!!   ");
+			 system("pause");
+			 system("cls");
+			 janelaGerirDocente();
 		 }
 	 }
 
@@ -189,15 +206,19 @@ int main(void)
 		 char opc;
 		 system("cls");
 		 cout << "-----Gerir Alunos-----" << endl << endl << "0-Voltar" << endl <<
-			 "1-Adicionar aluno" << endl << "2-Remover aluno" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+			 "1-Adicionar aluno" << endl << "2-Remover aluno" << endl << "3-Adicionar alunos" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 		 cin >> opc;
 		 switch (opc)
 		 {
 		 case '0':janelaBV_Regente();
 		 case '1':;
 		 case '2':;
+		 case '3':;
 		 case 'm':janelaMensagens();
-		 default: janelaGerirAlunos(); // retorna á mesma janela.
+		 default: cout << endl << ("Opcao incorreta!!!   ");
+			 system("pause");
+			 system("cls");
+			 janelaGerirAlunos();
 		 }
 	 }
 
@@ -208,7 +229,7 @@ int main(void)
 			 char opc;
 			 system("cls");
 			 cout << "-----Gerir Eventos-----" << endl << endl << "0-Voltar" << endl <<
-				 "1-Alterar" << endl << "2-Remover" << endl << "3-Adicionar" << endl <<
+				 "1-Alterar Eventos" << endl << "2-Remover Eventos" << endl << "3-Adicionar Eventos" << endl <<
 				 "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 			 
 			cin >> opc;
@@ -220,7 +241,10 @@ int main(void)
 			 case '3':;
 			 case '4':;
 			 case 'm':janelaMensagens();
-			 default: janelaGerirEventos();
+			 default:cout << endl << ("Opcao incorreta!!!   ");
+				 system("pause");
+				 system("cls");
+				 janelaGerirEventos();
 		 }
 		}
 
@@ -228,18 +252,21 @@ int main(void)
 		 {
 			 char opc;
 			 system("cls");
-			 cout << "-----Janela UC-----" << endl << endl << "0-Voltar" << endl <<
+			 cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
 				 "1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << "----------" << endl<< "m-Mensagens" << endl << "A sua opcao: ";
 			 cin >> opc;
 		 switch (opc)
 		 {	
-			case '0':janelaLogin();
+			case '0':exit(0);
 			case '1':janelaDisciplina();
 			case '2':janelaVisualizacao();
 			case '3':;
 			case '4':;
 			case 'm':janelaMensagens();
-			 default: janelaUC();
+			default:cout << endl << ("Opcao incorreta!!!");
+				system("pause");
+				system("cls");
+				janelaUC();
 		 }
 		 }
 		 void janelaMensagens()
@@ -255,7 +282,10 @@ int main(void)
 				case '1':janelaCaixaEntrada();
 				case '2':janelaEnviarMensagem();
 				case 'm':janelaMensagens();
-				default: janelaMensagens();
+				default:cout << endl << ("Opcao incorreta!!!   ");
+					system("pause");
+					system("cls");
+				    janelaMensagens();
 			 }
 		 }
 		 
@@ -280,7 +310,10 @@ int main(void)
 			 case '6':;
 		     case '7':;
 			 case 'm':; janelaMensagens();
-			 default: janelaUC();
+			 default: cout << endl << ("Opcao incorreta!!!   ");
+				 system("pause");
+				 system("cls");
+				 janelaDisciplina();
 		 }
 		 }
 
@@ -298,7 +331,10 @@ int main(void)
 			 case '1':;
 			 case '2':;
 			 case 'm':janelaMensagens();
-			 default: janelaVisualizacao();
+			 default:cout << endl << ("Opcao incorreta!!!   ");
+				 system("pause");
+				 system("cls");
+				 janelaVisualizacao();
 		 }
 		 }
 
