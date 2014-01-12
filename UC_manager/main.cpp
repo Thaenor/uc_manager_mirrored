@@ -12,7 +12,7 @@ using namespace std;
 /*******************************************************************************************/
 Gestao _gestao;
 BDados *ligacao;
-Utilizador* ut;
+Pessoa* ut;
 
 void janelaUC();
 void janelaLogin();
@@ -64,7 +64,8 @@ int main(void)
 			 cin.get();
 			 
 
-			 ut = &ligacao->login(_user, _pw);
+			 ut = ligacao->login(_user, _pw);
+			 _gestao.setUser(ut);
 			 //cout << *ut;
 			 string null = "";
 			 
@@ -211,7 +212,7 @@ int main(void)
 		 switch (opc)
 		 {
 		 case '0':janelaBV_Regente();
-		 case '1':;
+		 case '1':_gestao.criarAluno();
 		 case '2':;
 		 case '3':;
 		 case 'm':janelaMensagens();

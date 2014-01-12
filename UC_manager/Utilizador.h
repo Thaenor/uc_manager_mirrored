@@ -3,6 +3,9 @@
 
 //#include <iostream>
 #include <vector>
+//#include "Mensagem.h"
+#include "Pessoa.h"
+
 using namespace std;
 
 //#include "Pessoa.h"
@@ -19,7 +22,7 @@ class Utilizador : public Pessoa
 	Utilizador(string nome, string sigla);
 	~ Utilizador();
 	Utilizador(const Utilizador &other);            /* Construtor Copia */
-	Utilizador* clone() ;						/* construtor Clone */
+	virtual Utilizador* clone() ;						/* construtor Clone */
 
 	void escreve(ostream out) const;
 

@@ -1,7 +1,7 @@
 #ifndef UC_Manager_Pessoa_h
 #define UC_Manager_Pessoa_h
 
-
+#include "Mensagem.h"
 using namespace std;
 class Pessoa
 {
@@ -18,9 +18,14 @@ public:
 
 	void setNome(string nome);
 
+	//heranca
 	virtual string getNome()const;
 	virtual string getCod_utilizador()const;
 	virtual int getNumero()const;
+	virtual char  getTipo()const;
+	virtual vector<Mensagem> getMsg()const;
+
+
 
 	virtual Pessoa& operator=(const Pessoa &p);
 	virtual bool operator==(const Pessoa &p)const;
@@ -66,6 +71,16 @@ int Pessoa::getNumero()const
 	return 0;
 }
 
+char Pessoa:: getTipo()const
+{
+	return 'P';
+}
+
+vector<Mensagem> Pessoa:: getMsg()const
+{
+	vector<Mensagem> m;
+	return m;
+}
 
 
 bool Pessoa:: operator==(const Pessoa &p)const{

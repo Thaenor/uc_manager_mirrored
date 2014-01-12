@@ -1,10 +1,10 @@
 #ifndef UC_Manager_Aluno_h
 #define UC_Manager_Aluno_h
+#include "Pessoa.h"
 
 using namespace std;
 //#include <iostream>
 //#include <vector>
-#include "Pessoa.h"
 //#include"Gestao.h"
 
 

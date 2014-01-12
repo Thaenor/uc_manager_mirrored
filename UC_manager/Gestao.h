@@ -10,19 +10,27 @@ class Gestao
 {
 private:
 
-	Utilizador user;
+	Pessoa * user;
 	UC uc;
 	void destroy();
 
 public:
 	//Construtor e destrutor
 	Gestao();
-	Gestao(Utilizador user, UC uc);
+	Gestao(Pessoa * user, UC uc);
 	Gestao(const Gestao &g);
 	~Gestao();
+
+	//sets/gets
+	void setUser(Pessoa * user);
+	Pessoa * getUser();
 	//metodo ordenar
 	void ListarTeste(vector<Aluno> al);
 	void ListarMensagem(vector<Mensagem> ms);
+
+	//ligacao
+	BDados* ligar();
+
 
 	//leitura Teste
 	vector<Aluno> LerTeste(string fich);
@@ -30,10 +38,14 @@ public:
 
 	//leitura de docentes
 	vector<Pessoa*> lerDocentes(string fich);
+
 	void printPessoa(vector<Pessoa*> vec);
 
 	//leitura Alunos
-	vector<Pessoa*> Gestao::LerAlunos(string fich);
+	vector<Pessoa*> LerAlunos(string fich);
+
+	//criar aluno
+	void criarAluno();
 
 
 	
@@ -47,7 +59,7 @@ Gestao::Gestao()
 {
 }
 
-Gestao::Gestao(Utilizador _user, UC _uc)
+Gestao::Gestao(Pessoa * _user, UC _uc)
 {	
 	user = _user;
 	uc = _uc;
@@ -79,6 +91,16 @@ void Gestao::ListarMensagem(vector<Mensagem> ms)
 		c++;
 
 	}
+}
+
+void Gestao :: setUser(Pessoa * _user)
+{
+	this->user = user;
+}
+
+Pessoa * Gestao :: getUser()
+{
+	return this->user;
 }
 
 
@@ -271,4 +293,39 @@ vector<Pessoa*> Gestao::LerAlunos(string fich)
 	return users;
 }
 
+void Gestao :: criarAluno()
+{
+	
+	BDados *ligacao = ligar();
+
+	string  nome;int numero;
+	vector<double> notas;
+	system("cls");
+	cout << "introduza o nome : ";
+	cin >> nome;
+	cout << "\nintroduza o numero (0 - para gerar automaticamente): ";
+	cin >> numero;
+
+	if (!ligacao->jaExisteAluno(numero))
+	{
+		Aluno a(nome,numero,notas);
+		ligacao->regAluno(&a);
+	}
+	else
+	{
+		cout << "O numero de aluno fornecido ja existe!!!";
+		criarAluno();
+	}
+	delete ligacao;
+
+}
+
+BDados* Gestao :: ligar()
+{
+	string utilizador = "B6_5";
+	string palavra = "xico";
+	string bd = "193.136.62.27:1521/pdborcl";
+	BDados *ligacao = new BDados(utilizador, palavra, bd);
+	return ligacao;
+}
 #endif

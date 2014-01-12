@@ -4,7 +4,7 @@
 #include <iomanip> 
 #include <occi.h>
 #include "Aluno.h"
-#include "Mensagem.h"
+//#include "Mensagem.h"
 #include "Utilizador.h"
 //#include <list>
 //#include <vector>
@@ -22,11 +22,15 @@ public:
 	~ BDados();   
 	list <Aluno> lerAlunos(); // Método para ler uma lista de clientes
 	vector<Mensagem> CarregaMsg();
-	Utilizador& login(string _usr, string _pw);
+	Pessoa* login(string _usr, string _pw);
 
 	Connection * Ligacao() const { return ligacao; }
 	void Ligacao(Connection * val) { ligacao = val; }
 	void enviaMsgBD(string _usr, string cod_destino, string assunto, string msg, string anexo);
+
+	// regAluno
+	bool jaExisteAluno(int numero );
+	void regAluno(Pessoa * aluno);
 };
 
 	BDados::BDados(string user, string passwd, string db) 
@@ -42,7 +46,7 @@ public:
 	} 
 
 	/// método login
-	Utilizador& BDados::login(string _usr, string _pw)
+	Pessoa* BDados::login(string _usr, string _pw)
 	{
 		Statement *instruc;
 		system("cls");
@@ -51,7 +55,7 @@ public:
 		ResultSet *rset = instruc->executeQuery("SELECT * FROM UTILIZADOR");
 
 		bool match = false;
-		Utilizador* uti;
+		Utilizador  * uti;
 		vector<Mensagem> msg;
 		while (rset->next()){
 			string cod = rset->getString(1);
@@ -86,11 +90,11 @@ public:
 		}
 		if (match){
 			cout << "Sucesso";
-			return *uti;
+			return uti;
 		}
 		else{
 			cout << "falhou login";
-			return *uti;
+			return uti;
 		}		
 	}
 	void BDados::enviaMsgBD(string _usr, string cod_destino, string assunto, string msg, string anexo)
@@ -109,6 +113,40 @@ public:
 		rset2 = instruc->executeQuery();
 		instruc->closeResultSet(rset2);
 	}
+
+	bool BDados :: jaExisteAluno(int numero )
+	{
+		
+
+		Statement *instruc;
+
+		instruc = ligacao->createStatement("SELECT * FROM ALUNO");
+		instruc->setInt(1, numero);
+		ResultSet *rset = instruc->executeQuery();
+		if (rset->isNull(0)) return false;
+		
+		return true;
+	}
+
+	void BDados :: regAluno(Pessoa * aluno)
+	{
+		Statement *instruc;
+		if (aluno->getNumero() == 0)
+		{
+			instruc = ligacao->createStatement("INSERT INTO ALUNO (COD_ALUNO,NOME) VALUES (:1, SEQ_COD_ALUNO.NEXTVAL)");
+			instruc->setString(1, aluno->getNome());
+		}
+		else
+		{
+			instruc = ligacao->createStatement("INSERT INTO ALUNO (COD_ALUNO,NOME) VALUES (:1, :2)");
+			instruc->setString(1, aluno->getNome());
+			instruc->setInt(2, aluno->getNumero());
+
+		}
+		
+		
+	}
+
 
 	//list <Aluno> BDados::lerAlunos() 
 	//{ 

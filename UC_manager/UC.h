@@ -17,7 +17,7 @@ class UC
 {
 private:
 	string cod_uc;
-	int edicao;
+	string edicao;
 	int ano, semestre;
 	string regente;
 	vector<Pessoa*> alunos;
