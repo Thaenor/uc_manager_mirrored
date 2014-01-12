@@ -34,8 +34,8 @@ public:
 	~UC();                          /* Destrutor */
 	UC(const UC &other);            /* Construtor Copia */
 	UC* clone() const;              /* construtor Clone */
-	void print(ostream &out) const;
-	void write();                   /*write UC name*/
+	void escreve(ostream &out) const;
+	void listar();                   /*listar UC name*/
 
 	//string getCod()const;            /*Gets & set*/
 	string getRegente()const;
@@ -124,12 +124,12 @@ public:
 	void UC::setRegente(string regente) { this->regente = regente; }
 
 
-	void UC::print(ostream &out) const
+	void UC::escreve(ostream &out) const
 	{
 		out << "Codigo UC = " << cod_uc << " regente: " << regente << ". ";
 	}
 
-	void UC::write()
+	void UC::listar()
 	{
 		cout << "Unidade curricular: " << regente;
 	}
@@ -161,9 +161,9 @@ public:
 
 	/****************************************...************************************************/
 
-	/*  Overl0ad print operator - NORMAL  */
+	/*  Overl0ad escreve operator - NORMAL  */
 	ostream& operator<<(ostream& out,UC uc){
-		uc.print(out);
+		uc.escreve(out);
 		return out;
 	}
 
