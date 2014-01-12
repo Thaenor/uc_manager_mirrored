@@ -123,6 +123,8 @@ void janelaAdicionarUC() //janela adiciona UC
 	system("cls");
 	cout << "-----Adicionar UC-----" << endl << endl << "0-Voltar" << endl
 		<< endl << "m-Mensagens" << endl;
+	_gestao.criarUC();
+	janelaBV_Regente();
 }
 void janelaRemoverUC() //janela adiciona UC
 {
@@ -177,7 +179,7 @@ void janelaGerirDocente() //só acessivel pelo regente
 	switch (opc)
 	{
 	case '0':janelaGerirConteudo();
-	case '1':_gestao.criarDocente();
+	case '1':_gestao.criarDocente(); janelaGerirDocente();
 	case '2':;
 	case 'm':janelaMensagens();
 	default: cout << endl << ("Opcao incorreta!!!   ");

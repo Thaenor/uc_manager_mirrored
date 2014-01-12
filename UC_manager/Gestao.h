@@ -344,9 +344,11 @@ void Gestao :: criarDocente()
 	}
 	else
 	{
-		cout << "O numero de aluno fornecido ja existe!!!";
+		cout << "A sigla de docente fornecido ja existe!!!";
 		criarDocente();
 	}
+	cout << "Docente criado com sucesso..." << endl,
+	system("pause");
 	delete ligacao;
 
 }
@@ -380,7 +382,7 @@ void Gestao :: criarUC()
 	}
 	else
 	{
-		cout << "O numero de aluno fornecido ja existe!!!";
+		cout << "Codigo UC já existe!";
 		criarUC();
 	}
 	delete ligacao;
