@@ -50,6 +50,8 @@ public:
 	//Criar docente
 	void criarDocente();
 
+	//criar uc
+	void criarUC();
 
 
 };
@@ -344,6 +346,38 @@ void Gestao :: criarDocente()
 	{
 		cout << "O numero de aluno fornecido ja existe!!!";
 		criarDocente();
+	}
+	delete ligacao;
+
+}
+
+void Gestao :: criarUC()
+{
+	BDados *ligacao = ligar();
+
+	string regente; string cod_uc; string nome; string edicao; int ano;int semestre	;
+	system("cls");
+	cout << "introduza o nome : ";
+	cin.ignore();
+	getline(cin,nome);
+	cout << "\nintroduza a sigla : ";
+	getline(cin,cod_uc);
+	cout << "\nintroduza a edicao : ";
+	getline(cin,edicao);
+	cout << "\nintroduza o ano";
+	getline(cin,ano);
+
+	regente = user->getCod_utilizador;
+
+	if (!ligacao->jaExisteDocente(sigla))
+	{
+		Utilizador u(nome,sigla,'D');
+		ligacao->regDocente(&u);
+	}
+	else
+	{
+		cout << "O numero de aluno fornecido ja existe!!!";
+		criarUC();
 	}
 	delete ligacao;
 

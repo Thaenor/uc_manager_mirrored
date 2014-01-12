@@ -17,8 +17,9 @@ class UC
 {
 private:
 	string cod_uc;
+	string nome;
 	string edicao;
-	int ano, semestre;
+	string ano, semestre;
 	string regente;
 	vector<Pessoa*> alunos;
 	vector<Pessoa*> utilizador;
@@ -27,7 +28,7 @@ private:
 
 public:
 	UC();                           /* Construtor por Defeito */
-	UC(string ID, string name, int ano, int semestre);     /* Construtor com parametros */
+	UC(string _regente, string _cod_uc, string _nome, string _edicao, string ano, string semestre);     /* Construtor com parametros */
 	~UC();                          /* Destrutor */
 	UC(const UC &other);            /* Construtor Copia */
 	UC* clone() const;              /* construtor Clone */
@@ -44,9 +45,9 @@ public:
 	bool operator > (const UC &other) const;
 	bool operator==(const UC& other) const;
 
-	int getSemestre() const;
+	string getSemestre() const;
 	void setSemestre(int val);
-	int getAno() const;
+	string getAno() const;
 	void setAno(int val);
 	vector<Pessoa*> getUtilizador() const;
 	void setUtilizador(vector<Pessoa*> Utilizador);
@@ -64,10 +65,12 @@ public:
 		regente = "default";
 	}
 
-	UC::UC(string cod_uc, string regente, int ano, int semestre)         /* Construtor com parametros */
+	UC::UC(string _regente, string _cod_uc, string _nome, string _edicao, string ano, string semestre)         /* Construtor com parametros */
 	{
-		this->cod_uc = cod_uc;
-		this->regente = regente;
+		this->cod_uc = _cod_uc;
+		this->nome = _nome;
+		this->regente = _regente;
+		this->edicao = _edicao;
 		this->ano = ano;
 		this->semestre = semestre;
 
@@ -96,8 +99,8 @@ public:
 
 	}
 
-	int UC::getSemestre() const { return semestre; }
-	int UC::getAno() const { return ano; }
+	string UC::getSemestre() const { return semestre; }
+	string UC::getAno() const { return ano; }
 	vector<Pessoa*> UC::getUtilizador() const { return utilizador; }
 	vector<Pessoa*> UC::getAlunos() const { return alunos; }
 	vector<Eventos*> UC::geteventos() const { return eventos; }
