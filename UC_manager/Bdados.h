@@ -6,6 +6,7 @@
 #include "Aluno.h"
 //#include "Mensagem.h"
 #include "Utilizador.h"
+#include "UC.h"
 //#include <list>
 //#include <vector>
 using namespace oracle::occi;
@@ -35,6 +36,11 @@ public:
 	// regDocente
 	bool jaExisteDocente(string  cod );
 	void regDocente(Pessoa * doc);
+
+	//uc
+	bool jaExisteCadeira(string  cod);
+	void registarUC(UC * uc);
+
 
 };
 
@@ -171,6 +177,20 @@ public:
 		return true;
 	}
 
+	bool BDados::jaExisteCadeira(string  cod)
+	{
+
+
+		Statement *instruc;
+
+		instruc = ligacao->createStatement("SELECT * FROM UC WHERE COD_UC=:1");
+		instruc->setString(1, cod);
+		ResultSet *rset = instruc->executeQuery();
+		if (!rset->next()) return false;
+
+		return true;
+	}
+
 	void BDados :: regDocente(Pessoa * doc)
 	{
 		Statement *instruc;
@@ -185,6 +205,21 @@ public:
 		
 	}
 
+	void BDados :: registarUC(UC * uc)
+	{
+		Statement *instruc;
+
+		instruc = ligacao->createStatement("INSERT INTO UC (COD_UC,COD_EDICAO,NOME,ANO,SEMESTRE) VALUES (:1,:2,:3,:4,:5)");
+		instruc->setString(1, uc->Cod_uc());
+		instruc->setString(2, uc->Edicao());
+		instruc->setString(3, uc->Nome());
+		instruc->setString(4, uc->Ano());
+		instruc->setString(5, uc->getSemestre());
+		ResultSet* rset2 = instruc->executeQuery();
+		ligacao->commit();
+		cout << endl << "Cadeira inserida com sucesso" << endl;
+
+	}
 
 	//list <Aluno> BDados::lerAlunos() 
 	//{ 

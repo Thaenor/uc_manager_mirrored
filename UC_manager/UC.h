@@ -19,7 +19,9 @@ private:
 	string cod_uc;
 	string nome;
 	string edicao;
-	string ano, semestre;
+	string ano;
+
+	string semestre;
 	string regente;
 	vector<Pessoa*> alunos;
 	vector<Pessoa*> utilizador;
@@ -36,7 +38,6 @@ public:
 	void write();                   /*write UC name*/
 
 	//string getCod()const;            /*Gets & set*/
-	void setCod(int ID);
 	string getRegente()const;
 	void setRegente(string regente);
 
@@ -45,10 +46,15 @@ public:
 	bool operator > (const UC &other) const;
 	bool operator==(const UC& other) const;
 
+	string Ano() const { return ano; }
+	void Ano(string val) { ano = val; }
+
+	string Nome() const { return nome; }
+	void Nome(string val) { nome = val; }
 	string getSemestre() const;
 	void setSemestre(int val);
 	string getAno() const;
-	void setAno(int val);
+	void setAno(string val);
 	vector<Pessoa*> getUtilizador() const;
 	void setUtilizador(vector<Pessoa*> Utilizador);
 	vector<Pessoa*> getAlunos() const;
@@ -56,6 +62,11 @@ public:
 	vector<Eventos*> geteventos() const;
 	void setEventos(vector<Eventos*> eventos);
 	UC &operator = (const UC &other);
+
+	string Cod_uc() const { return cod_uc; }
+	void Cod_uc(string val) { cod_uc = val; }
+	string Edicao() const { return edicao; }
+	void Edicao(string val) { edicao = val; }
 
 	};
 
@@ -107,7 +118,6 @@ public:
 	string UC::getRegente() const { return regente; }
 
 	void UC::setSemestre(int semestre) { this->semestre = semestre; }
-	void UC::setAno(int ano) { this->ano = ano; }
 	void UC::setUtilizador(vector<Pessoa*> utilizador) { this->utilizador = utilizador; }
 	void UC::setAlunos(vector<Pessoa*> alunos) { this->alunos = alunos; }
 	void UC::setEventos(vector<Eventos*> eventos) { this->eventos = eventos; }

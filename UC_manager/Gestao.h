@@ -355,7 +355,7 @@ void Gestao :: criarUC()
 {
 	BDados *ligacao = ligar();
 
-	string regente; string cod_uc; string nome; string edicao; int ano;int semestre	;
+	string regente; string cod_uc; string nome; string edicao; string ano;string semestre	;
 	system("cls");
 	cout << "introduza o nome : ";
 	cin.ignore();
@@ -364,15 +364,19 @@ void Gestao :: criarUC()
 	getline(cin,cod_uc);
 	cout << "\nintroduza a edicao : ";
 	getline(cin,edicao);
-	cout << "\nintroduza o ano";
+	cout << "\nintroduza o ano : ";
 	getline(cin,ano);
+	cout << "\nSemestre : ";
+	getline(cin, semestre);
+	cout << "\nSigla do regente : ";
+	getline(cin, regente);
 
-	regente = user->getCod_utilizador;
+	//regente = user->getCod_utilizador; é feito atraves de um trigger na bdd
 
-	if (!ligacao->jaExisteDocente(sigla))
+	if (!ligacao->jaExisteCadeira(cod_uc))
 	{
-		Utilizador u(nome,sigla,'D');
-		ligacao->regDocente(&u);
+		UC uc(regente, cod_uc, nome, edicao, ano, semestre);
+		ligacao->registarUC(&uc);
 	}
 	else
 	{

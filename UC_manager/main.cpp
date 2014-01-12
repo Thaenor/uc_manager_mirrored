@@ -123,19 +123,7 @@ void janelaAdicionarUC() //janela adiciona UC
 	system("cls");
 	cout << "-----Adicionar UC-----" << endl << endl << "0-Voltar" << endl
 		<< endl << "m-Mensagens" << endl;
-	char opc;
-	cin >> opc;
-	switch (opc)
-	{
-	case '0':janelaBV_Regente();
-	case '1':;
-	case '2':;
-	case '3':;
-	case 'm':janelaMensagens();
-	default:cout << endl << ("Opcao incorreta!!!   ");
-		system("pause");
-		system("cls");
-		janelaAdicionarUC();
+	_gestao->
 	}
 }
 void janelaRemoverUC() //janela adiciona UC
