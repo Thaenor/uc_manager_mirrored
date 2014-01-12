@@ -123,8 +123,6 @@ void janelaAdicionarUC() //janela adiciona UC
 	system("cls");
 	cout << "-----Adicionar UC-----" << endl << endl << "0-Voltar" << endl
 		<< endl << "m-Mensagens" << endl;
-	_gestao->
-	}
 }
 void janelaRemoverUC() //janela adiciona UC
 {
