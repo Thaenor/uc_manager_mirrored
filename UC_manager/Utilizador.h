@@ -19,7 +19,7 @@ class Utilizador : public Pessoa
 	public:
 	Utilizador();
 	Utilizador(string nome,string cod_utilizador, char tipo, vector<Mensagem>msg);
-	Utilizador(string nome, string sigla);
+	Utilizador(string nome, string sigla, char tipo);
 	~ Utilizador();
 	Utilizador(const Utilizador &other);            /* Construtor Copia */
 	virtual Utilizador* clone() ;						/* construtor Clone */
@@ -58,9 +58,10 @@ Utilizador::Utilizador(string nome, string _cod_utilizador, char _tipo, vector<M
 	msg = _msg;
 }
 
-Utilizador::Utilizador(string n, string c): Pessoa(n)
+Utilizador::Utilizador(string n, string c, char type): Pessoa(n)
 {
 	cod_utilizador = c;
+	tipo = type;
 }
 
 Utilizador::~Utilizador()         /* Destrutor */

@@ -47,8 +47,8 @@ public:
 	//criar aluno
 	void criarAluno();
 
-
-	
+	//Criar docente
+	void criarDocente();
 
 
 
@@ -229,7 +229,7 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 			pos++;
 			inic = pos;
 			string nome(linha.substr(inic, linha.size()));
-			Utilizador * p = new Utilizador(nome, sigla);
+			Utilizador * p = new Utilizador(nome, sigla, 'D');
 			users.push_back(p);
 			
 
@@ -302,7 +302,9 @@ void Gestao :: criarAluno()
 	vector<double> notas;
 	system("cls");
 	cout << "introduza o nome : ";
-	cin >> nome;
+	cin.ignore();
+	getline(std::cin,nome);
+	cout << "\n";
 	cout << "\nintroduza o numero (0 - para gerar automaticamente): ";
 	cin >> numero;
 
@@ -319,6 +321,35 @@ void Gestao :: criarAluno()
 	delete ligacao;
 
 }
+
+void Gestao :: criarDocente()
+{
+	BDados *ligacao = ligar();
+
+	string  nome;string sigla;
+	vector<double> notas;
+	system("cls");
+	cout << "introduza o nome : ";
+	cin.ignore();
+	getline(cin,nome);
+	cout << "\nintroduza a sigla : ";
+	getline(cin,sigla);
+
+	if (!ligacao->jaExisteDocente(sigla))
+	{
+		Utilizador u(nome,sigla,'D');
+		ligacao->regDocente(&u);
+	}
+	else
+	{
+		cout << "O numero de aluno fornecido ja existe!!!";
+		criarDocente();
+	}
+	delete ligacao;
+
+}
+
+
 
 BDados* Gestao :: ligar()
 {

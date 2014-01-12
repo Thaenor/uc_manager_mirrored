@@ -31,6 +31,11 @@ public:
 	// regAluno
 	bool jaExisteAluno(int numero );
 	void regAluno(Pessoa * aluno);
+
+	// regDocente
+	bool jaExisteDocente(string  cod );
+	void regDocente(Pessoa * doc);
+
 };
 
 	BDados::BDados(string user, string passwd, string db) 
@@ -120,10 +125,10 @@ public:
 
 		Statement *instruc;
 
-		instruc = ligacao->createStatement("SELECT * FROM ALUNO");
+		instruc = ligacao->createStatement("SELECT * FROM ALUNO WHERE COD_ALUNO=:1");
 		instruc->setInt(1, numero);
 		ResultSet *rset = instruc->executeQuery();
-		if (rset->isNull(0)) return false;
+		if (!rset->next()) return false;
 		
 		return true;
 	}
@@ -133,17 +138,50 @@ public:
 		Statement *instruc;
 		if (aluno->getNumero() == 0)
 		{
-			instruc = ligacao->createStatement("INSERT INTO ALUNO (COD_ALUNO,NOME) VALUES (:1, SEQ_COD_ALUNO.NEXTVAL)");
+			instruc = ligacao->createStatement("INSERT INTO ALUNO (COD_ALUNO,NOME) VALUES (SEQ_COD_ALUNO.NEXTVAL,:1)");
 			instruc->setString(1, aluno->getNome());
+			ResultSet* rset2 = instruc->executeQuery();
+
 		}
 		else
 		{
 			instruc = ligacao->createStatement("INSERT INTO ALUNO (COD_ALUNO,NOME) VALUES (:1, :2)");
-			instruc->setString(1, aluno->getNome());
-			instruc->setInt(2, aluno->getNumero());
+			instruc->setString(2, aluno->getNome());
+			instruc->setInt(1, aluno->getNumero());
+			ResultSet* rset2 = instruc->executeQuery();
+
+			
 
 		}
+		ligacao->commit();
 		
+	}
+
+	bool BDados :: jaExisteDocente(string  cod )
+	{
+		
+
+		Statement *instruc;
+
+		instruc = ligacao->createStatement("SELECT * FROM UTILIZADOR WHERE COD_UTILIZADOR=:1");
+		instruc->setString(1, cod);
+		ResultSet *rset = instruc->executeQuery();
+		if (!rset->next()) return false;
+		
+		return true;
+	}
+
+	void BDados :: regDocente(Pessoa * doc)
+	{
+		Statement *instruc;
+		
+			instruc = ligacao->createStatement("INSERT INTO UTILIZADOR (COD_UTILIZADOR,NOME) VALUES (:1,:2)");
+			instruc->setString(1, doc->getCod_utilizador());
+			instruc->setString(2, doc->getNome());
+			ResultSet* rset2 = instruc->executeQuery();
+
+		
+		ligacao->commit();
 		
 	}
 

@@ -191,7 +191,7 @@ void janelaGerirDocente() //só acessivel pelo regente
 	switch (opc)
 	{
 	case '0':janelaGerirConteudo();
-	case '1':;
+	case '1':_gestao.criarDocente();
 	case '2':;
 	case 'm':janelaMensagens();
 	default: cout << endl << ("Opcao incorreta!!!   ");
@@ -211,7 +211,7 @@ void janelaGerirAlunos() //só acessivel pelo regente
 	switch (opc)
 	{
 	case '0':janelaBV_Regente();
-	case '1':;
+	case '1':_gestao.criarAluno();
 	case '2':;
 	case '3':;
 	case 'm':janelaMensagens();
