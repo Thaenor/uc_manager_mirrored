@@ -3,16 +3,6 @@
 
 #include <fstream>
 #include "UC.h"
-#include <algorithm>
-#include <stdexcept>
-//#include "up_and_down.h"
-#include "Avaliacao.h"
-#include "Sala.h"
-
-string app_key = "54lc1hrozp8u01k";
-string app_secret = "8tuyvtv4y2dg072";
-string token =  "304pyo06bbqdhtr1";
-string token_secret = "hn4qk5vmeusmaes";
 //#include <list>
 using namespace std;
 
@@ -21,16 +11,21 @@ class Gestao
 private:
 
 	Pessoa * user;
-	UC uc;
-	
+	UC* uc;
+	string cod_user;
+	string cod_edicao;
+	string cod_uc;
+
+
 	void destroy();
 
 public:
 	//Construtor e destrutor
 	Gestao();
-	Gestao(Pessoa * user, UC uc);
+	Gestao(Pessoa * user, UC * uc);
 	Gestao(const Gestao &g);
 	~Gestao();
+
 
 	//sets/gets
 	void setUser(Pessoa * user);
@@ -42,9 +37,22 @@ public:
 	//ligacao
 	BDados* ligar();
 
+	void setUc(UC* val) { 
+		this->uc = val;
+		 }
 
+	void setcod_uc(string cod, string edicao)
+	{
+		cod_uc = cod;
+		cod_edicao = edicao;
+	}
+	void set_cod_user(string cod){ cod_user = cod; }
+
+	string get_cod_uc(){ return cod_uc; }
+	string get_cod_edicao(){ return cod_edicao; }
+	string get_user(){ return cod_user; }
 	//leitura Teste
-	vector<Aluno> LerTeste(string fich,Avaliacao desc);
+	vector<Aluno> LerTeste(string fich);
 	double calcAlineas(vector<double> notas, vector<double> cota);
 
 	//leitura de docentes
@@ -67,10 +75,9 @@ public:
 	//alterar Login
 	void alterarLogin(string pw);
 
-	UC Uc() const { return uc; }
-	void Uc(UC val) { uc = val; }
-	void atualizarSumario(UC* uc, string texto, string cod_ut);
-	Avaliacao getAval(string mom);
+	UC* Uc() const { return uc; }
+	void atualizarSumario(string texto,string ed,string cod, string codq);
+	void ListarUC(vector<UC*> cadeiras);
 };
 
 //construtor e destrutor
@@ -78,7 +85,7 @@ Gestao::Gestao()
 {
 }
 
-Gestao::Gestao(Pessoa * _user, UC _uc)
+Gestao::Gestao(Pessoa * _user, UC * _uc)
 {	
 	user = _user;
 	uc = _uc;
@@ -112,9 +119,20 @@ void Gestao::ListarMensagem(vector<Mensagem> ms)
 	}
 }
 
+void Gestao::ListarUC(vector<UC*> cadeiras)
+{
+	vector<UC*>::iterator it;
+	int c = 1;
+	for (it = cadeiras.begin(); it != cadeiras.end(); it++) {
+		cout << "-" << c << "-	";
+		(*it)->listar();
+		c++;
+
+	}
+}
 void Gestao :: setUser(Pessoa * _user)
 {
-	this->user = user;
+	this->user = _user;
 }
 
 Pessoa * Gestao :: getUser()
@@ -124,15 +142,12 @@ Pessoa * Gestao :: getUser()
 
 
 
-vector<Aluno> Gestao::LerTeste(string fich,Avaliacao aval)
+vector<Aluno> Gestao::LerTeste(string fich)
 {
 	int inic = 0;
 	string linha;
 	ifstream fx;
-	BDados *ligacao = ligar();
 
-	string caminho = "D:\Dropbox\Aplicativos\UC_Manager_Link";
-	caminho +=fich;
 	//dados importados
 	vector<double> cotacoes;
 	list<double> notas;
@@ -141,7 +156,8 @@ vector<Aluno> Gestao::LerTeste(string fich,Avaliacao aval)
 	int n_al;
 	int num;
 
-	fx.open(caminho);
+
+	fx.open(fich);
 	if (!fx)
 	{
 		cout << "Ficheiro de Teste nao existe !" << endl;
@@ -203,8 +219,7 @@ vector<Aluno> Gestao::LerTeste(string fich,Avaliacao aval)
 		}
 		vector<double> nota;
 		nota.push_back(calcAlineas(n, cotacoes));
-		
-		ligacao->regAval_Notas(*it, nota[0], aval);
+
 		alunos.push_back(Aluno(*it, nota));
 	}
 	ListarTeste(alunos);
@@ -231,12 +246,6 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 	int inic = 0;
 	string linha;
 	ifstream fx;
-	
-	string caminho = "D:\Dropbox\Aplicativos\UC_Manager_Link";
-	caminho +=fich;
-
-	//dropfuncs::dropbox::isep_credentials(app_key,app_secret,token,token_secret);						 
-	//dropfuncs::dropbox::isep_down(fich, fich, false);
 
 	BDados *ligacao = ligar();
 
@@ -265,7 +274,7 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 
 		}
 	}
-	//printPessoa(users);//tirar se nao funcionar
+	printPessoa(users);//tirar se nao funcionar
 	return users;
 }
 
@@ -292,16 +301,10 @@ vector<Pessoa*> Gestao::LerAlunos(string fich)
 	int inic = 0;
 	string linha;
 	ifstream fx;
-	string caminho = "D:/Dropbox/Aplicativos/UC_Manager_Link/";
-	caminho +=fich;
-	//dropfuncs::dropbox::isep_credentials(app_key,app_secret,token,token_secret);		
-	//dropfuncs::dropbox::isep_up("hello1.txt", false);
-	//			 
-	//dropfuncs::dropbox::isep_down(fich, fich, false);
 
 	BDados *ligacao = ligar();
 
-	fx.open(caminho);
+	fx.open(fich);
 	if (!fx)
 	{
 		cout << "Ficheiro de Alunos nao existe !" << endl;
@@ -328,7 +331,7 @@ vector<Pessoa*> Gestao::LerAlunos(string fich)
 
 		}
 	}
-	//printPessoa(users);
+	printPessoa(users);
 	return users;
 }
 
@@ -426,10 +429,11 @@ void Gestao :: criarUC()
 
 }
 
-void Gestao::atualizarSumario(UC* uc, string texto, string cod_ut)
+void Gestao::atualizarSumario(string texto, string ed, string cod, string codq)
+
 {
-	BDados *bd;
-	bd->addSumario(uc->Cod_uc(), uc->Edicao(), cod_ut, texto);
+	BDados* bd = ligar();
+	bd->addSumario(ed,cod , user->getCod_utilizador(), texto);//era suposto passar o *uc mas nao foi possivel implementar
 }
 
 
@@ -448,13 +452,4 @@ void Gestao :: alterarLogin(string pw)
 	ligacao->alterarLogin(user, pw);
 
 }
-
-Avaliacao Gestao :: getAval(string mom)
-{
-		BDados *ligacao = ligar();
-		return ligacao->getAval(uc,mom);
-
-}
-				
-
 #endif

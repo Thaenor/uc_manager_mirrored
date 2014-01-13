@@ -67,7 +67,12 @@ public:
 
 	string Cod_uc() const { return cod_uc; }
 	void Cod_uc(string val) { cod_uc = val; }
-	string Edicao() const { return edicao; }
+	string Edicao() const {
+		/*if (edicao.empty()==false){
+			return edicao;
+		}
+		return "sem edicao"*/return this->edicao;
+	}
 	void Edicao(string val) { edicao = val; }
 
 	// sumários
@@ -121,7 +126,14 @@ public:
 	vector<Pessoa*> UC::getUtilizador() const { return utilizador; }
 	vector<Pessoa*> UC::getAlunos() const { return alunos; }
 	vector<Eventos*> UC::geteventos() const { return eventos; }
-	string UC::getRegente() const { return regente; }
+	string UC::getRegente() const { 
+		/*if (regente.empty() == false)
+		{
+		return regente;
+		}*/
+		//return "Sem regente" ; 
+		return this->regente;
+	}
 
 	void UC::setSemestre(int semestre) { this->semestre = semestre; }
 	void UC::setUtilizador(vector<Pessoa*> utilizador) { this->utilizador = utilizador; }
@@ -151,7 +163,7 @@ public:
 
 	void UC::listar()
 	{
-		cout << "Unidade curricular: " << regente;
+		cout << "Unidade curricular: " << cod_uc<<" - "<<edicao<<" - "<<nome<<endl;
 	}
 
 	/*******************************************************************************************/
