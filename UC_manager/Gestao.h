@@ -53,6 +53,10 @@ public:
 	//criar uc
 	void criarUC();
 
+	//alterar Login
+	void alterarLogin(string pw);
+
+
 
 };
 
@@ -212,6 +216,8 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 	string linha;
 	ifstream fx;
 
+	BDados *ligacao = ligar();
+
 	fx.open(fich);
 	if (!fx)
 	{
@@ -232,18 +238,18 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 			inic = pos;
 			string nome(linha.substr(inic, linha.size()));
 			Utilizador * p = new Utilizador(nome, sigla, 'D');
-			users.push_back(p);
-			
+			ligacao->regDocente(p);
+			users.push_back(p);		
 
 		}
 	}
-	printPessoa(users);
+	printPessoa(users);//tirar se nao funcionar
 	return users;
 }
 
 void Gestao::printPessoa(vector<Pessoa*> t)
 {
-	vector<Pessoa*>::iterator it;
+	vector<Pessoa*>::const_iterator it;
 	if (strcmp(&(typeid(**it).name())[0], &("class Utilizador")[0]) == 0){
 		for (it = t.begin(); it != t.end(); it++) {
 
@@ -264,6 +270,8 @@ vector<Pessoa*> Gestao::LerAlunos(string fich)
 	int inic = 0;
 	string linha;
 	ifstream fx;
+
+	BDados *ligacao = ligar();
 
 	fx.open(fich);
 	if (!fx)
@@ -286,6 +294,7 @@ vector<Pessoa*> Gestao::LerAlunos(string fich)
 			inic = pos;
 			string nome(linha.substr(inic, linha.size()));
 			Aluno * p = new Aluno(nome, num);
+			ligacao->regAluno(p);
 			users.push_back(p);
 
 
@@ -398,5 +407,12 @@ BDados* Gestao :: ligar()
 	string bd = "193.136.62.27:1521/pdborcl";
 	BDados *ligacao = new BDados(utilizador, palavra, bd);
 	return ligacao;
+}
+
+void Gestao :: alterarLogin(string pw)
+{
+	BDados *ligacao = ligar();
+	ligacao->alterarLogin(user, pw);
+
 }
 #endif

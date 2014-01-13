@@ -28,6 +28,11 @@ void janelaGerirAlunos();
 void janelaAdicionarUC();
 void janelaRemoverUC();
 void janelaGerirDocente();
+
+void carregarAlunos();
+void marcarReuniao();
+void alterarLogin();
+
 /*******************************************************************************************/
 
 int main(void)
@@ -201,7 +206,7 @@ void janelaGerirAlunos() //só acessivel pelo regente
 	case '0':janelaBV_Regente();
 	case '1':_gestao.criarAluno();
 	case '2':;
-	case '3':;
+	case '3':carregarAlunos();
 	case 'm':janelaMensagens();
 	default: cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
@@ -402,7 +407,31 @@ void janelaEnviarMensagem() // enviar mensagem (completo)
 	}
 }
 
+void alterarLogin()
+{
+	system("cls");
+	string pw;
+	cout << "introduza a sua nova password : ";
+	cin >> pw;
 
+	_gestao.alterarLogin(pw);
+}
+
+void marcarReuniao()
+{
+	system("cls");
+	string data_ini;string data_fim;string desc;
+	int pri ; 
+}
+
+void carregarAlunos()
+{
+	string caminho;
+	cout << "introduza o caminho do ficheiro de Alunos : ";
+	cin.ignore();
+	getline(cin,caminho);
+	_gestao.LerAlunos(caminho);
+}
 
 
 

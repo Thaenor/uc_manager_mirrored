@@ -41,6 +41,10 @@ public:
 	bool jaExisteCadeira(string  cod);
 	void registarUC(UC * uc);
 
+	//alterar Login
+	void alterarLogin(Pessoa * user, string pw);
+
+
 
 };
 
@@ -218,6 +222,16 @@ public:
 		ResultSet* rset2 = instruc->executeQuery();
 		ligacao->commit();
 		cout << endl << "Cadeira inserida com sucesso" << endl;
+
+	}
+
+	void BDados :: alterarLogin(Pessoa * user,string pw)
+	{
+		Statement *instruc;
+
+		instruc = ligacao->createStatement("UPDATE UTILIZADOR SET pw=:1 WHERE cod_utilizador=:2");
+		instruc->setString(1,pw);
+		instruc->setString(2,user->getCod_utilizador());
 
 	}
 
