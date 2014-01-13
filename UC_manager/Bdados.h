@@ -81,7 +81,7 @@ public:
 		ResultSet *rset = instruc->executeQuery("SELECT * FROM UTILIZADOR");
 
 		bool match = false;
-		Utilizador  * uti;
+		Utilizador  * uti = new Utilizador();
 		vector<Mensagem> msg;
 		while (rset->next()){
 			string cod = rset->getString(1);
