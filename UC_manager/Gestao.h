@@ -65,8 +65,9 @@ public:
 	vector<Aluno> LerTeste(string fich,Avaliacao desc);
 	double calcAlineas(vector<double> notas, vector<double> cota);
 
-			//leitura Teste
-	vector<Aluno> LerTeste(string fich,Avaliacao desc);
+	void ListarUC(vector<UC*> cadeiras);
+
+	Avaliacao getAval(string mom);
 
 	//leitura de docentes
 	vector<Pessoa*> lerDocentes(string fich);
@@ -362,6 +363,35 @@ vector<Pessoa*> Gestao::LerAlunos(string fich)
 	//printPessoa(users);
 	return users;
 }
+
+void Gestao :: criarAluno()
+{
+	
+	BDados *ligacao = ligar();
+
+	string  nome;int numero;
+	vector<double> notas;
+	system("cls");
+	cout << "introduza o nome : ";
+	cin.ignore();
+	getline(std::cin,nome);
+	cout << "\n";
+	cout << "\nintroduza o numero (0 - para gerar automaticamente): ";
+	cin >> numero;
+
+	if (!ligacao->jaExisteAluno(numero))
+	{
+		Aluno a(nome,numero,notas);
+		ligacao->regAluno(&a);
+	}
+	else
+	{
+		cout << "O numero de aluno fornecido ja existe!!!";
+		criarAluno();
+	}
+	delete ligacao;
+
+}
 void Gestao :: criarDocente()
 {
 	BDados *ligacao = ligar();
@@ -454,7 +484,7 @@ void Gestao :: alterarLogin(string pw)
 Avaliacao Gestao :: getAval(string mom)
 {
 		BDados *ligacao = ligar();
-		return ligacao->getAval(uc,mom);
+		return ligacao->getAval(*uc,mom);
 
 }
 				
