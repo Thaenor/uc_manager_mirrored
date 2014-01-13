@@ -363,8 +363,10 @@ void janelaDisciplina()
 		}
 		;
 	case '5':
-
-		_gestao.Uc()->visualizarSumario();
+		(*it)->Sumarios(ligacao->carregarSumarios((*it)->Cod_uc(), (*it)->Edicao()));
+		(*it)->visualizarSumario();
+		system("PAUSE");
+		janelaUC();
 	case '6':;
 	case '7':;
 	case 'm':; janelaMensagens();

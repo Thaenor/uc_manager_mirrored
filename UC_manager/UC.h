@@ -155,10 +155,14 @@ public:
 
 	void UC::visualizarSumario()
 	{
-		for (vector<string>::iterator itv = sumarios.begin(); itv != sumarios.end(); itv++)
+		system("cls");
+		int i;
+		cout << "---Sumarios: ";
+		for (i = 0; i < sumarios.size(); i++)
 		{
-			cout << *itv << "---------------------------" << endl;
+			cout << endl << ""+i+1 <<  sumarios[i];
 		}
+		cout << endl;
 	}
 
 	void UC::listar()

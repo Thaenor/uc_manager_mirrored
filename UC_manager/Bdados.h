@@ -48,6 +48,7 @@ public:
 	void registarUC(UC * uc);
 	void addSumario(string cod_uc, string cod_edicao, string cod_utilizador, string texto);
 	vector<UC*> carregarUCs(string cod_u);
+	vector<string> carregarSumarios(string cod_uc, string cod_edicao);
 
 	//alterar Login
 	void alterarLogin(Pessoa * user, string pw);
@@ -333,6 +334,23 @@ public:
 		ligacao->commit();
 		cout << endl << "Avaliacao registada com sucesso" << endl;
 		instruc->closeResultSet(rset2);
+	}
+
+	vector<string> BDados::carregarSumarios(string cod_uc, string cod_edicao)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("SELECT * FROM SUMARIO WHERE COD_UC =:1 AND COD_EDICAO =:2");
+		instruc->setString(1, cod_uc);
+		instruc->setString(2, cod_edicao);
+		ResultSet* rset2 = instruc->executeQuery();
+		vector<string> sumarios;
+		while (rset2->next())
+		{
+			sumarios.push_back(rset2->getString(6));
+		}
+		
+		instruc->closeResultSet(rset2);
+		return sumarios;
 	}
 
 
