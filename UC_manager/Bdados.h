@@ -256,7 +256,7 @@ public:
 	{
 		
 		Statement *instruc;
-		instruc = ligacao->createStatement("SELECT * FROM UC WHERE COD_UC IN (SELECT COD_UC FROM DOCENTE_UC WHERE COD_UTILIZADOR =(:1))");
+		instruc = ligacao->createStatement("SELECT * FROM UC WHERE COD_UC IN (SELECT COD_UC FROM DOCENTE_UC WHERE COD_UTILIZADOR =(:1)) OR REGENTE =:1");
 		instruc->setString(1, cod_u);
 		ResultSet* rset = instruc->executeQuery();
 

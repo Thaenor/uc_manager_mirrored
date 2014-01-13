@@ -108,7 +108,7 @@ void janelaLogin()
 void janelaBV_Regente() //janela boas vindas
 {
 	system("cls");
-	cout << "-----Bem-vindo-----" << endl << endl << "0-Sair" << endl <<
+	cout << "-----Bem-vindo-----" << endl << endl << "0-Sair da aplicacao" << endl <<
 		"1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Fechar UC" << endl << "4-Janela UC" << endl << "----------"
 		<< endl << "m-Mensagens" << endl << endl << "A sua opcao: ";
 	char opc;
@@ -273,7 +273,7 @@ void janelaUC()
 	char opc;
 	system("cls");
 	if (_gestao.getUser()->getTipo() == 'D'){
-		cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
+		cout << "-----Janela UC-----" << endl << endl << "0-Sair da aplicacao" << endl <<
 			"1-Leccionadas" << endl << "2-Permissoes/Historico" <<endl<< "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 		cin >> opc;
 		switch (opc)
@@ -289,7 +289,7 @@ void janelaUC()
 		}
 	}
 	else{
-		cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
+		cout << "-----Janela UC-----" << endl << endl << "0-Sair da aplicacao" << endl <<
 			"1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << endl <<"3-Janela BV Regente"<<endl<< "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 		cin >> opc;
 		switch (opc)
@@ -407,6 +407,18 @@ void janelaVisualizacao()
 
 {
 	char opc;
+	cout << "Escolha a disciplina" << endl;
+	vector<UC*> cadeiras = ligacao->carregarUCs(_gestao.getUser()->getCod_utilizador());
+	_gestao.ListarUC(cadeiras);
+	cout << "Escolha UC : ";
+	cin >> opc;
+	int i = atoi(&opc);
+	vector<UC*> ::iterator it = cadeiras.begin();
+	i--;
+	it += i;
+	_gestao.setUc((*it)->clone());
+	system("PAUSE");
+	system("cls");
 	system("cls");
 	cout << "-----Visualizacao-----" << endl << endl << "0-Voltar" << endl <<
 		"1-Visualizar notas" << endl << "2-Visualizar sumarios" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
@@ -415,7 +427,12 @@ void janelaVisualizacao()
 	{
 	case '0':janelaUC();
 	case '1':;
-	case '2':;
+	case '2':
+		(*it)->Sumarios(ligacao->carregarSumarios((*it)->Cod_uc(), (*it)->Edicao()));
+		(*it)->visualizarSumario();
+		system("PAUSE");
+		janelaUC();
+		;
 	case 'm':janelaMensagens();
 	default:cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
