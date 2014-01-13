@@ -254,7 +254,7 @@ public:
 
 	vector<UC*> BDados::carregarUCs(string cod_u)
 	{
-		
+		//
 		Statement *instruc;
 		instruc = ligacao->createStatement("SELECT * FROM UC WHERE COD_UC IN (SELECT COD_UC FROM DOCENTE_UC WHERE COD_UTILIZADOR =(:1)) OR REGENTE =:1");
 		instruc->setString(1, cod_u);
