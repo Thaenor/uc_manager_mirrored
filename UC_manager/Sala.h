@@ -1,13 +1,10 @@
 #ifndef UC_Sala_H
 #define UC_Sala_H
 
-#include <string>
-#include <iostream>
-#include <vector>
+
 
 using namespace std;
 
-#include "Pessoa.h"
 
 class Sala
 {
@@ -25,12 +22,8 @@ public:
 	Sala(const Sala &other);
 	Sala* clone() const;
 	
-	string getCod_sala()const;
-	int getCapacidade()const;
 	int getCapacidade() const { return capacidade; }
 	void setCapacidade(int val) { capacidade = val; }
-	void setCod_sala(string cod_sala);
-	void setCapacidade(int capacidade);
 	std::string getCod_sala() const { return cod_sala; }
 	void setCod_sala(std::string val) { cod_sala = val; }
 

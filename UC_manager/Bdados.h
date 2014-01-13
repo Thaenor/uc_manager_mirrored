@@ -7,6 +7,7 @@
 //#include "Mensagem.h"
 #include "Utilizador.h"
 #include "UC.h"
+#include "Avaliacao.h"
 //#include <list>
 //#include <vector>
 using namespace oracle::occi;
@@ -46,6 +47,10 @@ public:
 	//alterar Login
 	void alterarLogin(Pessoa * user, string pw);
 
+	//existe Avaliacao
+	Avaliacao getAval(UC uc, string mom);
+	void regAval(Avaliacao aval);
+	void regAval_Notas(	int	it, double nota,Avaliacao aval);
 
 
 };
@@ -244,6 +249,7 @@ public:
 
 	vector<UC> BDados::carregarUClecionada(string cod_u)
 	{
+		vector<UC> vec;
 		Statement *instruc;
 		instruc = ligacao->createStatement("SELECT * FROM DOCENTE_UC WHERE COD_UTILIZADOR =:1");
 		instruc->setString(1, cod_u);
@@ -252,6 +258,7 @@ public:
 		{
 
 		}
+		return vec;
 	}
 
 	void BDados :: alterarLogin(Pessoa * user,string pw)
@@ -263,6 +270,64 @@ public:
 		instruc->setString(2,user->getCod_utilizador());
 
 	}
+
+	Avaliacao BDados ::getAval(UC uc, string mom)
+	{
+		Statement *instruc;
+
+		instruc = ligacao->createStatement("SELECT * FROM AVALICAO WHERE TIPO=:1 AND COD_UC=:2 AND COD_EDICAO=:3");
+		instruc->setString(1, mom);
+		instruc->setString(2, uc.Edicao());
+		instruc->setString(3, uc.Cod_uc());
+
+		ResultSet *rset = instruc->executeQuery();
+		rset->next();
+
+		int cod_aval = rset->getInt(1);
+		string tipo =rset->getString(2);
+		string cod_uc = rset->getString(3);
+		string cod_edicao = rset->getString(4);
+
+		
+		Avaliacao a(cod_aval,mom,uc);
+		return a;
+
+	}
+
+	void BDados :: regAval(Avaliacao aval)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO AVALIACAO(COD_AVAL,TIPO,COD_UC,COD_EDICAO) VALUES(SEQ_COD_AVAL.NEXTVAL, :1, :2,:3)");
+		instruc->setString(1, aval.getTipo());
+		instruc->setString(2,  (aval.getUC())->Cod_uc());
+		instruc->setString(3, (aval.getUC())->Edicao());
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Avaliacao registada com sucesso" << endl;
+		instruc->closeResultSet(rset2);
+
+	}
+
+	void BDados :: regAval_Notas(int it, double nota,Avaliacao aval)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO AVALIACAO_ALUNO(COD_AVAL,COD_ALUNO,NOTA_FINAL) VALUES( :1, :2,:3)");
+		instruc->setInt(1, aval.getCod_avaliacao());
+		instruc->setInt(2,  it);
+		instruc->setDouble(3, nota);
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Avaliacao registada com sucesso" << endl;
+		instruc->closeResultSet(rset2);
+	}
+
+
+
+
+
+
 
 
 

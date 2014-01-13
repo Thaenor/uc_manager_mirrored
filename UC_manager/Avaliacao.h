@@ -1,12 +1,7 @@
 #ifndef Avaliacao_
 #define Avaliacao_
-#include<vector>
-#include <string>
-#include<list>
 
-#include"Eventos.h"
-#include"Sala.h"
-#include"Pessoa.h"
+#include "Sala.h"
 using namespace std;
 
 class Avaliacao{
@@ -20,13 +15,15 @@ private:
 	vector<Sala*> salas;
 	vector<Pessoa*> monitores;
 	int docentes_sala;
+	UC * uc;
 	
 public:
 
 	Avaliacao();
 	~Avaliacao();
-	Avaliacao(int c, string t, string di, string df, int es,vector<Sala*> sa, vector<Pessoa*> moni, int doc);
-
+	Avaliacao(int c, string t, string di, string df, int es, vector<Sala*> sa, vector<Pessoa*> moni, int doc);
+	Avaliacao( string tipo, UC uc);
+	Avaliacao(int c, string t, UC);
 	int getDocentes_sala() const { return docentes_sala; }
 	void setDocentes_sala(int val) { docentes_sala = val; }
 	vector<Pessoa*> getMonitores() const { return monitores; }
@@ -43,6 +40,8 @@ public:
 	void setCod_avaliacao(int val) { cod_avaliacao = val; }
 	int getEstado() const { return estado; }
 	void setEstado(int val) { estado = val; }
+	UC * Avaliacao :: getUC();
+
 
 	Avaliacao& operator=(const Avaliacao &c);
 	bool operator==(const Avaliacao &c)const;
@@ -69,21 +68,38 @@ Avaliacao::Avaliacao(int c, string t, string di, string df, int es, vector<Sala*
 	docentes_sala = doc;
 }
 
+Avaliacao :: Avaliacao(int c, string t, UC _uc)
+{
+	*uc = _uc;
+	cod_avaliacao = c;
+	tipo = t;
+}
+
+
+
+Avaliacao :: Avaliacao(string _tipo, UC _uc)
+{
+	tipo = _tipo;
+	*uc = _uc;
+}
+
+
 Avaliacao& Avaliacao::operator=(const Avaliacao &c)
 {
-	cod_avaliacao = c.Cod_avaliacao();
-	tipo = c.Tipo();
-	data_inicio = c.Data_inicio();
-	data_fim = c.Data_fim();
-	estado = c.Estado();
-	salas = c.Salas();
-	monitores = c.Monitores();
-	docentes_sala = c.Docentes_sala();
+	cod_avaliacao = c.getCod_avaliacao();
+	tipo = c.getTipo();
+	data_inicio = c.getData_inicio();
+	data_fim = c.getData_fim();
+	estado = c.getEstado();
+	salas = c.getSalas();
+	monitores = c.getMonitores();
+	docentes_sala = c.getDocentes_sala();
+	return *this;
 }
 
 bool Avaliacao::operator==(const Avaliacao &c) const
 {
-	if (cod_avaliacao == c.Cod_avaliacao())
+	if (cod_avaliacao == c.getCod_avaliacao())
 	{
 		return true;
 	}
@@ -95,7 +111,7 @@ bool Avaliacao::operator==(const Avaliacao &c) const
 
 bool Avaliacao::operator>(const Avaliacao &c) const
 {
-	if (cod_avaliacao > c.Cod_avaliacao())
+	if (cod_avaliacao > c.getCod_avaliacao())
 	{
 		return true;	
 	}
@@ -110,5 +126,11 @@ void Avaliacao::escrever(ostream &o)const
 {
 	//o << "Codigo de avaliacao:" << cod_avaliacao<<endl;
 }
+
+UC * Avaliacao :: getUC()
+{
+	return uc;
+}
+
 
 #endif

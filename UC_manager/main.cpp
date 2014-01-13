@@ -29,7 +29,7 @@ void janelaGerirAlunos();
 void janelaAdicionarUC();
 void janelaRemoverUC();
 void janelaGerirDocente();
-
+void CarregaTeste();
 void carregarAlunos();
 void marcarReuniao();
 void alterarLogin();
@@ -208,7 +208,7 @@ void janelaGerirAlunos() //só acessivel pelo regente
 	case '0':janelaBV_Regente();
 	case '1':_gestao.criarAluno();
 	case '2':;
-	case '3':;
+	case '3':carregarAlunos();
 	case 'm':janelaMensagens();
 	default: cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
@@ -231,7 +231,7 @@ void janelaGerirEventos()
 	switch (opc)
 	{
 	case '0':janelaGerirConteudo();
-	case '1':;
+	case '1':CarregaTeste();
 	case '2':;
 	case '3':;
 	case '4':;
@@ -327,7 +327,7 @@ void janelaDisciplina()
 	{
 	case '0':janelaUC();
 	case '1':;
-	case '2':;
+	case '2':CarregaTeste();
 	case '3':;
 	case '4':
 		system("cls");
@@ -486,6 +486,26 @@ void carregarAlunos()
 	getline(cin,caminho);
 	_gestao.LerAlunos(caminho);
 }
+void CarregaTeste()
+{
+	string mom;
+	string fx;
+	cout << "insira o momento de avaliacao(ex.:T1) : ";
+	cin >> mom;
+	Avaliacao a = _gestao.getAval(mom);
+	if(a.getTipo() == "")
+	{
+		cout << "Momento de avaliacao inexistente";
+		system("PAUSE");
+		CarregaTeste();
+	}
+	
+	cout << "insira o nome do ficheiro";cin>>fx;
+	_gestao.LerTeste(fx,a);
+}
+
+
+
 
 
 
