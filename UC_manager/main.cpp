@@ -71,7 +71,7 @@ void janelaLogin()
 
 
 		ut = ligacao->login(_user, _pw);
- 		_gestao.setUser(ut);
+		_gestao.setUser(ut);
 		string null = "";
 
 		if (ut->getTipo() == 'D')
@@ -106,7 +106,7 @@ void janelaBV_Regente() //janela boas vindas
 {
 	system("cls");
 	cout << "-----Bem-vindo-----" << endl << endl << "0-Sair" << endl <<
-		"1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Remover UC" << endl<< "4-Janela UC"<<endl << "----------"
+		"1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Remover UC" << endl << "4-Janela UC" << endl << "----------"
 		<< endl << "m-Mensagens" << endl << endl << "A sua opcao: ";
 	char opc;
 	cin >> opc;
@@ -208,7 +208,7 @@ void janelaGerirAlunos() //só acessivel pelo regente
 	case '0':janelaBV_Regente();
 	case '1':_gestao.criarAluno();
 	case '2':;
-	case '3':carregarAlunos();
+	case '3':;
 	case 'm':janelaMensagens();
 	default: cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
@@ -247,7 +247,7 @@ void janelaUC()
 {
 	char opc;
 	system("cls");
-	if (_gestao.getUser()->getTipo() =='D' ){
+	if (_gestao.getUser()->getTipo() == 'D'){
 		cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
 			"1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 		cin >> opc;
@@ -267,7 +267,7 @@ void janelaUC()
 	}
 	else{
 		cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
-			"1-Leccionadas" << endl << "2-Permissoes/Historico" <<endl<<"3-Janela BV Regente"<< endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+			"1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << "3-Janela BV Regente" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 		cin >> opc;
 		switch (opc)
 		{
@@ -331,7 +331,7 @@ void janelaDisciplina()
 	case '3':;
 	case '4':
 		system("cls");
-		cout << "----Escrever sumário----" <<endl;
+		cout << "----Escrever sumário----" << endl;
 		cout << "Texto (enter para terminar):";
 		cin >> _texto;
 
@@ -342,7 +342,7 @@ void janelaDisciplina()
 			_gestao.Uc().adicionarSumario(_texto);
 			cout << _gestao.Uc() << endl;
 			system("PAUSE");
-			_gestao.atualizarSumario(&_gestao.Uc(),_gestao.getUser()->getCod_utilizador(), _texto);
+			_gestao.atualizarSumario(&_gestao.Uc(), _gestao.getUser()->getCod_utilizador(), _texto);
 			cout << "Sumário adicionado" << endl;
 			janelaDisciplina();
 

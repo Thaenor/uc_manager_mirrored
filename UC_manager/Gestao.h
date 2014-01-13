@@ -12,6 +12,7 @@ private:
 
 	Pessoa * user;
 	UC uc;
+	
 	void destroy();
 
 public:
@@ -56,8 +57,9 @@ public:
 	//alterar Login
 	void alterarLogin(string pw);
 
-
-
+	UC Uc() const { return uc; }
+	void Uc(UC val) { uc = val; }
+	void atualizarSumario(UC* uc, string texto, string cod_ut);
 };
 
 //construtor e destrutor
@@ -398,6 +400,11 @@ void Gestao :: criarUC()
 
 }
 
+void Gestao::atualizarSumario(UC* uc, string texto, string cod_ut)
+{
+	BDados *bd;
+	bd->addSumario(uc->Cod_uc(), uc->Edicao(), cod_ut, texto);
+}
 
 
 BDados* Gestao :: ligar()
