@@ -22,10 +22,6 @@ private:
 
 	Pessoa * user;
 	UC* uc;
-	string cod_user;
-	string cod_edicao;
-	string cod_uc;
-	
 
 	void destroy();
 
@@ -51,16 +47,7 @@ public:
 		this->uc = val;
 		 }
 
-	void setcod_uc(string cod, string edicao)
-	{
-		cod_uc = cod;
-		cod_edicao = edicao;
-	}
-	void set_cod_user(string cod){ cod_user = cod; }
 
-	string get_cod_uc(){ return cod_uc; }
-	string get_cod_edicao(){ return cod_edicao; }
-	string get_user(){ return cod_user; }
 	//leitura Teste
 	vector<Aluno> LerTeste(string fich,Avaliacao desc);
 	double calcAlineas(vector<double> notas, vector<double> cota);
@@ -92,6 +79,10 @@ public:
 	UC * Uc() const { return uc; }
 	void Uc(UC * val) { uc = val; }
 	void atualizarSumario(string texto, string ed, string cod, string codq);
+
+	//criarReuniao
+	void criarReuniao(string data_inicio, string data_fim, string des, int pri, string cod_sala);
+	void criarSala(string cod_sala, int capacidade);
 };
 
 //construtor e destrutor
@@ -487,6 +478,21 @@ Avaliacao Gestao :: getAval(string mom)
 		return ligacao->getAval(*uc,mom);
 
 }
-				
+
+void Gestao::criarReuniao(string data_inicio, string data_fim, string des, int pri,string cod_sala)
+{
+	BDados *ligacao = ligar();
+	ligacao->registarReuniao(data_inicio, data_fim, des, pri, user->getCod_utilizador(), uc->Cod_uc(), uc->Edicao(),cod_sala);
+}
+
+void Gestao::criarSala(string cod_sala,int capacidade)
+{
+	BDados *ligacao = ligar();
+	cout << "Qual a sala?" << endl;
+	cin >> cod_sala;
+	cout << "Qual a capacidade?" << endl;
+	cin >> capacidade;
+	ligacao->adicionarSala(cod_sala, capacidade);
+}
 
 #endif

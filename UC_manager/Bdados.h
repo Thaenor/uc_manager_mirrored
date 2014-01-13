@@ -52,7 +52,9 @@ public:
 
 	//alterar Login
 	void alterarLogin(Pessoa * user, string pw);
-
+	void registarReuniao(string data_inicio, string data_fim, string des, int prioridade, string cod_user, string cod_uc, string cod_edicao, string cod_sala);
+	void adicionarSala(string cod_sala, int capacidade);
+	//
 
 
 };
@@ -353,6 +355,35 @@ public:
 		return sumarios;
 	}
 
+	void BDados::registarReuniao(string data_inicio, string data_fim, string des, int prioridade, string cod_user, string cod_uc, string cod_edicao, string cod_sala)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO EVENTO(COD_EVENTO,COD_UC,COD_EDICAO,COD_SALA,COD_UTILIZADOR,DESCRICAO,DATA_INICIO,DATA_FIM) VALUES(SEQ_COD_AVAL.NEXTVAL,:1,:2,:3,:4,:5,TO_DATE(:6,'yy.mm.dd hh:mi'),TO_DATE(:7,'yy.mm.dd hh:mi'))");
+		instruc->setString(1, cod_uc);
+		instruc->setString(2, cod_edicao);
+		instruc->setString(3, cod_sala);
+		instruc->setString(4, cod_user);
+		instruc->setString(5, des);
+		instruc->setString(6, data_inicio);
+		instruc->setString(7, data_fim);
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Reuniao marcada com sucesso" << endl;
+		instruc->closeResultSet(rset2);
+	}
+	void BDados::adicionarSala(string cod_sala,int capacidade)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO SALA(COD_SALA,CAPACIDADE)VALUES(:1,:2)");
+		instruc -> setString(1, cod_sala);
+		instruc -> setInt(2, capacidade);
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Sala adicionada com sucesso" << endl;
+		instruc->closeResultSet(rset2);
+	}
 
 
 	//list <Aluno> BDados::lerAlunos() 
