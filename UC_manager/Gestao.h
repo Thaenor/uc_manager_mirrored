@@ -3,6 +3,16 @@
 
 #include <fstream>
 #include "UC.h"
+#include <algorithm>
+#include <stdexcept>
+//#include "up_and_down.h"
+#include "Avaliacao.h"
+#include "Sala.h"
+
+string app_key = "54lc1hrozp8u01k";
+string app_secret = "8tuyvtv4y2dg072";
+string token =  "304pyo06bbqdhtr1";
+string token_secret = "hn4qk5vmeusmaes";
 //#include <list>
 using namespace std;
 
@@ -15,7 +25,7 @@ private:
 	string cod_user;
 	string cod_edicao;
 	string cod_uc;
-
+	
 
 	void destroy();
 
@@ -52,8 +62,11 @@ public:
 	string get_cod_edicao(){ return cod_edicao; }
 	string get_user(){ return cod_user; }
 	//leitura Teste
-	vector<Aluno> LerTeste(string fich);
+	vector<Aluno> LerTeste(string fich,Avaliacao desc);
 	double calcAlineas(vector<double> notas, vector<double> cota);
+
+			//leitura Teste
+	vector<Aluno> LerTeste(string fich,Avaliacao desc);
 
 	//leitura de docentes
 	vector<Pessoa*> lerDocentes(string fich);
@@ -75,9 +88,9 @@ public:
 	//alterar Login
 	void alterarLogin(string pw);
 
-	UC* Uc() const { return uc; }
-	void atualizarSumario(string texto,string ed,string cod, string codq);
-	void ListarUC(vector<UC*> cadeiras);
+	UC * Uc() const { return uc; }
+	void Uc(UC * val) { uc = val; }
+	void atualizarSumario(string texto, string ed, string cod, string codq);
 };
 
 //construtor e destrutor
@@ -142,12 +155,15 @@ Pessoa * Gestao :: getUser()
 
 
 
-vector<Aluno> Gestao::LerTeste(string fich)
+vector<Aluno> Gestao::LerTeste(string fich,Avaliacao aval)
 {
 	int inic = 0;
 	string linha;
 	ifstream fx;
+	BDados *ligacao = ligar();
 
+	string caminho = "D:\Dropbox\Aplicativos\UC_Manager_Link";
+	caminho +=fich;
 	//dados importados
 	vector<double> cotacoes;
 	list<double> notas;
@@ -156,8 +172,7 @@ vector<Aluno> Gestao::LerTeste(string fich)
 	int n_al;
 	int num;
 
-
-	fx.open(fich);
+	fx.open(caminho);
 	if (!fx)
 	{
 		cout << "Ficheiro de Teste nao existe !" << endl;
@@ -219,7 +234,8 @@ vector<Aluno> Gestao::LerTeste(string fich)
 		}
 		vector<double> nota;
 		nota.push_back(calcAlineas(n, cotacoes));
-
+		
+		ligacao->regAval_Notas(*it, nota[0], aval);
 		alunos.push_back(Aluno(*it, nota));
 	}
 	ListarTeste(alunos);
@@ -246,6 +262,12 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 	int inic = 0;
 	string linha;
 	ifstream fx;
+	
+	string caminho = "D:\Dropbox\Aplicativos\UC_Manager_Link";
+	caminho +=fich;
+
+	//dropfuncs::dropbox::isep_credentials(app_key,app_secret,token,token_secret);						 
+	//dropfuncs::dropbox::isep_down(fich, fich, false);
 
 	BDados *ligacao = ligar();
 
@@ -274,7 +296,7 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 
 		}
 	}
-	printPessoa(users);//tirar se nao funcionar
+	//printPessoa(users);//tirar se nao funcionar
 	return users;
 }
 
@@ -301,10 +323,16 @@ vector<Pessoa*> Gestao::LerAlunos(string fich)
 	int inic = 0;
 	string linha;
 	ifstream fx;
+	string caminho = "D:/Dropbox/Aplicativos/UC_Manager_Link/";
+	caminho +=fich;
+	//dropfuncs::dropbox::isep_credentials(app_key,app_secret,token,token_secret);		
+	//dropfuncs::dropbox::isep_up("hello1.txt", false);
+	//			 
+	//dropfuncs::dropbox::isep_down(fich, fich, false);
 
 	BDados *ligacao = ligar();
 
-	fx.open(fich);
+	fx.open(caminho);
 	if (!fx)
 	{
 		cout << "Ficheiro de Alunos nao existe !" << endl;
@@ -331,39 +359,9 @@ vector<Pessoa*> Gestao::LerAlunos(string fich)
 
 		}
 	}
-	printPessoa(users);
+	//printPessoa(users);
 	return users;
 }
-
-void Gestao :: criarAluno()
-{
-	
-	BDados *ligacao = ligar();
-
-	string  nome;int numero;
-	vector<double> notas;
-	system("cls");
-	cout << "introduza o nome : ";
-	cin.ignore();
-	getline(std::cin,nome);
-	cout << "\n";
-	cout << "\nintroduza o numero (0 - para gerar automaticamente): ";
-	cin >> numero;
-
-	if (!ligacao->jaExisteAluno(numero))
-	{
-		Aluno a(nome,numero,notas);
-		ligacao->regAluno(&a);
-	}
-	else
-	{
-		cout << "O numero de aluno fornecido ja existe!!!";
-		criarAluno();
-	}
-	delete ligacao;
-
-}
-
 void Gestao :: criarDocente()
 {
 	BDados *ligacao = ligar();
@@ -452,4 +450,13 @@ void Gestao :: alterarLogin(string pw)
 	ligacao->alterarLogin(user, pw);
 
 }
+
+Avaliacao Gestao :: getAval(string mom)
+{
+		BDados *ligacao = ligar();
+		return ligacao->getAval(uc,mom);
+
+}
+				
+
 #endif
