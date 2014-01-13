@@ -14,6 +14,7 @@ Gestao _gestao;
 BDados *ligacao;
 Pessoa* ut;
 
+
 void janelaUC();
 void janelaLogin();
 void janelaBV_Regente();
@@ -65,7 +66,7 @@ void janelaLogin()
 
 
 		ut = ligacao->login(_user, _pw);
-		//cout << *ut;
+ 		_gestao.setUser(ut);
 		string null = "";
 
 		if (ut->getTipo() == 'D')
@@ -100,7 +101,7 @@ void janelaBV_Regente() //janela boas vindas
 {
 	system("cls");
 	cout << "-----Bem-vindo-----" << endl << endl << "0-Sair" << endl <<
-		"1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Remover UC" << endl << "----------"
+		"1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Remover UC" << endl<< "4-Janela UC"<<endl << "----------"
 		<< endl << "m-Mensagens" << endl << endl << "A sua opcao: ";
 	char opc;
 	cin >> opc;
@@ -110,6 +111,7 @@ void janelaBV_Regente() //janela boas vindas
 	case '1':janelaGerirConteudo();
 	case '2':janelaAdicionarUC();
 	case '3':janelaRemoverUC();
+	case '4':janelaUC();
 	case 'm':janelaMensagens();
 	default:cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
@@ -240,21 +242,42 @@ void janelaUC()
 {
 	char opc;
 	system("cls");
-	cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
-		"1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
-	cin >> opc;
-	switch (opc)
-	{
-	case '0':exit(0);
-	case '1':janelaDisciplina();
-	case '2':janelaVisualizacao();
-	case '3':;
-	case '4':;
-	case 'm':janelaMensagens();
-	default:cout << endl << ("Opcao incorreta!!!");
-		system("pause");
-		system("cls");
-		janelaUC();
+	if (_gestao.getUser()->getTipo() =='D' ){
+		cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
+			"1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+		cin >> opc;
+		switch (opc)
+		{
+		case '0':exit(0);
+		case '1':janelaDisciplina();
+		case '2':janelaVisualizacao();
+		case '3':;
+		case '4':;
+		case 'm':janelaMensagens();
+		default:cout << endl << ("Opcao incorreta!!!");
+			system("pause");
+			system("cls");
+			janelaUC();
+		}
+	}
+	else{
+		cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
+			"1-Leccionadas" << endl << "2-Permissoes/Historico" <<endl<<"3-Janela BV Regente"<< endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+		cin >> opc;
+		switch (opc)
+		{
+		case '0':exit(0);
+		case '1':janelaDisciplina();
+		case '2':janelaVisualizacao();
+		case '3':janelaBV_Regente();
+		case '4':;
+		case 'm':janelaMensagens();
+		default:cout << endl << ("Opcao incorreta!!!");
+			system("pause");
+			system("cls");
+			janelaUC();
+		}
+
 	}
 }
 void janelaMensagens()
@@ -281,11 +304,19 @@ void janelaDisciplina()
 {
 	char opc;
 	system("cls");
+	cout << "Escolha a disciplina" << endl;
+
+
 	cout << "-----Gestao Disciplina-----" << endl << endl << "0-Voltar" << endl <<
 		"1-Marcar Avaliacao" << endl << "2-Publicar notas" << endl << "3-Visualizar notas" <<
 		endl << "4-Escrever sumarios" << endl << "5-Visualizar Sumarios"
 		<< endl << "6-Marcar aula extra" << endl << "7-Historico" << endl << "----------" << endl <<
 		"m-Mensagens" << endl << "A sua opcao: ";
+	string _texto;
+	string _coduc;
+	string _coded;
+	string _coduti;
+	string _opc;
 	cin >> opc;
 	switch (opc)
 	{
@@ -293,8 +324,31 @@ void janelaDisciplina()
 	case '1':;
 	case '2':;
 	case '3':;
-	case '4':;
-	case '5':;
+	case '4':
+		system("cls");
+		cout << "----Escrever sumário----" <<endl;
+		cout << "Texto (enter para terminar):";
+		cin >> _texto;
+
+		cout << "Deseja enviar sumário?(s/n): ";
+		cin >> _opc;
+		if (_opc.compare("s") == 0)
+		{
+			_gestao.Uc().adicionarSumario(_texto);
+			cout << _gestao.Uc() << endl;
+			system("PAUSE");
+			_gestao.atualizarSumario(&_gestao.Uc(),_gestao.getUser()->getCod_utilizador(), _texto);
+			cout << "Sumário adicionado" << endl;
+			janelaDisciplina();
+
+		}
+		else{
+			janelaDisciplina();
+		}
+		;
+	case '5':
+
+		_gestao.Uc().visualizarSumario();
 	case '6':;
 	case '7':;
 	case 'm':; janelaMensagens();

@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include "UC.h"
+#include "Utilizador.h"
 //#include <list>
 using namespace std;
 
@@ -12,6 +13,7 @@ private:
 
 	Pessoa * user;
 	UC uc;
+	
 	void destroy();
 
 public:
@@ -50,8 +52,12 @@ public:
 	//Criar docente
 	void criarDocente();
 
-	//criar uc
+	// uc
 	void criarUC();
+	void atualizarSumario(UC* uc, string texto, string cod_ut);
+
+	UC Uc() const { return uc; }
+	void Uc(UC val) { uc = val; }
 
 
 };
@@ -97,7 +103,7 @@ void Gestao::ListarMensagem(vector<Mensagem> ms)
 
 void Gestao :: setUser(Pessoa * _user)
 {
-	this->user = user;
+	this->user = _user;
 }
 
 Pessoa * Gestao :: getUser()
@@ -391,6 +397,7 @@ void Gestao :: criarUC()
 
 
 
+
 BDados* Gestao :: ligar()
 {
 	string utilizador = "B6_5";
@@ -399,4 +406,11 @@ BDados* Gestao :: ligar()
 	BDados *ligacao = new BDados(utilizador, palavra, bd);
 	return ligacao;
 }
+
+void Gestao::atualizarSumario(UC* uc, string texto, string cod_ut)
+{
+	BDados *bd;
+	bd->addSumario(uc->Cod_uc(), uc->Edicao(),cod_ut,texto);
+}
+
 #endif

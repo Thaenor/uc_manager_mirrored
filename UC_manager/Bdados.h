@@ -40,7 +40,8 @@ public:
 	//uc
 	bool jaExisteCadeira(string  cod);
 	void registarUC(UC * uc);
-
+	void addSumario(string cod_uc, string cod_edicao, string cod_utilizador, string texto);
+	vector<UC> carregarUClecionada(string cod_u);
 
 };
 
@@ -221,6 +222,34 @@ public:
 
 	}
 
+	void BDados::addSumario(string cod_uc, string cod_edicao, string cod_utilizador, string texto)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO SUMARIO (COD_SUMARIO,COD_UC,COD_EDICAO,COD_UTILIZADOR,DESCRICAO) VALUES (SEQ_COD_SUMARIO.NEXTVAL,:2,:3,:4,:5)");
+		instruc->setString(2, cod_uc);
+		instruc->setString(3, cod_edicao);
+		instruc->setString(4, cod_utilizador);
+		instruc->setString(5,texto);
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Sumario inserido com sucesso" << endl;
+		instruc->closeResultSet(rset2);
+	}
+
+	vector<UC> BDados::carregarUClecionada(string cod_u)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("SELECT * FROM DOCENTE_UC WHERE COD_UTILIZADOR =:1");
+		instruc->setString(1, cod_u);
+		ResultSet* rset = instruc->executeQuery();
+		while (rset->next)
+		{
+			
+		}
+
+
+	}
 	//list <Aluno> BDados::lerAlunos() 
 	//{ 
 	//	list <Aluno> ret; 
