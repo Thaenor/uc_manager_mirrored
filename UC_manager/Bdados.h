@@ -41,7 +41,7 @@ public:
 	bool jaExisteCadeira(string  cod);
 	void registarUC(UC * uc);
 	void addSumario(string cod_uc, string cod_edicao, string cod_utilizador, string texto);
-	vector<UC> carregarUClecionada(string cod_u);
+	vector<UC*> carregarUCs(string cod_u);
 
 	//alterar Login
 	void alterarLogin(Pessoa * user, string pw);
@@ -230,11 +230,12 @@ public:
 	void BDados::addSumario(string cod_uc, string cod_edicao, string cod_utilizador, string texto)
 	{
 		Statement *instruc;
-		instruc = ligacao->createStatement("INSERT INTO SUMARIO (COD_SUMARIO,COD_UC,COD_EDICAO,COD_UTILIZADOR,DESCRICAO) VALUES (SEQ_COD_SUMARIO.NEXTVAL,:2,:3,:4,:5)");
-		instruc->setString(2, cod_uc);
-		instruc->setString(3, cod_edicao);
-		instruc->setString(4, cod_utilizador);
-		instruc->setString(5, texto);
+		instruc = ligacao->createStatement("INSERT INTO SUMARIO (COD_SUMARIO,COD_UC,COD_EDICAO,COD_UTILIZADOR, DESCRICAO) VALUES (SEQ_COD_SUMARIO.NEXTVAL,:1,:2,:3,:4)");
+
+		instruc->setString(1, cod_uc);
+		instruc->setString(2, cod_edicao);
+		instruc->setString(3, cod_utilizador);
+		instruc->setString(4, texto);
 		ResultSet* rset2 = instruc->executeQuery();
 
 		ligacao->commit();
@@ -242,16 +243,28 @@ public:
 		instruc->closeResultSet(rset2);
 	}
 
-	vector<UC> BDados::carregarUClecionada(string cod_u)
+	vector<UC*> BDados::carregarUCs(string cod_u)
 	{
+		
 		Statement *instruc;
-		instruc = ligacao->createStatement("SELECT * FROM DOCENTE_UC WHERE COD_UTILIZADOR =:1");
+		instruc = ligacao->createStatement("SELECT * FROM UC WHERE COD_UC IN (SELECT COD_UC FROM DOCENTE_UC WHERE COD_UTILIZADOR =(:1))");
 		instruc->setString(1, cod_u);
 		ResultSet* rset = instruc->executeQuery();
+
+		vector<UC*> cadeiras;
 		while (rset->next())
 		{
-
+			string cod_uc= rset->getString(1);
+			string cod_ed = rset->getString(2);
+			string nome = rset->getString(3);
+			string ano = rset->getString(4);
+			string semestre = rset->getString(5);
+			string regente = rset->getString(6);
+			UC* u = new UC(regente,cod_uc,nome,cod_ed,ano,semestre);
+			cadeiras.push_back(u);
 		}
+		
+		return cadeiras;
 	}
 
 	void BDados :: alterarLogin(Pessoa * user,string pw)

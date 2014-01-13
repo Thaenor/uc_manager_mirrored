@@ -11,16 +11,21 @@ class Gestao
 private:
 
 	Pessoa * user;
-	UC uc;
-	
+	UC* uc;
+	string cod_user;
+	string cod_edicao;
+	string cod_uc;
+
+
 	void destroy();
 
 public:
 	//Construtor e destrutor
 	Gestao();
-	Gestao(Pessoa * user, UC uc);
+	Gestao(Pessoa * user, UC * uc);
 	Gestao(const Gestao &g);
 	~Gestao();
+
 
 	//sets/gets
 	void setUser(Pessoa * user);
@@ -32,7 +37,20 @@ public:
 	//ligacao
 	BDados* ligar();
 
+	void setUc(UC* val) { 
+		this->uc = val;
+		 }
 
+	void setcod_uc(string cod, string edicao)
+	{
+		cod_uc = cod;
+		cod_edicao = edicao;
+	}
+	void set_cod_user(string cod){ cod_user = cod; }
+
+	string get_cod_uc(){ return cod_uc; }
+	string get_cod_edicao(){ return cod_edicao; }
+	string get_user(){ return cod_user; }
 	//leitura Teste
 	vector<Aluno> LerTeste(string fich);
 	double calcAlineas(vector<double> notas, vector<double> cota);
@@ -57,9 +75,9 @@ public:
 	//alterar Login
 	void alterarLogin(string pw);
 
-	UC Uc() const { return uc; }
-	void Uc(UC val) { uc = val; }
-	void atualizarSumario(UC* uc, string texto, string cod_ut);
+	UC* Uc() const { return uc; }
+	void atualizarSumario(string texto,string ed,string cod, string codq);
+	void ListarUC(vector<UC*> cadeiras);
 };
 
 //construtor e destrutor
@@ -67,7 +85,7 @@ Gestao::Gestao()
 {
 }
 
-Gestao::Gestao(Pessoa * _user, UC _uc)
+Gestao::Gestao(Pessoa * _user, UC * _uc)
 {	
 	user = _user;
 	uc = _uc;
@@ -101,9 +119,20 @@ void Gestao::ListarMensagem(vector<Mensagem> ms)
 	}
 }
 
+void Gestao::ListarUC(vector<UC*> cadeiras)
+{
+	vector<UC*>::iterator it;
+	int c = 1;
+	for (it = cadeiras.begin(); it != cadeiras.end(); it++) {
+		cout << "-" << c << "-	";
+		(*it)->listar();
+		c++;
+
+	}
+}
 void Gestao :: setUser(Pessoa * _user)
 {
-	this->user = user;
+	this->user = _user;
 }
 
 Pessoa * Gestao :: getUser()
@@ -400,10 +429,11 @@ void Gestao :: criarUC()
 
 }
 
-void Gestao::atualizarSumario(UC* uc, string texto, string cod_ut)
+void Gestao::atualizarSumario(string texto, string ed, string cod, string codq)
+
 {
-	BDados *bd;
-	bd->addSumario(uc->Cod_uc(), uc->Edicao(), cod_ut, texto);
+	BDados* bd = ligar();
+	bd->addSumario(ed,cod , user->getCod_utilizador(), texto);//era suposto passar o *uc mas nao foi possivel implementar
 }
 
 
