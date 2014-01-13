@@ -21,6 +21,7 @@ class Gestao
 private:
 
 	Pessoa * user;
+	
 	UC* uc;
 
 	void destroy();
@@ -81,8 +82,11 @@ public:
 	void atualizarSumario(string texto, string ed, string cod, string codq);
 
 	//criarReuniao
-	void criarReuniao(string data_inicio, string data_fim, string des, int pri, string cod_sala);
+	void criarReuniao(string data_inicio, string data_fim, string des, int pri, string cod_sala, string cod_utilizador, string cod_uc, string cod_edicao);
 	void criarSala(string cod_sala, int capacidade);
+
+	Pessoa * User() const { return user; }
+	void User(Pessoa * val) { user = val; }
 };
 
 //construtor e destrutor
@@ -479,10 +483,10 @@ Avaliacao Gestao :: getAval(string mom)
 
 }
 
-void Gestao::criarReuniao(string data_inicio, string data_fim, string des, int pri,string cod_sala)
+void Gestao::criarReuniao(string data_inicio, string data_fim, string des, int pri,string cod_sala, string cod_utilizador, string cod_uc,string cod_edicao)
 {
 	BDados *ligacao = ligar();
-	ligacao->registarReuniao(data_inicio, data_fim, des, pri, user->getCod_utilizador(), uc->Cod_uc(), uc->Edicao(),cod_sala);
+	ligacao->registarReuniao(data_inicio, data_fim, des, cod_utilizador, cod_uc,cod_edicao,cod_sala);
 }
 
 void Gestao::criarSala(string cod_sala,int capacidade)

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#include"Bdados.h"
+#include "Bdados.h"
 #include "Gestao.h"
 #include "Eventos.h"
 #include <string>
@@ -34,7 +34,6 @@ void carregarAlunos();
 void marcarReuniao();
 void alterarLogin();
 void janelaGerirEventosDocente();
-void marcarReuniao();
 void janelaAdicionarEventos();
 
 /*******************************************************************************************/
@@ -350,8 +349,8 @@ void janelaDisciplina()
 	cout << "-----Gestao Disciplina-----" << endl << endl << "0-Voltar" << endl <<
 		"1-Marcar Avaliacao" << endl << "2-Publicar notas" << endl << "3-Visualizar notas" <<
 		endl << "4-Escrever sumarios" << endl << "5-Visualizar Sumarios"
-		<< endl << "6-Marcar aula extra" << endl << "7-Historico" << endl<<"8- Marcar aula extra" <<
-		endl << "9- Marcar avaliacao" << endl << "----------" << endl <<"m-Mensagens" << endl << "A sua opcao: ";
+		<< endl << "6-Marcar aula extra" << endl << "7-Historico"  <<
+		endl << "8- Marcar avaliacao" << endl << "----------" << endl <<"m-Mensagens" << endl << "A sua opcao: ";
 	string _texto="";
 	string _coduc="";
 	string _coded="";
@@ -518,17 +517,29 @@ void marcarReuniao()
 	string data_ini; string data_fim; string hora_ini; string hora_fim;
 	string cod_uc, cod_evento, cod_edicao, cod_sala, cod_utilzador, n_docentes, descricao;
 	cout << "----Marcar Reuniao----" << endl;
+
+	char opc;
+	cout << "Escolha a disciplina" << endl;
+	vector<UC*> cadeiras = ligacao->carregarUCs(_gestao.getUser()->getCod_utilizador());
+	_gestao.ListarUC(cadeiras);
+	cout << "Escolha UC : ";
+	cin >> opc;
+	int i = atoi(&opc);
+	vector<UC*> ::iterator it = cadeiras.begin();
+	i--;
+	it += i;
+	_gestao.setUc((*it)->clone());
+
 	cout << "Data de inicio(ano.mes.dia:hora:minutos): ";
 	cin >> data_ini;
-	cin >> hora_ini;
 	data_ini + " " + hora_ini;
 	cout << "Data de fim(ano.mes.dia:hora:minutos): ";
 	cin >> data_fim;
-	cin >> hora_fim;
 	data_fim + " " + hora_fim;
-	cout << "Codigo da sala?: " << endl;
+	cout << "Codigo da sala?: ";
 	cin >> cod_sala;
-	_gestao.criarReuniao(data_ini, data_fim, "Reuniao", 2, cod_sala );
+	_gestao.criarReuniao(data_ini, data_fim, "Reuniao", 2, cod_sala, ut->getCod_utilizador(), (*it)->Cod_uc(), (*it)->Edicao());
+	janelaAdicionarEventos();
 
 }
 
