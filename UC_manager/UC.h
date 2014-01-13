@@ -20,7 +20,7 @@ private:
 	string nome;
 	string edicao;
 	string ano;
-
+	vector<string> sumarios;
 	string semestre;
 	string regente;
 	vector<Pessoa*> alunos;
@@ -62,11 +62,17 @@ public:
 	vector<Eventos*> geteventos() const;
 	void setEventos(vector<Eventos*> eventos);
 	UC &operator = (const UC &other);
+	vector<string> Sumarios() const { return sumarios; }
+	void Sumarios(vector<string> val) { sumarios = val; }
 
 	string Cod_uc() const { return cod_uc; }
 	void Cod_uc(string val) { cod_uc = val; }
 	string Edicao() const { return edicao; }
 	void Edicao(string val) { edicao = val; }
+
+	// sumários
+	void adicionarSumario(string sumario);
+	void visualizarSumario();
 
 	};
 
@@ -127,6 +133,20 @@ public:
 	void UC::escreve(ostream &out) const
 	{
 		out << "Codigo UC = " << cod_uc << " regente: " << regente << ". ";
+	}
+
+
+	void UC::adicionarSumario(string sumario)
+	{
+		this->sumarios.push_back(sumario);
+	}
+
+	void UC::visualizarSumario()
+	{
+		for (vector<string>::iterator itv = sumarios.begin(); itv != sumarios.end(); itv++)
+		{
+			cout << *itv << "---------------------------" << endl;
+		}
 	}
 
 	void UC::listar()
