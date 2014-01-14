@@ -24,7 +24,7 @@ public:
 	Avaliacao();
 	~Avaliacao();
 	Avaliacao(int c, string t, string di, string df, int es, vector<Sala*> sa, vector<Pessoa*> moni, int doc);
-	Avaliacao( string tipo, UC* uc,int c);
+	Avaliacao(string _tipo, UC * _uc, int cod);
 	Avaliacao(int c, string t, string uc, string edi_);
 	int getDocentes_sala() const { return docentes_sala; }
 	void setDocentes_sala(int val) { docentes_sala = val; }

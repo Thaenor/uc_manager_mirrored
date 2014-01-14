@@ -1,8 +1,9 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#include"Bdados.h"
+#include "Bdados.h"
 #include "Gestao.h"
+#include "Eventos.h"
 #include <string>
 #include <conio.h>
 
@@ -28,13 +29,16 @@ void janelaVisualizacao();
 void janelaGerirEventos();
 void janelaGerirAlunos();
 void janelaAdicionarUC();
-void janelaRemoverUC();
+void janelaFecharUC();
 void janelaGerirDocente();
 void CarregaTeste();
 void carregarAlunos();
 void marcarReuniao();
 void alterarLogin();
+void janelaGerirEventosDocente();
+void janelaAdicionarEventos();
 void FechaUC();
+
 
 /*******************************************************************************************/
 
@@ -74,7 +78,7 @@ void janelaLogin()
 
 		ut = ligacao->login(_user, _pw);
 		_gestao.setUser(ut);
-		_gestao.set_cod_user(ut->getCod_utilizador());
+		//_gestao.set_cod_user(ut->getCod_utilizador());
 		string null = "";
 
 		if (ut->getTipo() == 'D')
@@ -108,8 +112,8 @@ void janelaLogin()
 void janelaBV_Regente() //janela boas vindas
 {
 	system("cls");
-	cout << "-----Bem-vindo-----" << endl << endl << "0-Sair" << endl <<
-		"1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Remover UC" << endl << "4-Janela UC" << endl << "----------"
+	cout << "-----Bem-vindo-----" << endl << endl << "0-Sair da aplicacao" << endl <<
+		"1-Entrar UC" << endl << "2-Adicionar UC" << endl << "3-Fechar UC" << endl << "4-Janela UC" << endl << "----------"
 		<< endl << "m-Mensagens" << endl << endl << "A sua opcao: ";
 	char opc;
 	cin >> opc;
@@ -118,7 +122,7 @@ void janelaBV_Regente() //janela boas vindas
 	case '0':exit(0);
 	case '1':janelaGerirConteudo();
 	case '2':janelaAdicionarUC();
-	case '3':janelaRemoverUC();
+	case '3':janelaFecharUC();
 	case '4':janelaUC();
 	case 'm':janelaMensagens();
 	default:cout << endl << ("Opcao incorreta!!!   ");
@@ -136,17 +140,15 @@ void janelaAdicionarUC() //janela adiciona UC
 	_gestao.criarUC();
 	janelaBV_Regente();
 }
-void janelaRemoverUC() //janela adiciona UC
+void janelaFecharUC() //janela adiciona UC
 {
 	system("cls");
-	cout << "-----Remover UC-----" << endl << endl << "0-Voltar" << endl
+	cout << "-----Fechar UC-----" << endl << endl << "0-Voltar" << endl
 		<< endl << "m-Mensagens" << endl;
-	FechaUC();
-
 	char opc;
 	cin >> opc;
 	switch (opc)
-	{FechaUC();
+	{
 	case '0':janelaBV_Regente();
 	case '1':;
 	case '2':;
@@ -155,7 +157,7 @@ void janelaRemoverUC() //janela adiciona UC
 	default:cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
 		system("cls");
-		janelaRemoverUC();;
+		janelaFecharUC();
 	}
 }
 
@@ -186,13 +188,12 @@ void janelaGerirDocente() //só acessivel pelo regente
 	char opc;
 	system("cls");
 	cout << "-----Gerir Docente-----" << endl << endl << "0-Voltar" << endl <<
-		"1-Adicionar Docente" << endl << "2-Remover Docente" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+		"1-Adicionar Docente" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 	cin >> opc;
 	switch (opc)
 	{
 	case '0':janelaGerirConteudo();
 	case '1':_gestao.criarDocente(); janelaGerirDocente();
-	case '2':;
 	case 'm':janelaMensagens();
 	default: cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
@@ -206,14 +207,13 @@ void janelaGerirAlunos() //só acessivel pelo regente
 	char opc;
 	system("cls");
 	cout << "-----Gerir Alunos-----" << endl << endl << "0-Voltar" << endl <<
-		"1-Adicionar aluno" << endl << "2-Remover aluno" << endl << "3-Adicionar alunos" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+		"1-Adicionar aluno" << endl << "2-Adicionar alunos" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 	cin >> opc;
 	switch (opc)
 	{
 	case '0':janelaBV_Regente();
 	case '1':_gestao.criarAluno();
-	case '2':;
-	case '3':carregarAlunos();
+	case '2':carregarAlunos();
 	case 'm':janelaMensagens();
 	default: cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
@@ -236,8 +236,32 @@ void janelaGerirEventos()
 	switch (opc)
 	{
 	case '0':janelaGerirConteudo();
-	case '1':CarregaTeste();
-	case '2':alterarLogin();
+	case '1':janelaAdicionarEventos();
+	case '2':;
+	case '3':janelaAdicionarEventos();
+	case '4':;
+	case 'm':janelaMensagens();
+	default:cout << endl << ("Opcao incorreta!!!   ");
+		system("pause");
+		system("cls");
+		janelaGerirEventos();
+	}
+}
+
+void janelaAdicionarEventos()
+{
+	char opc;
+	system("cls");
+	cout << "-----Adicionar Eventos-----" << endl << endl << "0-Voltar" << endl <<
+		"1-Marcar Reunioes" << endl << "2-Marcar cursos" << endl << "3-Marcar workshops " << endl << "4-Marcar conferencias"<<endl<<
+		"----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+
+	cin >> opc;
+	switch (opc)
+	{
+	case '0':janelaGerirEventos();
+	case '1':marcarReuniao();
+	case '2':;
 	case '3':;
 	case '4':;
 	case 'm':janelaMensagens();
@@ -253,16 +277,14 @@ void janelaUC()
 	char opc;
 	system("cls");
 	if (_gestao.getUser()->getTipo() == 'D'){
-		cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
-			"1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+		cout << "-----Janela UC-----" << endl << endl << "0-Sair da aplicacao" << endl <<
+			"1-Leccionadas" << endl << "2-Permissoes/Historico" <<endl<< "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 		cin >> opc;
 		switch (opc)
 		{
 		case '0':exit(0);
 		case '1':janelaDisciplina();
 		case '2':janelaVisualizacao();
-		case '3':;
-		case '4':;
 		case 'm':janelaMensagens();
 		default:cout << endl << ("Opcao incorreta!!!");
 			system("pause");
@@ -271,8 +293,8 @@ void janelaUC()
 		}
 	}
 	else{
-		cout << "-----Janela UC-----" << endl << endl << "0-Sair" << endl <<
-			"1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << "3-Janela BV Regente" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
+		cout << "-----Janela UC-----" << endl << endl << "0-Sair da aplicacao" << endl <<
+			"1-Leccionadas" << endl << "2-Permissoes/Historico" << endl << endl <<"3-Janela BV Regente"<<endl<< "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
 		cin >> opc;
 		switch (opc)
 		{
@@ -280,7 +302,6 @@ void janelaUC()
 		case '1':janelaDisciplina();
 		case '2':janelaVisualizacao();
 		case '3':janelaBV_Regente();
-		case '4':;
 		case 'm':janelaMensagens();
 		default:cout << endl << ("Opcao incorreta!!!");
 			system("pause");
@@ -290,6 +311,8 @@ void janelaUC()
 
 	}
 }
+
+
 void janelaMensagens()
 {
 	char opc;
@@ -324,15 +347,14 @@ void janelaDisciplina()
 	vector<UC*> ::iterator it = cadeiras.begin();
 	i--;
 	it += i;
-	cod_uc = (*it)->Cod_uc();cod_edicao=(*it)->Edicao();
 	_gestao.setUc((*it)->clone());
 	system("PAUSE");
 	system("cls");
 	cout << "-----Gestao Disciplina-----" << endl << endl << "0-Voltar" << endl <<
 		"1-Marcar Avaliacao" << endl << "2-Publicar notas" << endl << "3-Visualizar notas" <<
 		endl << "4-Escrever sumarios" << endl << "5-Visualizar Sumarios"
-		<< endl << "6-Marcar aula extra" << endl << "7-Historico" << endl << "----------" << endl <<
-		"m-Mensagens" << endl << "A sua opcao: ";
+		<< endl << "6-Marcar aula extra" << endl << "7-Historico"  <<
+		endl << "8- Marcar avaliacao" << endl << "----------" << endl <<"m-Mensagens" << endl << "A sua opcao: ";
 	string _texto="";
 	string _coduc="";
 	string _coded="";
@@ -359,8 +381,7 @@ void janelaDisciplina()
 		//	_gestao.Uc()->adicionarSumario(_texto);
 			cout << _texto << endl;
 			system("PAUSE");
-			
-			_gestao.atualizarSumario(_texto, cod_uc, cod_edicao, ut->getCod_utilizador() );
+			_gestao.atualizarSumario(_texto, (*it)->Cod_uc(), (*it)->Edicao(), ut->getCod_utilizador() );
 			cout << "Sumário adicionado" << endl;
 			janelaDisciplina();
 
@@ -370,10 +391,14 @@ void janelaDisciplina()
 		}
 		;
 	case '5':
-
-		_gestao.Uc()->visualizarSumario();
+		(*it)->Sumarios(ligacao->carregarSumarios((*it)->Cod_uc(), (*it)->Edicao()));
+		(*it)->visualizarSumario();
+		system("PAUSE");
+		janelaUC();
 	case '6':;
 	case '7':;
+	case '8':;
+	case '9':;
 	case 'm':; janelaMensagens();
 	default: cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
@@ -386,6 +411,18 @@ void janelaVisualizacao()
 
 {
 	char opc;
+	cout << "Escolha a disciplina" << endl;
+	vector<UC*> cadeiras = ligacao->carregarUCs(_gestao.getUser()->getCod_utilizador());
+	_gestao.ListarUC(cadeiras);
+	cout << "Escolha UC : ";
+	cin >> opc;
+	int i = atoi(&opc);
+	vector<UC*> ::iterator it = cadeiras.begin();
+	i--;
+	it += i;
+	_gestao.setUc((*it)->clone());
+	system("PAUSE");
+	system("cls");
 	system("cls");
 	cout << "-----Visualizacao-----" << endl << endl << "0-Voltar" << endl <<
 		"1-Visualizar notas" << endl << "2-Visualizar sumarios" << endl << "----------" << endl << "m-Mensagens" << endl << "A sua opcao: ";
@@ -394,7 +431,12 @@ void janelaVisualizacao()
 	{
 	case '0':janelaUC();
 	case '1':;
-	case '2':;
+	case '2':
+		(*it)->Sumarios(ligacao->carregarSumarios((*it)->Cod_uc(), (*it)->Edicao()));
+		(*it)->visualizarSumario();
+		system("PAUSE");
+		janelaUC();
+		;
 	case 'm':janelaMensagens();
 	default:cout << endl << ("Opcao incorreta!!!   ");
 		system("pause");
@@ -492,8 +534,34 @@ void alterarLogin()
 void marcarReuniao()
 {
 	system("cls");
-	string data_ini;string data_fim;string desc;
-	int pri ; 
+	
+	string data_ini; string data_fim; string hora_ini; string hora_fim;
+	string cod_uc, cod_evento, cod_edicao, cod_sala, cod_utilzador, n_docentes, descricao;
+	cout << "----Marcar Reuniao----" << endl;
+
+	char opc;
+	cout << "Escolha a disciplina" << endl;
+	vector<UC*> cadeiras = ligacao->carregarUCs(_gestao.getUser()->getCod_utilizador());
+	_gestao.ListarUC(cadeiras);
+	cout << "Escolha UC : ";
+	cin >> opc;
+	int i = atoi(&opc);
+	vector<UC*> ::iterator it = cadeiras.begin();
+	i--;
+	it += i;
+	_gestao.setUc((*it)->clone());
+
+	cout << "Data de inicio(ano.mes.dia:hora:minutos): ";
+	cin >> data_ini;
+	data_ini + " " + hora_ini;
+	cout << "Data de fim(ano.mes.dia:hora:minutos): ";
+	cin >> data_fim;
+	data_fim + " " + hora_fim;
+	cout << "Codigo da sala?: ";
+	cin >> cod_sala;
+	_gestao.criarReuniao(data_ini, data_fim, "Reuniao", 2, cod_sala, ut->getCod_utilizador(), (*it)->Cod_uc(), (*it)->Edicao());
+	janelaAdicionarEventos();
+
 }
 
 void carregarAlunos()
@@ -510,7 +578,7 @@ void CarregaTeste()
 	string fx;
 	cout << "insira o momento de avaliacao(ex.:T1) : ";
 	cin >> mom;
-	Avaliacao a = _gestao.getAval(cod_uc,cod_edicao ,mom);
+	Avaliacao a = _gestao.getAval(mom);
 	if(a.getTipo() == "")
 	{
 		cout << "Momento de avaliacao inexistente";
@@ -521,6 +589,15 @@ void CarregaTeste()
 	cout << "insira o nome do ficheiro";cin>>fx;
 	_gestao.LerTeste(fx,a);
 }
+
+
+
+
+
+
+
+
+
 
 void FechaUC()
 {

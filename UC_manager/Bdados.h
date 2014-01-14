@@ -27,7 +27,7 @@ public:
 	Pessoa* login(string _usr, string _pw);
 
 	//existe Avaliacao
-	Avaliacao getAval(string  uc,string edi, string mom);
+	Avaliacao getAval(UC uc, string mom);
 	void regAval(Avaliacao aval);
 	void regAval_Notas(	int	it, double nota,Avaliacao aval);
 
@@ -48,11 +48,16 @@ public:
 	void registarUC(UC * uc);
 	void addSumario(string cod_uc, string cod_edicao, string cod_utilizador, string texto);
 	vector<UC*> carregarUCs(string cod_u);
+	vector<string> carregarSumarios(string cod_uc, string cod_edicao);
 
 	//alterar Login
 	void alterarLogin(Pessoa * user, string pw);
+	void registarReuniao(string data_inicio, string data_fim, string des, string cod_user, string cod_uc, string cod_edicao, string cod_sala);
+	void adicionarSala(string cod_sala, int capacidade);
+
 	void fecharUC(string cod_uc,string cod_edicao);
 
+	//
 
 
 };
@@ -254,7 +259,7 @@ public:
 	{
 		
 		Statement *instruc;
-		instruc = ligacao->createStatement("SELECT * FROM UC WHERE COD_UC IN (SELECT COD_UC FROM DOCENTE_UC WHERE COD_UTILIZADOR =(:1))");
+		instruc = ligacao->createStatement("SELECT * FROM UC WHERE COD_UC IN (SELECT COD_UC FROM DOCENTE_UC WHERE COD_UTILIZADOR =(:1)) OR REGENTE =:1");
 		instruc->setString(1, cod_u);
 		ResultSet* rset = instruc->executeQuery();
 
@@ -281,19 +286,17 @@ public:
 		instruc = ligacao->createStatement("UPDATE UTILIZADOR SET pw=:1 WHERE cod_utilizador=:2");
 		instruc->setString(1,pw);
 		instruc->setString(2,user->getCod_utilizador());
-		ResultSet *rset = instruc->executeQuery();
-		ligacao->commit();
 
 	}
 
-	Avaliacao BDados ::getAval(string  uc,string edi, string mom)
+	Avaliacao BDados ::getAval(UC uc, string mom)
 	{
 		Statement *instruc;
 
-		instruc = ligacao->createStatement("SELECT * FROM AVALIACAO WHERE TIPO=:1 AND COD_UC=:2 AND COD_EDICAO=:3");
+		instruc = ligacao->createStatement("SELECT * FROM AVALICAO WHERE TIPO=:1 AND COD_UC=:2 AND COD_EDICAO=:3");
 		instruc->setString(1, mom);
-		instruc->setString(2, uc);
-		instruc->setString(3, edi);
+		instruc->setString(2, uc.Edicao());
+		instruc->setString(3, uc.Cod_uc());
 
 		ResultSet *rset = instruc->executeQuery();
 		rset->next();
@@ -303,8 +306,8 @@ public:
 		string cod_uc = rset->getString(3);
 		string cod_edicao = rset->getString(4);
 
-		UC * uc_ = new UC(cod_uc, cod_edicao);
-		Avaliacao a(mom,uc_,cod_aval);
+		
+		Avaliacao a(mom,&uc,cod_aval);
 		return a;
 
 	}
@@ -337,6 +340,54 @@ public:
 		cout << endl << "Avaliacao registada com sucesso" << endl;
 		instruc->closeResultSet(rset2);
 	}
+
+	vector<string> BDados::carregarSumarios(string cod_uc, string cod_edicao)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("SELECT * FROM SUMARIO WHERE COD_UC =:1 AND COD_EDICAO =:2");
+		instruc->setString(1, cod_uc);
+		instruc->setString(2, cod_edicao);
+		ResultSet* rset2 = instruc->executeQuery();
+		vector<string> sumarios;
+		while (rset2->next())
+		{
+			sumarios.push_back(rset2->getString(6));
+		}
+		
+		instruc->closeResultSet(rset2);
+		return sumarios;
+	}
+
+	void BDados::registarReuniao(string data_inicio, string data_fim, string des, string cod_user, string cod_uc, string cod_edicao, string cod_sala)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO EVENTO(COD_EVENTO,COD_UC,COD_EDICAO,COD_SALA,COD_UTILIZADOR,DESCRICAO,DATA_INICIO,DATA_FIM) VALUES(SEQ_COD_AVAL.NEXTVAL,:1,:2,:3,:4,:5,:6,:7)");
+		instruc->setString(1, cod_uc);
+		instruc->setString(2, cod_edicao);
+		instruc->setString(3, cod_sala);
+		instruc->setString(4, cod_user);
+		instruc->setString(5, des);
+		instruc->setString(6, data_inicio);
+		instruc->setString(7, data_fim);
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Reuniao marcada com sucesso" << endl;
+		instruc->closeResultSet(rset2);
+	}
+	void BDados::adicionarSala(string cod_sala,int capacidade)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO SALA(COD_SALA,CAPACIDADE)VALUES(:1,:2)");
+		instruc -> setString(1, cod_sala);
+		instruc -> setInt(2, capacidade);
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Sala adicionada com sucesso" << endl;
+		instruc->closeResultSet(rset2);
+	}
+
 
 	void BDados :: fecharUC(string cod_uc,string cod_edicao)
 	{

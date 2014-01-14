@@ -1,6 +1,8 @@
 //
 //  Mensagem.h
 //  Afonso Reis 
+
+#include <iostream>
 using namespace std;
 
 class Mensagem

@@ -8,6 +8,7 @@
 //#include "up_and_down.h"
 #include "Avaliacao.h"
 #include "Sala.h"
+#include "Bdados.h"
 
 string app_key = "54lc1hrozp8u01k";
 string app_secret = "8tuyvtv4y2dg072";
@@ -21,11 +22,8 @@ class Gestao
 private:
 
 	Pessoa * user;
-	UC* uc;
-	string cod_user;
-	string cod_edicao;
-	string cod_uc;
 	
+	UC* uc;
 
 	void destroy();
 
@@ -51,24 +49,14 @@ public:
 		this->uc = val;
 		 }
 
-	void setcod_uc(string cod, string edicao)
-	{
-		cod_uc = cod;
-		cod_edicao = edicao;
-	}
-	void set_cod_user(string cod){ cod_user = cod; }
 
-	string get_cod_uc(){ return cod_uc; }
-	string get_cod_edicao(){ return cod_edicao; }
-	string get_user(){ return cod_user; }
 	//leitura Teste
 	vector<Aluno> LerTeste(string fich,Avaliacao desc);
 	double calcAlineas(vector<double> notas, vector<double> cota);
 
 	void ListarUC(vector<UC*> cadeiras);
 
-	Avaliacao getAval(string cod_uc,string cod_edicao,string  _mom);
-
+	Avaliacao getAval(string mom);
 
 	//leitura de docentes
 	vector<Pessoa*> lerDocentes(string fich);
@@ -81,11 +69,14 @@ public:
 	//criar aluno
 	void criarAluno();
 
+
 	//Criar docente
 	void criarDocente();
 
 	//criar uc
 	void criarUC();
+	void fecharUC(string cod_uc,string cod_edicao);
+
 
 	//alterar Login
 	void alterarLogin(string pw);
@@ -94,7 +85,12 @@ public:
 	void Uc(UC * val) { uc = val; }
 	void atualizarSumario(string texto, string ed, string cod, string codq);
 
-	void fecharUC(string cod_uc,string cod_edicao);
+	//criarReuniao
+	void criarReuniao(string data_inicio, string data_fim, string des, int pri, string cod_sala, string cod_utilizador, string cod_uc, string cod_edicao);
+	void criarSala(string cod_sala, int capacidade);
+
+	Pessoa * User() const { return user; }
+	void User(Pessoa * val) { user = val; }
 };
 
 //construtor e destrutor
@@ -166,7 +162,7 @@ vector<Aluno> Gestao::LerTeste(string fich,Avaliacao aval)
 	ifstream fx;
 	BDados *ligacao = ligar();
 
-	string caminho = "D:/Dropbox/Aplicativos/UC_Manager_Link/";
+	string caminho = "D:\Dropbox\Aplicativos\UC_Manager_Link";
 	caminho +=fich;
 	//dados importados
 	vector<double> cotacoes;
@@ -237,8 +233,7 @@ vector<Aluno> Gestao::LerTeste(string fich,Avaliacao aval)
 			notas.pop_front();
 		}
 		vector<double> nota;
-		double no = calcAlineas(n, cotacoes);
-		nota.push_back(no);
+		nota.push_back(calcAlineas(n, cotacoes));
 		
 		ligacao->regAval_Notas(*it, nota[0], aval);
 		alunos.push_back(Aluno(*it, nota));
@@ -268,7 +263,7 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 	string linha;
 	ifstream fx;
 	
-	string caminho = "D:/Dropbox/Aplicativos/UC_Manager_Link/";
+	string caminho = "D:\Dropbox\Aplicativos\UC_Manager_Link";
 	caminho +=fich;
 
 	//dropfuncs::dropbox::isep_credentials(app_key,app_secret,token,token_secret);						 
@@ -482,18 +477,33 @@ void Gestao :: alterarLogin(string pw)
 {
 	BDados *ligacao = ligar();
 	ligacao->alterarLogin(user, pw);
-	delete ligacao;
+
 }
 
-Avaliacao Gestao :: getAval(string cod_uc,string cod_edicao,string  _mom)
+Avaliacao Gestao :: getAval(string mom)
 {
 		BDados *ligacao = ligar();
-		Avaliacao a =ligacao->getAval(cod_uc, cod_edicao, _mom);
-		delete ligacao;
-		return a;
-		
+		return ligacao->getAval(*uc,mom);
 
 }
+
+void Gestao::criarReuniao(string data_inicio, string data_fim, string des, int pri,string cod_sala, string cod_utilizador, string cod_uc,string cod_edicao)
+{
+	BDados *ligacao = ligar();
+	ligacao->registarReuniao(data_inicio, data_fim, des, cod_utilizador, cod_uc,cod_edicao,cod_sala);
+}
+
+void Gestao::criarSala(string cod_sala,int capacidade)
+{
+	BDados *ligacao = ligar();
+	cout << "Qual a sala?" << endl;
+	cin >> cod_sala;
+	cout << "Qual a capacidade?" << endl;
+	cin >> capacidade;
+	ligacao->adicionarSala(cod_sala, capacidade);
+}
+
+
 				
 void Gestao :: fecharUC(string cod_uc,string cod_edicao)
 {
