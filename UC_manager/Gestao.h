@@ -56,10 +56,12 @@ public:
 
 	void ListarUC(vector<UC*> cadeiras);
 
-	Avaliacao getAval(string mom);
+	Avaliacao getAval(string mom,string cod_UC, string ed);
 
 	//leitura de docentes
 	vector<Pessoa*> lerDocentes(string fich);
+
+	void criarFich(string ed);
 
 	void printPessoa(vector<Pessoa*> vec);
 
@@ -86,11 +88,15 @@ public:
 	void atualizarSumario(string texto, string ed, string cod, string codq);
 
 	//criarReuniao
+	void Gestao::criarEvento(string data_inicio, string data_fim, string des, int pri,string cod_sala, string cod_utilizador, string cod_uc,string cod_edicao);
 	void criarReuniao(string data_inicio, string data_fim, string des, int pri, string cod_sala, string cod_utilizador, string cod_uc, string cod_edicao);
 	void criarSala(string cod_sala, int capacidade);
-
+	void marcarAval(string cod_aval, string tipo, string cod_uc, string cod_edicao, string data_realizada);
 	Pessoa * User() const { return user; }
 	void User(Pessoa * val) { user = val; }
+
+	void criarFich();
+
 };
 
 //construtor e destrutor
@@ -480,10 +486,10 @@ void Gestao :: alterarLogin(string pw)
 
 }
 
-Avaliacao Gestao :: getAval(string mom)
+Avaliacao Gestao :: getAval(string mom,string cod_UC, string ed)
 {
 		BDados *ligacao = ligar();
-		return ligacao->getAval(*uc,mom);
+		return ligacao->getAval(mom,cod_UC,ed);
 
 }
 
@@ -514,6 +520,43 @@ void Gestao :: fecharUC(string cod_uc,string cod_edicao)
 
 }
 
+void Gestao :: criarFich()
+{
+	BDados *ligacao = ligar();
+	
+	ofstream myfile;
+	myfile.open ("D:/Dropbox/Aplicativos/UC_Manager_Link/"+uc->Cod_uc()+"_"+uc->Edicao()+".csv");
 
+	vector<Aluno> al = ligacao->lerAlunos(uc->Cod_uc());
+	for (vector<Aluno> :: iterator it=al.begin();it!=al.end();it++)
+	{	
+		vector<double> notas=ligacao->getAval_Aluno(it->getNumero());
+		it->setNotas(notas);
+		string linha = it->getCod_utilizador();
+		for(vector<double> ::iterator itn=notas.begin(); itn!=notas.end();itn++)
+		{
+			linha+= ";"+ to_string(*itn) ;
+		}
+		myfile << linha << endl;
+
+		
+	}
+
+	delete ligacao;
+
+	myfile.close();
+}
+
+void Gestao::marcarAval(string cod_aval, string tipo, string cod_uc, string cod_edicao, string data_realizada)
+{
+	BDados *ligacao = ligar();
+	ligacao->registarTesteBD(cod_aval, tipo, cod_uc, cod_edicao, data_realizada);
+}
+
+void Gestao::criarEvento(string data_inicio, string data_fim, string des, int pri,string cod_sala, string cod_utilizador, string cod_uc,string cod_edicao)
+{
+	BDados *ligacao = ligar();
+	ligacao->registarEventoBD(data_inicio, data_fim, des, cod_utilizador, cod_uc,cod_edicao,cod_sala);
+}
 
 #endif

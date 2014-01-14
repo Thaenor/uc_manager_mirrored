@@ -24,8 +24,7 @@ public:
 	virtual int getNumero()const;
 	virtual char  getTipo()const;
 	virtual vector<Mensagem> getMsg()const;
-
-
+	virtual void setNumero(int num);
 
 	virtual Pessoa& operator=(const Pessoa &p);
 	virtual bool operator==(const Pessoa &p)const;
@@ -61,6 +60,14 @@ void Pessoa::setNome(string n){
 string Pessoa::getNome()const{
 	return nome;
 }
+
+void Pessoa ::  setNumero(int num)
+{
+}
+
+
+
+
 
 string Pessoa::getCod_utilizador()const
 {	

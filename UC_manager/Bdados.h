@@ -22,12 +22,12 @@ public:
 
 	BDados(string user, string passwd, string db);  
 	~ BDados();   
-	list <Aluno> lerAlunos(); // Método para ler uma lista de clientes
+	vector<Aluno> lerAlunos(string uc); // Método para ler uma lista de clientes
 	vector<Mensagem> CarregaMsg();
 	Pessoa* login(string _usr, string _pw);
 
 	//existe Avaliacao
-	Avaliacao getAval(UC uc, string mom);
+	Avaliacao getAval(string uc, string ed, string mom);
 	void regAval(Avaliacao aval);
 	void regAval_Notas(	int	it, double nota,Avaliacao aval);
 
@@ -56,10 +56,11 @@ public:
 	void adicionarSala(string cod_sala, int capacidade);
 
 	void fecharUC(string cod_uc,string cod_edicao);
-
+	vector<double> getAval_Aluno(int a);
 	//
-
-
+	void registarTesteBD(string cod_aval, string tipo, string cod_uc, string cod_edicao, string data_realizada);
+    void registarTPBD(string cod_aval, string tipo, string cod_uc, string cod_edicao, string data_realizada);
+	void BDados::registarEventoBD(string data_inicio, string data_fim, string des, string cod_user, string cod_uc, string cod_edicao, string cod_sala);
 };
 
 	BDados::BDados(string user, string passwd, string db) 
@@ -289,25 +290,24 @@ public:
 
 	}
 
-	Avaliacao BDados ::getAval(UC uc, string mom)
+	Avaliacao BDados ::getAval(string uc,string ed, string mom)
 	{
 		Statement *instruc;
 
-		instruc = ligacao->createStatement("SELECT * FROM AVALICAO WHERE TIPO=:1 AND COD_UC=:2 AND COD_EDICAO=:3");
+		instruc = ligacao->createStatement("SELECT * FROM AVALIACAO WHERE TIPO=:1 AND COD_UC=:2 AND COD_EDICAO=:3");
 		instruc->setString(1, mom);
-		instruc->setString(2, uc.Edicao());
-		instruc->setString(3, uc.Cod_uc());
+		instruc->setString(2, uc);
+		instruc->setString(3, ed);
 
 		ResultSet *rset = instruc->executeQuery();
-		rset->next();
 
 		int cod_aval = rset->getInt(1);
 		string tipo =rset->getString(2);
 		string cod_uc = rset->getString(3);
 		string cod_edicao = rset->getString(4);
 
-		
-		Avaliacao a(mom,&uc,cod_aval);
+		Avaliacao a(cod_aval,mom,uc,ed);		
+
 		return a;
 
 	}
@@ -400,6 +400,94 @@ public:
 
 		instruc->closeResultSet(rset2);
 
+	}
+
+	vector<double> BDados ::getAval_Aluno(int a)
+	{
+		vector<double> notas;
+		Statement *instruc;
+		instruc = ligacao->createStatement("SELECT nota FROM AVALIACAO_ALUNO WHERE COD_ALUNO =:1 ");
+		instruc->setInt(1, a);
+		ResultSet* rset2 = instruc->executeQuery();
+		while (rset2->next())
+		{
+			
+			string nota= rset2->getString(1);
+			double n = stod(nota);
+			notas.push_back(n);
+			
+		}
+		instruc->closeResultSet(rset2);
+		return notas;
+	}
+
+	vector<Aluno> BDados :: lerAlunos(string uc)
+	{
+		vector<Aluno> alunos;
+		Statement *instruc;
+		instruc = ligacao->createStatement("SELECT cod_aluno FROM ALUNO_UC WHERE COD_UC =:1");
+		instruc->setString(1, uc);
+		ResultSet* rset2 = instruc->executeQuery();
+		while (rset2->next())
+		{
+			
+			string a= rset2->getString(1);
+			int n = stoi(a);
+			Aluno al;
+			al.setNumero(n);
+			alunos.push_back(al);
+			
+		}
+		instruc->closeResultSet(rset2);
+		return alunos;
+	}
+	
+
+void BDados::registarTesteBD(string cod_aval, string tipo, string cod_uc, string cod_edicao, string data_realizada)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO AVALIACAO(COD_AVAL,TIPO,COD_UC,COD_EDICAO,DATA_REALIZACAO) VALUES(SEQ_COD_AVAL.NEXTVAL,:1,:2,:3,:4)");
+		instruc->setString(1, tipo);
+		instruc->setString(2, cod_uc);
+		instruc->setString(3, cod_edicao);
+		instruc->setString(4, data_realizada);
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Teste marcado com sucesso" << endl;
+		instruc->closeResultSet(rset2);
+	}
+
+void BDados::registarTPBD(string cod_aval, string tipo, string cod_uc, string cod_edicao, string data_realizada)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO AVALIACAO(COD_AVAL,TIPO,COD_UC,COD_EDICAO,DATA_REALIZACAO) VALUES(SEQ_COD_AVAL.NEXTVAL,'TP',:1,:2,:3)");
+		instruc->setString(1, cod_uc);
+		instruc->setString(2, cod_edicao);
+		instruc->setString(3, data_realizada);
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Teste marcado com sucesso" << endl;
+		instruc->closeResultSet(rset2);
+	}
+
+void BDados::registarEventoBD(string data_inicio, string data_fim, string des, string cod_user, string cod_uc, string cod_edicao, string cod_sala)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("INSERT INTO EVENTO(COD_EVENTO,COD_UC,COD_EDICAO,COD_SALA,COD_UTILIZADOR,DESCRICAO,DATA_INICIO,DATA_FIM) VALUES(SEQ_COD_AVAL.NEXTVAL,:1,:2,:3,:4,:5,:6,:7)");
+		instruc->setString(1, cod_uc);
+		instruc->setString(2, cod_edicao);
+		instruc->setString(3, cod_sala);
+		instruc->setString(4, cod_user);
+		instruc->setString(5, des);
+		instruc->setString(6, data_inicio);
+		instruc->setString(7, data_fim);
+		ResultSet* rset2 = instruc->executeQuery();
+
+		ligacao->commit();
+		cout << endl << "Reuniao marcada com sucesso" << endl;
+		instruc->closeResultSet(rset2);
 	}
 
 

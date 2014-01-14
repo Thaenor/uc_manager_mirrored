@@ -18,6 +18,7 @@ public:
 	Aluno();
 	Aluno(string nome, int numero,vector <double> notas);
 	Aluno(string nome,int numero);
+
 	Aluno(int numero, vector <double> notas);
 	~Aluno();
     Aluno(const Aluno& other);
@@ -36,6 +37,8 @@ public:
 	virtual bool operator>(const Aluno &a)const;
 	void escrever(ostream &a)const;
 	const Aluno& operator+=(const Aluno &a);
+
+
 };
 
 
