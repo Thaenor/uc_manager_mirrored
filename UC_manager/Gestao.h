@@ -67,7 +67,8 @@ public:
 
 	void ListarUC(vector<UC*> cadeiras);
 
-	Avaliacao getAval(string mom);
+	Avaliacao getAval(string cod_uc,string cod_edicao,string  _mom);
+
 
 	//leitura de docentes
 	vector<Pessoa*> lerDocentes(string fich);
@@ -92,6 +93,8 @@ public:
 	UC * Uc() const { return uc; }
 	void Uc(UC * val) { uc = val; }
 	void atualizarSumario(string texto, string ed, string cod, string codq);
+
+	void fecharUC(string cod_uc,string cod_edicao);
 };
 
 //construtor e destrutor
@@ -163,7 +166,7 @@ vector<Aluno> Gestao::LerTeste(string fich,Avaliacao aval)
 	ifstream fx;
 	BDados *ligacao = ligar();
 
-	string caminho = "D:\Dropbox\Aplicativos\UC_Manager_Link";
+	string caminho = "D:/Dropbox/Aplicativos/UC_Manager_Link/";
 	caminho +=fich;
 	//dados importados
 	vector<double> cotacoes;
@@ -234,7 +237,8 @@ vector<Aluno> Gestao::LerTeste(string fich,Avaliacao aval)
 			notas.pop_front();
 		}
 		vector<double> nota;
-		nota.push_back(calcAlineas(n, cotacoes));
+		double no = calcAlineas(n, cotacoes);
+		nota.push_back(no);
 		
 		ligacao->regAval_Notas(*it, nota[0], aval);
 		alunos.push_back(Aluno(*it, nota));
@@ -264,7 +268,7 @@ vector<Pessoa*> Gestao::lerDocentes(string fich)
 	string linha;
 	ifstream fx;
 	
-	string caminho = "D:\Dropbox\Aplicativos\UC_Manager_Link";
+	string caminho = "D:/Dropbox/Aplicativos/UC_Manager_Link/";
 	caminho +=fich;
 
 	//dropfuncs::dropbox::isep_credentials(app_key,app_secret,token,token_secret);						 
@@ -478,15 +482,28 @@ void Gestao :: alterarLogin(string pw)
 {
 	BDados *ligacao = ligar();
 	ligacao->alterarLogin(user, pw);
-
+	delete ligacao;
 }
 
-Avaliacao Gestao :: getAval(string mom)
+Avaliacao Gestao :: getAval(string cod_uc,string cod_edicao,string  _mom)
 {
 		BDados *ligacao = ligar();
-		return ligacao->getAval(*uc,mom);
+		Avaliacao a =ligacao->getAval(cod_uc, cod_edicao, _mom);
+		delete ligacao;
+		return a;
+		
 
 }
 				
+void Gestao :: fecharUC(string cod_uc,string cod_edicao)
+{
+	BDados *ligacao = ligar();
+	ligacao->fecharUC(cod_uc,cod_edicao);
+	delete ligacao;
+
+
+}
+
+
 
 #endif

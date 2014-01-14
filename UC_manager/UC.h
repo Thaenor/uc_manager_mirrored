@@ -30,7 +30,8 @@ private:
 
 public:
 	UC();                           /* Construtor por Defeito */
-	UC(string _regente, string _cod_uc, string _nome, string _edicao, string ano, string semestre);     /* Construtor com parametros */
+	UC(string _regente, string _cod_uc, string _nome, string _edicao, string ano, string semestre); /* Construtor com parametros */
+	UC(string _codUc, string edicao);
 	~UC();                          /* Destrutor */
 	UC(const UC &other);            /* Construtor Copia */
 	UC* clone() const;              /* construtor Clone */
@@ -97,6 +98,15 @@ public:
 		this->semestre = semestre;
 
 	}
+
+	UC::UC(string _codUc, string _edicao)
+	{
+		cod_uc = _codUc;
+		edicao = _edicao;
+	}
+
+	
+
 
 	UC::~UC()         /* Destrutor */
 	{
@@ -198,5 +208,7 @@ public:
 		uc.escreve(out);
 		return out;
 	}
+
+
 
 #endif

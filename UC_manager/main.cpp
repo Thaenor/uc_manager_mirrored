@@ -13,6 +13,8 @@ using namespace std;
 Gestao _gestao;
 BDados *ligacao;
 Pessoa* ut;
+string cod_uc;
+string cod_edicao;
 
 void janelaUC();
 void janelaLogin();
@@ -32,6 +34,7 @@ void CarregaTeste();
 void carregarAlunos();
 void marcarReuniao();
 void alterarLogin();
+void FechaUC();
 
 /*******************************************************************************************/
 
@@ -138,10 +141,12 @@ void janelaRemoverUC() //janela adiciona UC
 	system("cls");
 	cout << "-----Remover UC-----" << endl << endl << "0-Voltar" << endl
 		<< endl << "m-Mensagens" << endl;
+	FechaUC();
+
 	char opc;
 	cin >> opc;
 	switch (opc)
-	{
+	{FechaUC();
 	case '0':janelaBV_Regente();
 	case '1':;
 	case '2':;
@@ -232,7 +237,7 @@ void janelaGerirEventos()
 	{
 	case '0':janelaGerirConteudo();
 	case '1':CarregaTeste();
-	case '2':;
+	case '2':alterarLogin();
 	case '3':;
 	case '4':;
 	case 'm':janelaMensagens();
@@ -319,6 +324,7 @@ void janelaDisciplina()
 	vector<UC*> ::iterator it = cadeiras.begin();
 	i--;
 	it += i;
+	cod_uc = (*it)->Cod_uc();cod_edicao=(*it)->Edicao();
 	_gestao.setUc((*it)->clone());
 	system("PAUSE");
 	system("cls");
@@ -353,7 +359,8 @@ void janelaDisciplina()
 		//	_gestao.Uc()->adicionarSumario(_texto);
 			cout << _texto << endl;
 			system("PAUSE");
-			_gestao.atualizarSumario(_texto, (*it)->Cod_uc(), (*it)->Edicao(), ut->getCod_utilizador() );
+			
+			_gestao.atualizarSumario(_texto, cod_uc, cod_edicao, ut->getCod_utilizador() );
 			cout << "Sumário adicionado" << endl;
 			janelaDisciplina();
 
@@ -503,7 +510,7 @@ void CarregaTeste()
 	string fx;
 	cout << "insira o momento de avaliacao(ex.:T1) : ";
 	cin >> mom;
-	Avaliacao a = _gestao.getAval(mom);
+	Avaliacao a = _gestao.getAval(cod_uc,cod_edicao ,mom);
 	if(a.getTipo() == "")
 	{
 		cout << "Momento de avaliacao inexistente";
@@ -514,6 +521,24 @@ void CarregaTeste()
 	cout << "insira o nome do ficheiro";cin>>fx;
 	_gestao.LerTeste(fx,a);
 }
+
+void FechaUC()
+{
+	string a;
+	cout << "selecione a UC a Fechar" << endl;
+	vector<UC*> ucs=ligacao->carregarUCs(ut->getCod_utilizador());
+	_gestao.ListarUC(ucs);
+	cin >> a;
+	int i = stoi(a);
+	vector<UC*> ::iterator it = ucs.begin();
+	i--;
+	it += i;
+	cod_uc = (*it)->Cod_uc();cod_edicao=(*it)->Edicao();
+	_gestao.fecharUC(cod_uc,cod_edicao);
+
+
+}
+
 
 
 

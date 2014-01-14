@@ -27,7 +27,7 @@ public:
 	Pessoa* login(string _usr, string _pw);
 
 	//existe Avaliacao
-	Avaliacao getAval(UC uc, string mom);
+	Avaliacao getAval(string  uc,string edi, string mom);
 	void regAval(Avaliacao aval);
 	void regAval_Notas(	int	it, double nota,Avaliacao aval);
 
@@ -51,6 +51,7 @@ public:
 
 	//alterar Login
 	void alterarLogin(Pessoa * user, string pw);
+	void fecharUC(string cod_uc,string cod_edicao);
 
 
 
@@ -280,17 +281,19 @@ public:
 		instruc = ligacao->createStatement("UPDATE UTILIZADOR SET pw=:1 WHERE cod_utilizador=:2");
 		instruc->setString(1,pw);
 		instruc->setString(2,user->getCod_utilizador());
+		ResultSet *rset = instruc->executeQuery();
+		ligacao->commit();
 
 	}
 
-	Avaliacao BDados ::getAval(UC uc, string mom)
+	Avaliacao BDados ::getAval(string  uc,string edi, string mom)
 	{
 		Statement *instruc;
 
-		instruc = ligacao->createStatement("SELECT * FROM AVALICAO WHERE TIPO=:1 AND COD_UC=:2 AND COD_EDICAO=:3");
+		instruc = ligacao->createStatement("SELECT * FROM AVALIACAO WHERE TIPO=:1 AND COD_UC=:2 AND COD_EDICAO=:3");
 		instruc->setString(1, mom);
-		instruc->setString(2, uc.Edicao());
-		instruc->setString(3, uc.Cod_uc());
+		instruc->setString(2, uc);
+		instruc->setString(3, edi);
 
 		ResultSet *rset = instruc->executeQuery();
 		rset->next();
@@ -300,8 +303,8 @@ public:
 		string cod_uc = rset->getString(3);
 		string cod_edicao = rset->getString(4);
 
-		
-		Avaliacao a(cod_aval,mom,uc);
+		UC * uc_ = new UC(cod_uc, cod_edicao);
+		Avaliacao a(mom,uc_,cod_aval);
 		return a;
 
 	}
@@ -335,98 +338,18 @@ public:
 		instruc->closeResultSet(rset2);
 	}
 
+	void BDados :: fecharUC(string cod_uc,string cod_edicao)
+	{
+		Statement *instruc;
+		instruc = ligacao->createStatement("BEGIN P_FECHA_UC(:1,:2) ;END;");
+		instruc->setString(1, cod_uc);
+		instruc->setString(2,  cod_edicao);
+		ResultSet* rset2 = instruc->executeQuery();
+		ligacao->commit();
+
+		instruc->closeResultSet(rset2);
+
+	}
 
 
-	//list <Aluno> BDados::lerAlunos() 
-	//{ 
-	//	list <Aluno> ret; 
-	//	
-	//	instrucao = ligacao->createStatement("SELECT * FROM ALUNO"); 
-	//	ResultSet *rset = instrucao->executeQuery ();
-	//	while (rset->next ())    
-	//	{   
-	//		int i=rset->getInt(1);
-	//		string s=rset->getString(2);
-	//		//Aluno a(i,s);
-	//	ret.push_back(a);     
-	//	}
-	//	
-	//	instrucao->closeResultSet (rset);  
-	//	return ret; } 
-	//Utilizador BDados::getDocente(string sigla) 
-	//{ 
-	//	Utilizador ret; 
-	//	
-	//	instrucao = ligacao->createStatement("SELECT * FROM UTILIZADOR WHERE SIGLA=COD_UTILIZADOR"); 
-	//	ResultSet *rset = instrucao->executeQuery ();
-	//	while (rset->next ())    
-	//	{   
-	//		string codigo=rset->getString(1);
-	//		string nome=rset->getString(2);
-	//		string data=rset->getString(3);
-	//		char tipo=rset->getString(4)[0];
-	//		string grau=rset->getString(5);
-	//		string pw=rset->getString(6);
-	//		ret(codigo,nome,data,tipo,grau,pw);
-	//	}
-	//	
-	//	instrucao->closeResultSet (rset);  
-	//	return ret;
-	//}
-
-	//string BDados::EscreveMsg(Utilizador doc)
-	//{
-	//	instrucao = ligacao->createStatement("SELECT count(*) FROM MENSAGEM ");
-	//	ResultSet *rset = instrucao->executeQuery();
-
-	//	int cod = rset->getInt(1);
-
-	//	string msg;
-	//	string dest;
-	//	string assunto;
-	//	cout << "introduza o assunto da mensagem  : "; cin >> assunto; cout << endl;
-	//	cout << "introduza a sigla do destinatario  : "; cin >> dest; cout << endl;
-	//	cout << "Mensagem : " << endl; cin >> msg; cout << endl;
-
-	//	instrucao = ligacao->createStatement("INSERT INTO MENSAGEM( VALUES(:COD_DESTINO,:COD_ORIGEM,:COD_UC,:ASSUNTO,:MENSAGEM");
-	//	instrucao->setInt(1, cod);
-	//	instrucao->setString(2, dest);
-	//	instrucao->setString(3, doc.getCod_utilizador());
-	//	/*instrucao->setString(4,null);*/
-	//	/*instrucao->setString(5, assunto);*/
-	//	instrucao->setString(6, assunto);
-	//	instrucao->setString(7, msg);
-	//}
-		
-	/*void BDados::CarregaMsg(string cod_doc) 
-	{ 
-		vector <Mensagem> ret; 
-		
-		instrucao = ligacao->createStatement("SELECT * FROM MENSAGEM WHERE COD_DESTINO = cod_doc"); 
-		ResultSet *rset = instrucao->executeQuery ();
-		while (rset->next ())    
-		{   
-			int codigo=rset->getInt(1);
-			string cod_destino=rset->getString(2);
-			string cod_origem=rset->getString(3);
-			string cod_uc=rset->getString(4);
-			int cod_edicao=rset->getInt(5);
-			string assunto=rset->getString(6);
-			string texto=rset->getString(7);
-			
-			Mensagem a(codigo,texto,assunto,"",cod_destino,cod_origem,"","");
-			ret.push_back(a);     
-		}
-		int i;
-		int choice;
-		do{for(i=0;i<ret.size();i++){
-			cout<<i+1<< ".";
-			ret[i].listar();
-		}
-		cin >>choice; 
-		cout << ret[choice-1];
-		
-
-		instrucao->closeResultSet (rset);  
-		return ret; } */
 #endif 

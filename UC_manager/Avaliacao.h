@@ -16,14 +16,16 @@ private:
 	vector<Pessoa*> monitores;
 	int docentes_sala;
 	UC * uc;
+	string uni;
+	string edi;
 	
 public:
 
 	Avaliacao();
 	~Avaliacao();
 	Avaliacao(int c, string t, string di, string df, int es, vector<Sala*> sa, vector<Pessoa*> moni, int doc);
-	Avaliacao( string tipo, UC uc);
-	Avaliacao(int c, string t, UC);
+	Avaliacao( string tipo, UC* uc,int c);
+	Avaliacao(int c, string t, string uc, string edi_);
 	int getDocentes_sala() const { return docentes_sala; }
 	void setDocentes_sala(int val) { docentes_sala = val; }
 	vector<Pessoa*> getMonitores() const { return monitores; }
@@ -68,19 +70,21 @@ Avaliacao::Avaliacao(int c, string t, string di, string df, int es, vector<Sala*
 	docentes_sala = doc;
 }
 
-Avaliacao :: Avaliacao(int c, string t, UC _uc)
+Avaliacao :: Avaliacao(int c, string t, string uc, string edi_)
 {
-	*uc = _uc;
+	uni = uc;
+	edi = edi_;
 	cod_avaliacao = c;
 	tipo = t;
 }
 
 
 
-Avaliacao :: Avaliacao(string _tipo, UC _uc)
+Avaliacao :: Avaliacao(string _tipo, UC * _uc, int cod)
 {
 	tipo = _tipo;
-	*uc = _uc;
+	uc = _uc->clone();
+	cod_avaliacao = cod;
 }
 
 
